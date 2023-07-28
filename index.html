@@ -7,7 +7,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-  
+    <style>
+    /* Default width for all devices */
+    .responsive-element {
+      width: 20%;
+    }
+
+    /* Tablet (min-width: 768px) */
+    @media (min-width: 768px) {
+      .responsive-element {
+        width: 100px;
+      }
+    }
+
+    /* Smartphone (max-width: 767px) */
+    @media (max-width: 767px) {
+      .responsive-element {
+        width: 60px;
+      }
+    }
+  </style>
 </head>
 <body class="is-preload">
 
@@ -44,7 +63,7 @@
         <header class="major">
           <h2>About Me</h2>
         </header>
-          <p><span class="image left"><img src="images/1stpic.png" alt="Ibrahim Lahlou picture" style="width: 40%;"/></span> I'm Ibrahim Lahlou, a second-yearData Science & Cloud Computing Engineering student at ENSA Oujda. Analyzing, innovating, and excelling in the world of data and cloud technology is my passion. <br><br>
+          <p><span class="image left"><img src="images/1stpic.png" alt="Ibrahim Lahlou picture" class="responsive-element"/></span> I'm Ibrahim Lahlou, a second-yearData Science & Cloud Computing Engineering student at ENSA Oujda. Analyzing, innovating, and excelling in the world of data and cloud technology is my passion. <br><br>
 
             On this academic account, I'll be sharing my journey through the realms of Data Engineering, DevOps, and Machine Learning. But that's not all! I also love incorporating LaTeX into my programming projects.<br><br>
             
