@@ -26,6 +26,26 @@
         width: 60px;
       }
     }
+    #game-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Hide the game section when the width is less than 600px */
+@media (max-width: 600px) {
+  #game {
+    display: none;
+  }
+}
+
+/* Make the game iframe responsive when the width is less than 800px */
+@media (max-width: 800px) {
+  #game-iframe {
+    width: 100%;
+    height: 450px;
+  }
+}
+
   </style>
 </head>
 <body class="is-preload">
