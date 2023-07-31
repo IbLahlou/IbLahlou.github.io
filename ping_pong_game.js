@@ -1,15 +1,21 @@
 let playerPaddle, aiPaddle, ball;
 let playerScore = 0, aiScore = 0;
 let ballSpeedX, ballSpeedY;
-const PADDLE_WIDTH = 15, PADDLE_HEIGHT = 100;
-const BALL_WIDTH = 20, BALL_HEIGHT = 20;
-const PADDLE_SPEED = 7, BALL_SPEED_X = 7, BALL_SPEED_Y = 7;
+let PADDLE_WIDTH, PADDLE_HEIGHT, BALL_WIDTH, BALL_HEIGHT, PADDLE_SPEED, BALL_SPEED_X, BALL_SPEED_Y;
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(windowWidth, windowHeight);
 
-  playerPaddle = createVector(30, height / 2 - PADDLE_HEIGHT / 2);
-  aiPaddle = createVector(width - 30 - PADDLE_WIDTH, height / 2 - PADDLE_HEIGHT / 2);
+  PADDLE_WIDTH = 0.03 * windowWidth;
+  PADDLE_HEIGHT = 0.2 * windowHeight;
+  BALL_WIDTH = 0.03 * windowWidth;
+  BALL_HEIGHT = 0.03 * windowWidth;
+  PADDLE_SPEED = 0.02 * windowHeight;
+  BALL_SPEED_X = 0.008 * windowWidth;
+  BALL_SPEED_Y = 0.008 * windowWidth;
+
+  playerPaddle = createVector(0.05 * windowWidth, height / 2 - PADDLE_HEIGHT / 2);
+  aiPaddle = createVector(width - 0.05 * windowWidth - PADDLE_WIDTH, height / 2 - PADDLE_HEIGHT / 2);
   ball = createVector(width / 2 - BALL_WIDTH / 2, height / 2 - BALL_HEIGHT / 2);
 
   ballSpeedX = BALL_SPEED_X * (random() < 0.5 ? 1 : -1);
@@ -74,7 +80,20 @@ function draw() {
 
   // Display scores
   fill(0);
-  textSize(40);
-  text(`Player: ${playerScore}`, 20, 40);
-  text(`AI: ${aiScore}`, width - 120, 40);
+  textSize(0.05 * windowWidth);
+  text(`Player: ${playerScore}`, 0.05 * windowWidth, 0.07 * windowHeight);
+  text(`AI: ${aiScore}`, width - 0.15 * windowWidth, 0.07 * windowHeight);
+}
+
+// Resize canvas when the window size changes
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+
+  // Adjust paddle and ball positions and sizes when the window size changes
+  playerPaddle.x = 0.05 * windowWidth;
+  playerPaddle.y = height / 2 - PADDLE_HEIGHT / 2;
+  aiPaddle.x = width - 0.05 * windowWidth - PADDLE_WIDTH;
+  aiPaddle.y = height / 2 - PADDLE_HEIGHT / 2;
+  ball.x = width / 2 - BALL_WIDTH / 2;
+  ball.y = height / 2 - BALL_HEIGHT / 2;
 }
