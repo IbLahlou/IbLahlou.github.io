@@ -45,7 +45,7 @@
         <li class="active"><a href="index.html">About Me</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="cv.html">CV</a></li>
+        
       </ul>
       <ul class="icons">
         <li> <a href="https://discord.gg/765145323826839553" class="icon brands fa-discord"><span class="label">Discord</span></a></li>
@@ -100,6 +100,23 @@
           <li>♠️ Chess / Checkers / Card games</li>
         </ul>
       </section>
+
+
+          <!-- Game -->
+      <section id="game">
+  <h2>Ping Pong Game</h2>
+  <button id="startButton" onclick="startGame()">Start Game</button>
+  <center>
+  <iframe id="gameFrame" src="" width="800" height="600" style="display: none;"></iframe>
+  </center>
+  <script>
+    function startGame() {
+      document.getElementById("startButton").style.display = "none";
+      document.getElementById("gameFrame").style.display = "block";
+      document.getElementById("gameFrame").src = "https://your-github-username.github.io/game.html";
+    }
+  </script>
+      </section>
     </div>
 
     <!-- Footer -->
@@ -133,7 +150,7 @@
           </ul>
         </section>
       </section>
-    
+    </footer>
   </div>
 
   <!-- Scripts -->
