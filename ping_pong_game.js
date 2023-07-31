@@ -88,13 +88,7 @@ function draw() {
       let countdown = Math.ceil((pauseEndTime - millis()) / 1000);
       text(`Game Paused - Resume in ${countdown} seconds`, width / 2, height / 2);
     }
-  } else {
-    // Display start button
-    fill(0);
-    textSize(24);
-    textAlign(CENTER);
-    text('Click Start Game to Play', width / 2, height / 2);
-  }
+  } 
 }
 
 function startGame() {
