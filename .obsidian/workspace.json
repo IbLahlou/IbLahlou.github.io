@@ -1,0 +1,162 @@
+{
+  "main": {
+    "id": "069f288be3f4c82e",
+    "type": "split",
+    "children": [
+      {
+        "id": "9ae721f461ed9d15",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "356b8197a97c4217",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "_posts/2024-09-08-cace-principle.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "333a24465fc245fb",
+    "type": "split",
+    "children": [
+      {
+        "id": "2a609d766078ceb3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0d21266621043dc8",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0db36140521d4fbe",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "9bcfb15d695b8748",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "56da1e01f01468d1",
+    "type": "split",
+    "children": [
+      {
+        "id": "40045ca4936d0f7f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "aadc448755b2df61",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "_posts/2024-09-08-cace-principle.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "7b366ab0a21657f6",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "_posts/2024-09-08-cace-principle.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e65ee0c2d18a3d9f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "4dd3c211d7e23069",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "_posts/2024-09-08-cace-principle.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Ouvrir le sélecteur rapide": false,
+      "graph:Ouvrir la vue graphique": false,
+      "canvas:Créer une nouvelle toile": false,
+      "daily-notes:Ouvrir la note quotidienne": false,
+      "templates:Insérer le modèle": false,
+      "command-palette:Ouvrir la palette de commandes": false
+    }
+  },
+  "active": "356b8197a97c4217",
+  "lastOpenFiles": [
+    "_posts/asset/Sans titre.md",
+    "_posts/asset/2024-09",
+    "_posts/2024-09-08-cace-principle.md",
+    "_posts/asset",
+    "_posts/asset/2024-09/output1.png",
+    "_posts/asset/2024-09/CACE.png",
+    "Pasted image 20240908203829.png",
+    "_posts/2024-09-08-python_package.md",
+    "_posts/test.md",
+    "_posts/2024-08-09-hello-world.md"
+  ]
+}
