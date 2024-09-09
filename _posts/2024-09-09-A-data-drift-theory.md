@@ -54,9 +54,6 @@ here's how we can use stability metrics
 
 **Mathematical Formulation :**
 
-
-
-
 $$
 P_{\text{train}}(X, Y) \neq P_{\text{test}}(X, Y)
 $$
@@ -68,9 +65,11 @@ There's 3 main subcategories (covariate shift , Prior probability shift &  Sampl
 Covariate shift occurs when the distribution of the input features (i.e., the characteristics or attributes) changes between the training and test data, but the way the features relate to the target (the thing you're trying to predict) remains the same.
 
 
-<center>
-<figure><center><img src="https://i.imgur.com/fg5GrSy.png" alt="" width="50%" ></center></figure>
-</center>
+<div style="text-align: center;">
+  <figure>
+    <img src="https://i.imgur.com/fg5GrSy.png" alt="" width="50%">
+  </figure>
+</div>
 
 $$P_{\text{train}}(X) \neq P_{\text{test}}(X) \ \text{, but} \ P_{\text{train}}(Y \mid X) = P_{\text{test}}(Y \mid X)$$
 
@@ -80,6 +79,14 @@ $$P_{\text{train}}(X) \neq P_{\text{test}}(X) \ \text{, but} \ P_{\text{train}}(
 **1. Covariate Observation Shift (COS)**
 Occurs when the conditional distribution of covariates given the labels shifts between training and testing:
 
+
+<div style="text-align: center;">
+  <figure>
+    <img src="https://i.imgur.com/GCE9shU.png" alt="" width="50%">
+  </figure>
+</div>
+
+
 $$P(X \mid Y)_{\text{train}} \neq P(X \mid Y)_{\text{test}}$$
 
 - **Example**: A model trained on animal images in a controlled environment tested on outdoor images with different lighting conditions.
@@ -87,6 +94,11 @@ $$P(X \mid Y)_{\text{train}} \neq P(X \mid Y)_{\text{test}}$$
 **2. Covariate Hidden Shift (CHS)**
 Involves the presence of a hidden variable $$X_H$$ that alters the covariates. The conditional distribution of hidden covariates given the observed covariates changes:
 
+<div style="text-align: center;">
+  <figure>
+    <img src="https://i.imgur.com/SqSWre6.png" alt="" width="50%">
+  </figure>
+</div>
 $$P(X_H \mid X)_{\text{train}} \neq P(X_H \mid X)_{\text{test}}$$
 
 - **Example**: A sales prediction model trained without considering economic changes as a hidden variable.
@@ -94,6 +106,11 @@ $$P(X_H \mid X)_{\text{train}} \neq P(X_H \mid X)_{\text{test}}$$
 **3. Distorted Covariate Shift (DCS)**
 Occurs when observed covariates are noisy or distorted compared to the true covariates:
 
+<div style="text-align: center;">
+  <figure>
+    <img src="https://i.imgur.com/Q1HU5sl.png" alt="" width="50%">
+  </figure>
+</div>
 $$P_{\text{observed}}(X) \neq P_{\text{true}}(X)$$
 
 - **Example**: Faulty sensors in a manufacturing process providing inaccurate data to a predictive model.
@@ -104,42 +121,52 @@ $$P_{\text{observed}}(X) \neq P_{\text{true}}(X)$$
 
 Prior probability shift happens when the overall proportion of the different classes or categories in the target variable changes between training and test data, but the relationship between the features and the target stays consistent.
 
-<center>
-<figure><center><img src="https://i.imgur.com/BJWCzc4.png" alt="" width="50%" ></center></figure>
-</center>
+
+<div style="text-align: center;">
+  <figure>
+    <img src="https://i.imgur.com/BJWCzc4.png" alt="" width="50%">
+  </figure>
+</div>
 
   $$P_{train}(Y) \neq P_{\text{test}}(Y)\ \text{, but } P_{\text{train}}(X \mid Y) = P_{\text{test}}(X \mid Y)$$ 
 
-**1. Prior Probability Shift (PPS)**
-This shift occurs when the prior probability distribution of the labels changes between the training and testing phases, without affecting the covariates:
 
-$$
-P(Y)_{\text{train}} \neq P(Y)_{\text{test}}
-$$
 
-- **Example**: A model trained on a dataset where one class is more frequent may face difficulty when tested on a dataset with different class proportions.
-
-**2. Prior Probability Observation Shift (PPOS)**
+**1. Prior Probability Observation Shift (PPOS)**
 Occurs when the prior probability distribution changes, and there is also an unobserved (hidden) factor $$X_H$$ that affects the covariates. The relationship between the hidden covariate and the label changes:
-
+<div style="text-align: center;">
+  <figure>
+    <img src="https://i.imgur.com/OgUZBvn.png" alt="" width="50%">
+  </figure>
+</div>
 $$
 P(X_H \mid Y)_{\text{train}} \neq P(X_H \mid Y)_{\text{test}}
 $$
 
 - **Example**: In a customer segmentation task, an unobserved variable like customer behavior changes over time, affecting the relationships between segments and their features.
 
-**3. Prior Probability Hidden Shift (PPHS)**
+**2. Prior Probability Hidden Shift (PPHS)**
 This type of shift occurs when a hidden variable $$X_H$$ influences both the covariates and the labels, and its conditional distribution shifts between the training and test datasets:
 
+<div style="text-align: center;">
+  <figure>
+    <img src="https://i.imgur.com/ePM0NEp.png" alt="" width="50%">
+  </figure>
+</div>
 $$
 P(X_H \mid Y)_{\text{train}} \neq P(X_H \mid Y)_{\text{test}}
 $$
 
 - **Example**: A medical model trained on data where $$X_H$$ (e.g., certain health conditions) influences both the test results and the patient outcomes, but changes in how those conditions manifest over time cause a shift.
 
-**4. Distorted Prior Probability Shift (DPPS)**
+**3. Distorted Prior Probability Shift (DPPS)**
 Occurs when the prior probability distribution shifts and the covariates are distorted. The observed covariates do not match the true covariates:
 
+<div style="text-align: center;">
+  <figure>
+    <img src="https://i.imgur.com/DgOaiV5.png" alt="" width="50%">
+  </figure>
+</div>
 $$
 P_{\text{observed}}(X) \neq P_{\text{true}}(X) \quad \text{and} \quad P(Y)_{\text{train}} \neq P(Y)_{\text{test}}
 $$
@@ -150,9 +177,13 @@ $$
   
 #### c) Sample Selection Bias:
 
-<center>
-<figure><center><img src="https://i.imgur.com/0CAMx7F.png" alt="" width="75%" ></center></figure>
-</center>
+
+<div style="text-align: center;">
+  <figure>
+    <img src="https://i.imgur.com/0CAMx7F.png" alt="" width="70%">
+  </figure>
+</div>
+
 
 Sample selection bias occurs when the training data is not representative of the real-world population, leading to incorrect conclusions because the data comes from a skewed subset.
 
