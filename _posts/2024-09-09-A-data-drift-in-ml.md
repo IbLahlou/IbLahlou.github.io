@@ -11,17 +11,14 @@ categories:
 tags:
   - MLOps
   - data-drift
-  - covariate-shift
   - prior-probability-shift
   - sample-selection-biais
   - model-observability
 ---
 
+<figure><center><img src="https://i.imgur.com/VLKoYT5.png" alt=""></center></figure>
 
-
-## Types of Drift in Machine Learning
-
-### 1. Data Drift
+## Types of  Data Drift in Machine Learning
 
 **Notation :**
 
@@ -34,7 +31,7 @@ tags:
 
 **Mathematical Formulation :**
 
-<figure><center><img src="https://i.imgur.com/VLKoYT5.png" alt=""></center></figure>
+
 
 
 $$
