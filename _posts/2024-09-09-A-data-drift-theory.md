@@ -14,11 +14,34 @@ tags:
   - prior-probability-shift
   - sample-selection-biais
   - model-observability
+  - stability-metric
 ---
 
 <figure><center><img src="https://i.imgur.com/VLKoYT5.png" alt=""></center></figure>
+## What's Data Drift ?
+
+
+
+Data drift refers to the change in the statistical properties of input data over time, impacting the reliability of machine learning models. Unlike concept drift, which requires monitoring prediction performance through metrics like accuracy or precision, data drift can be detected 
+by monitoring the stability of input features using statistical metrics.
+
+
+### History
+
+The concept of **data drift** was recognized as machine learning and statistical models began to be applied in real-world settings, where data used to train models often changed over time. While it's difficult to pinpoint an exact date, data drift became a critical concept as models moved from static environments to dynamic, evolving data ecosystems, particularly with the rise of **automated decision systems** in industries like finance, healthcare, and technology in the late 1990s and early 2000s.
+
+### Stability-metric-for-data-drift
+
+To ensure models remain accurate in production, stability metrics ,  they are used to detect changes in input data distributions, focusing on identifying covariate drift.
+
+here's how we can use stability metrics
+- Detect changes in prior probability using metrics such as the **Population Stability Index (PSI)** and **Divergence Index**.
+- Identify covariate shifts using tools like the **Covariate Stability Index (CSI)** and **Novelty Index**.
+
+ These metrics rely on both the input and output data in the production environment.
 
 ## Types of  Data Drift in Machine Learning
+
 
 **Notation :**
 
@@ -155,6 +178,14 @@ Sample selection bias occurs when the training data is not representative of the
    - **Stratum-specific parameters** are estimates that apply only to those selected into the sample (S = 1). These reflect the relationships in the **sampling population**.
    - **Marginal parameters** are estimates that average over both selected (S = 1) and non-selected individuals (S = 0), reflecting the relationships in the **target population**.
    Selection bias occurs when you want to estimate the marginal parameters (target population), but your data only provides stratum-specific parameters (sampling population).
+
+
+
+Reference :
+
+- Joaquin Quiñonero-Candela et al., éd. Dataset Shift in Machine Learning. Cambridge, MA,
+USA : MIT Press, 2009. isbn : 9780262170055.
+- Haneuse, S., Schildcrout, J., Crane, P., Sonnen, J., Breitner, J., & Larson, E. (2009). Adjustment for Selection Bias in Observational Studies with Application to the Analysis of Autopsy Data. _Neuroepidemiology_, 32, 229-39. https://doi.org/10.1159/000197389
 
 
 
