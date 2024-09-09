@@ -37,7 +37,7 @@ $P_{\text{train}}(X, Y) \neq P_{\text{test}}(X, Y)$ [Moreno-Torres et al., 2012]
   $P_{\text{train}}(X) \neq P_{\text{test}}(X)$, but $P_{\text{train}}(Y \mid X) = P_{\text{test}}(Y \mid X)$ [Shimodaira, 2000]
   
 - **b) Prior Probability Shift:**  
-  $P_{\text{train}}(Y) \neq P_{\text{test}}(Y)$, but $P_{\text{train}}(X \mid Y) = P_{\text{test}}(X \mid Y)$ [Moreno-Torres et al., 2012]
+  $P_{train}(Y) \neq P_{\text{test}}(Y)$, but $P_{\text{train}}(X \mid Y) = P_{\text{test}}(X \mid Y)$ [Moreno-Torres et al., 2012]
   
 - **c) Sample Selection Bias:**  
   The training data is not representative of the target population [Quionero-Candela et al., 2009]
