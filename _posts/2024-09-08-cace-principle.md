@@ -1,13 +1,13 @@
 ---
 title: Model entanglement
-description: Writing what can affect a change in a model and why technical debts are bad
+description: Explaining what can impact changes in a model and why technical debt is detrimental.
 date: 2024-09-08
 categories:
-  - Complexity debt
-  - Hidden Technical Debt
+  - MLOPs
 tags:
   - MLOps
-  - HTD
+  - complexity-debt
+  - hidden-technical-debt
 ---
 
 ![[CACE.png]]
