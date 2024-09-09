@@ -10,7 +10,7 @@ tags:
   - hidden-technical-debt
 ---
 
-<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/CACE.png?token=GHSAT0AAAAAACWQZXSCQIHO5HFAGORZSQNQZW6IOVQ" alt=""></center></figure>
+<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/CACE.png?token=GHSAT0AAAAAACWQZXSDH6HG3BZFUKZAAPJYZW6JXYQ" alt=""></center></figure>
 
 
 
@@ -79,7 +79,7 @@ model = DecisionTreeClassifier(random_state=42)
 model.fit(X_train, y_train)
 ```
 OUT[1] :
-<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/output1.png?token=GHSAT0AAAAAACWQZXSCM65JPUHJ43RWFESGZW6INCQ" alt=""></center></figure>
+<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/output1.png?token=GHSAT0AAAAAACWQZXSDI2UKSNWZ4RNEWABIZW6JZJA" alt=""></center></figure>
 
 #### Initial Loss Function (Cross-Entropy Loss)
 The cross-entropy loss for a classification problem can be represented as:
