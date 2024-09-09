@@ -1,6 +1,6 @@
 ---
-title: drift-in-machine-learning
-description: Writting about drift or shift in ml , and what's the impact of it 
+title: typology of data drift
+description: Writting about drift in data and what's the impact of it
 date: 2024-09-09
 categories:
   - MLOPs
@@ -8,226 +8,127 @@ categories:
 tags:
   - MLOps
   - data-drift
-  - covariate-drift
-  - concept-drift
+  - covariate-shift
+  - prior-probability-shift
+  - sample-selection-biais
   - model-observability
 ---
 
 
 
-### Types of Drift in Machine Learning
+## Types of Drift in Machine Learning
 
-**1. Data Drift**
+### 1. Data Drift
 
 **Notation :**
 
-- $P_{\text{train}}$: Distribution of the training data
-- $P_{\text{test}}$: Distribution of the test or production data
-- $X$: Input variables (features)
-- $Y$: Target variable (to be predicted)
+- $$P_{\text{train}}$$: Distribution of the training data
+- $$P_{\text{test}}$$: Distribution of the test or production data
+- $$X$$: Input variables (features)
+- $$Y$$: Target variable (to be predicted)
+
+$$C$$
+: A confounding variable that affect X or Y 
+
 
 **Mathematical Formulation :**
 
+<figure><center><img src="https://i.imgur.com/VLKoYT5.png" alt=""></center></figure>
+
+
 $$
-P_{\text{train}}(X, Y) \neq P_{\text{test}}(X, Y) \quad \text{[Moreno-Torres et al., 2012]}
+P_{\text{train}}(X, Y) \neq P_{\text{test}}(X, Y)
 $$
 
+There's 3 main subcategories (covariate shift , Prior probability shift &  Sample Selection Bias:)
 
-**Subcategories:**
+#### a) Covariate Shift:
 
-- **a) Covariate Shift:**  
-  $P_{\text{train}}(X) \neq P_{\text{test}}(X)$, but $P_{\text{train}}(Y \mid X) = P_{\text{test}}(Y \mid X)$ [Shimodaira, 2000]
+Covariate shift occurs when the distribution of the input features (i.e., the characteristics or attributes) changes between the training and test data, but the way the features relate to the target (the thing you're trying to predict) remains the same.
+
+<figure><center><img src="https://i.imgur.com/fg5GrSy.png" alt="" width="50%" ></center></figure>
+
+$$P_{\text{train}}(X) \neq P_{\text{test}}(X) \ \text{, but} \ P_{\text{train}}(Y \mid X) = P_{\text{test}}(Y \mid X)$$
+
+
+**SubSubcategories:**
+
+**1. Covariate Observation Shift (COS)**
+Occurs when the conditional distribution of covariates given the labels shifts between training and testing:
+
+$$P(X \mid Y)_{\text{train}} \neq P(X \mid Y)_{\text{test}}$$
+
+- **Example**: A model trained on animal images in a controlled environment tested on outdoor images with different lighting conditions.
+
+**2. Covariate Hidden Shift (CHS)**
+Involves the presence of a hidden variable $$X_H$$ that alters the covariates. The conditional distribution of hidden covariates given the observed covariates changes:
+
+$$P(X_H \mid X)_{\text{train}} \neq P(X_H \mid X)_{\text{test}}$$
+
+- **Example**: A sales prediction model trained without considering economic changes as a hidden variable.
+
+**3. Distorted Covariate Shift (DCS)**
+Occurs when observed covariates are noisy or distorted compared to the true covariates:
+
+$$P_{\text{observed}}(X) \neq P_{\text{true}}(X)$$
+
+- **Example**: Faulty sensors in a manufacturing process providing inaccurate data to a predictive model.
+
+
+
+#### b) Prior Probability Shift:
+
+Prior probability shift happens when the overall proportion of the different classes or categories in the target variable changes between training and test data, but the relationship between the features and the target stays consistent.
+
+<figure><center><img src="https://i.imgur.com/BJWCzc4.png" alt="" width="50%" ></center></figure>
+
+  $$P_{train}(Y) \neq P_{\text{test}}(Y)\ \text{, but } P_{\text{train}}(X \mid Y) = P_{\text{test}}(X \mid Y)$$ 
   
-- **b) Prior Probability Shift:**  
-  $P_{train}(Y) \neq P_{\text{test}}(Y)$, but $P_{\text{train}}(X \mid Y) = P_{\text{test}}(X \mid Y)$ [Moreno-Torres et al., 2012]
+**1. Prior Probability Shift (PPS)**
+This shift occurs when the prior probability distribution of the labels changes between the training and testing phases, without affecting the covariates:
+
+$$
+P(Y)_{\text{train}} \neq P(Y)_{\text{test}}
+$$
+
+- **Example**: A model trained on a dataset where one class is more frequent may face difficulty when tested on a dataset with different class proportions.
+
+**2. Prior Probability Observation Shift (PPOS)**
+Occurs when the prior probability distribution changes, and there is also an unobserved (hidden) factor $$X_H$$ that affects the covariates. The relationship between the hidden covariate and the label changes:
+
+$$
+P(X_H \mid Y)_{\text{train}} \neq P(X_H \mid Y)_{\text{test}}
+$$
+
+- **Example**: In a customer segmentation task, an unobserved variable like customer behavior changes over time, affecting the relationships between segments and their features.
+
+**3. Prior Probability Hidden Shift (PPHS)**
+This type of shift occurs when a hidden variable $$X_H$$ influences both the covariates and the labels, and its conditional distribution shifts between the training and test datasets:
+
+$$
+P(X_H \mid Y)_{\text{train}} \neq P(X_H \mid Y)_{\text{test}}
+$$
+
+- **Example**: A medical model trained on data where $$X_H$$ (e.g., certain health conditions) influences both the test results and the patient outcomes, but changes in how those conditions manifest over time cause a shift.
+
+**4. Distorted Prior Probability Shift (DPPS)**
+Occurs when the prior probability distribution shifts and the covariates are distorted. The observed covariates do not match the true covariates:
+
+$$
+P_{\text{observed}}(X) \neq P_{\text{true}}(X) \quad \text{and} \quad P(Y)_{\text{train}} \neq P(Y)_{\text{test}}
+$$
+
+- **Example**: A model trained with clean data might perform poorly when tested on noisy data, combined with a shift in label distributions. For instance, sensor errors distort the data, and class distributions also change.
+
+
   
-- **c) Sample Selection Bias:**  
-  The training data is not representative of the target population [Quionero-Candela et al., 2009]
+#### c) Sample Selection Bias:
 
----
+Sample selection bias occurs when the training data is not a good representation of the real-world population or the test data. This typically happens because the data used for training is collected in a biased or unrepresentative way.
 
-**2. Prediction Drift (Concept Drift)**
 
-**Mathematical formulation:**  
-$P_{t1}(Y \mid X) \neq P_{t2}(Y \mid X)$, where $t1$ and $t2$ represent different points in time [Gama et al., 2014]
 
-**Subcategories:** [Widmer and Kubat, 1996]
 
-- **a) Sudden:** Abrupt and sudden change
-- **b) Gradual:** Progressive change over time
-- **c) Incremental:** Small continuous changes
-- **d) Recurrent:** Concepts change but can return to previous states
-- **e) Blips:** Temporary change that quickly returns to the original state
-
-<br>
-
-<figure><center><img src="https://i.imgur.com/hjnpK24.png" width="75%" alt=""></center><center><em><figcaption>Concept Drift Subcategories</figcaption></em></center></figure>
-
-<br>
-
----
-
-**3. Covariate Drift (a specific type of data drift)**
-
-**Mathematical formulation:**  
-$P_{\text{train}}(X) \neq P_{\text{test}}(X)$, but $P_{\text{train}}(Y \mid X) = P_{\text{test}}(Y \mid X)$
-
-**Subcategories:** [Moreno-Torres et al., 2012]
-
-- **a) Feature Drift:** Changes in the distribution of one or more features
-- **b) Domain Shift:** Changes in the feature space (e.g., new categories)
-- **c) Magnitude Shift:** Changes in the scale or magnitude of the features
-
----
-
-**4. Performance and Stability Tests**
-
-Performance and stability tests are crucial for ensuring the robustness and reliability of machine learning models. They help detect potential drift and performance degradation, identify the causes of reduced performance, and ensure that the model remains performant and stable over time.
-
----
-
-### Kolmogorov-Smirnov (KS) Test for Drift Detection
-
-The Kolmogorov-Smirnov (KS) test is used to compare the distribution of features between the training and test data.
-
-
-<figure><center><img src="https://i.imgur.com/XTSlx6T.png" width="75%" alt=""></center><center><em><figcaption>CDF Graphs to calculate KS test metric</figcaption></em></center></figure>
-
-
-
-```python
-from scipy.stats import ks_2samp
-
-# Example of KS test
-ks_stat, p_value = ks_2samp(X_train[:, 0], X_test[:, 0])
-print(f"KS Statistic: {ks_stat}, P-value: {p_value}")
-```
-
-Here is the translation of the provided text into English:
-
----
-
-The formula for the KS test is given by: 
-
-$$D_{n,m} = \sup_x |F_n(x) - F_m(x)|$$
-
-where $F_n(x)$ and $F_m(x)$ represent the empirical cumulative distribution functions (CDFs) of the two respective samples. 
-
-
-
-If the p-value is low (e.g., less than 0.05), this indicates a significant drift in the feature distribution.
-
----
-
-### Classifier Performance Degradation Test
-
-Monitor performance degradation using common metrics such as accuracy, precision, or F1 score:
-
-```python
-from sklearn.metrics import accuracy_score
-
-# Train a model and make predictions
-y_pred_train = model.predict(X_train)
-y_pred_test = model.predict(X_test)
-
-# Calculate accuracy
-accuracy_train = accuracy_score(y_train, y_pred_train)
-accuracy_test = accuracy_score(y_test, y_pred_test)
-
-print(f"Training Accuracy: {accuracy_train}, Test Accuracy: {accuracy_test}")
-```
-
-A significant drop in accuracy can signal concept drift or data drift.
-
----
-
-### Population Stability Index (PSI)
-
-The PSI is often used in credit scoring to compare distributions between two datasets. It's calculated as follows:
-
-The formula for PSI is:
-
-$$\text{PSI} = \sum_{i=1}^{k} (O_i - E_i) \log\left(\frac{O_i}{E_i}\right)$$
-
-where $O_i$ and $E_i$ refer to the observed and expected frequencies in segment $i$, respectively. 
-
-
-```python
-def calculate_psi(expected, actual, buckettype='bins', buckets=10):
-    """Calculate the PSI (population stability index) for a single feature."""
-    def scale_range(input, min, max):
-        input += -(np.min(input))
-        input /= np.max(input) / (max - min)
-        input += min
-        return input
-    
-    breakpoints = np.linspace(0, 1, buckets + 1)
-    if buckettype == 'bins':
-        expected_perc = np.histogram(expected, bins=buckets)[0] / len(expected)
-        actual_perc = np.histogram(actual, bins=buckets)[0] / len(actual)
-    else:
-        expected_perc = np.percentile(expected, breakpoints)
-        actual_perc = np.percentile(actual, breakpoints)
-    
-    psi = np.sum((actual_perc - expected_perc) * np.log(actual_perc / expected_perc))
-    return psi
-
-psi_value = calculate_psi(X_train[:, 0], X_test[:, 0])
-print(f"PSI for Feature 0: {psi_value}")
-```
-
-PSI values:
-- < 0.1: No significant change
-- 0.1 - 0.2: Some drift
-- > 0.2: Significant drift
-
----
-
-### Drift Detection using Evidently
-
-You can use monitoring libraries such as **Evidently** for detailed drift reports:
-
-```python
-from evidently.report import Report
-from evidently.metrics import DataDriftMetric
-
-# Initialize report
-drift_report = Report(metrics=[DataDriftMetric()])
-drift_report.run(reference_data=X_train, current_data=X_test)
-
-# Show report
-drift_report.show()
-```
-
-This will generate a visual drift report to help in understanding feature or concept drift across datasets.
-
----
-
-### Drift Detection using NannyML
-
-NannyML is another tool for drift detection and performance estimation. Below is an example of how to use it to detect data drift:
-
-```python
-import nannyml as nml
-
-# Load reference and analysis datasets
-reference_data = X_train.copy()
-analysis_data = X_test.copy()
-
-# Initialize a data drift calculator
-drift_calculator = nml.DataDriftCalculator()
-
-# Fit on reference data (training set)
-drift_calculator.fit(reference_data)
-
-# Run calculation on analysis data (test set)
-results = drift_calculator.calculate(analysis_data)
-
-# Visualize results
-results.plot()
-```
-
-NannyML uses advanced techniques to estimate drift without access to the target variable in production, making it highly suitable for production monitoring where the ground truth is not available in real-time.
 
 <script type="text/javascript"
   async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
