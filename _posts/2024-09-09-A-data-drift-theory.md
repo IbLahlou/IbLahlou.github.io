@@ -1,6 +1,6 @@
 ---
 title: Data drift overview
-description: Writting about drift in data and what's the impact of it
+description: Writing on data drift and its various types
 date: 2024-09-09
 categories:
   - MLOPs
@@ -28,7 +28,9 @@ by monitoring the stability of input features using statistical metrics.
 
 ### History
 
-The concept of **data drift** was recognized as machine learning and statistical models began to be applied in real-world settings, where data used to train models often changed over time. While it's difficult to pinpoint an exact date, data drift became a critical concept as models moved from static environments to dynamic, evolving data ecosystems, particularly with the rise of **automated decision systems** in industries like finance, healthcare, and technology in the late 1990s and early 2000s.
+The concept of **data drift** was recognized as machine learning and statistical models began to be applied in real-world settings, where data used to train models often changed over time. 
+
+While it's difficult to pinpoint an exact date, data drift became a critical concept as models moved from static environments to dynamic, evolving data ecosystems, particularly with the rise of **automated decision systems** in industries like finance, healthcare, and technology in the late 1990s and early 2000s.
 
 ### Stability-metric-for-data-drift
 
@@ -67,7 +69,7 @@ Covariate shift occurs when the distribution of the input features (i.e., the ch
 
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/fg5GrSy.png" alt="" width="50%">
+    <img src="https://i.imgur.com/fg5GrSy.png" alt="" width="75%">
   </figure>
 </div>
 
@@ -82,7 +84,7 @@ Occurs when the conditional distribution of covariates given the labels shifts b
 
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/GCE9shU.png" alt="" width="50%">
+    <img src="https://i.imgur.com/GCE9shU.png" alt="" >
   </figure>
 </div>
 
@@ -96,9 +98,10 @@ Involves the presence of a hidden variable $$X_H$$ that alters the covariates. T
 
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/SqSWre6.png" alt="" width="50%">
+    <img src="https://i.imgur.com/SqSWre6.png" alt="">
   </figure>
 </div>
+
 $$P(X_H \mid X)_{\text{train}} \neq P(X_H \mid X)_{\text{test}}$$
 
 - **Example**: A sales prediction model trained without considering economic changes as a hidden variable.
@@ -108,9 +111,10 @@ Occurs when observed covariates are noisy or distorted compared to the true cova
 
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/Q1HU5sl.png" alt="" width="50%">
+    <img src="https://i.imgur.com/Q1HU5sl.png" alt="" >
   </figure>
 </div>
+
 $$P_{\text{observed}}(X) \neq P_{\text{true}}(X)$$
 
 - **Example**: Faulty sensors in a manufacturing process providing inaccurate data to a predictive model.
@@ -120,25 +124,23 @@ $$P_{\text{observed}}(X) \neq P_{\text{true}}(X)$$
 #### b) Prior Probability Shift:
 
 Prior probability shift happens when the overall proportion of the different classes or categories in the target variable changes between training and test data, but the relationship between the features and the target stays consistent.
-
-
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/BJWCzc4.png" alt="" width="50%">
+    <img src="https://i.imgur.com/BJWCzc4.png" alt="" width="75%">
   </figure>
 </div>
 
   $$P_{train}(Y) \neq P_{\text{test}}(Y)\ \text{, but } P_{\text{train}}(X \mid Y) = P_{\text{test}}(X \mid Y)$$ 
 
 
-
 **1. Prior Probability Observation Shift (PPOS)**
 Occurs when the prior probability distribution changes, and there is also an unobserved (hidden) factor $$X_H$$ that affects the covariates. The relationship between the hidden covariate and the label changes:
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/OgUZBvn.png" alt="" width="50%">
+    <img src="https://i.imgur.com/OgUZBvn.png" alt="" >
   </figure>
 </div>
+
 $$
 P(X_H \mid Y)_{\text{train}} \neq P(X_H \mid Y)_{\text{test}}
 $$
@@ -150,9 +152,10 @@ This type of shift occurs when a hidden variable $$X_H$$ influences both the cov
 
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/ePM0NEp.png" alt="" width="50%">
+    <img src="https://i.imgur.com/ePM0NEp.png" alt="" >
   </figure>
 </div>
+
 $$
 P(X_H \mid Y)_{\text{train}} \neq P(X_H \mid Y)_{\text{test}}
 $$
@@ -164,9 +167,10 @@ Occurs when the prior probability distribution shifts and the covariates are dis
 
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/DgOaiV5.png" alt="" width="50%">
+    <img src="https://i.imgur.com/DgOaiV5.png" alt="">
   </figure>
 </div>
+
 $$
 P_{\text{observed}}(X) \neq P_{\text{true}}(X) \quad \text{and} \quad P(Y)_{\text{train}} \neq P(Y)_{\text{test}}
 $$
@@ -180,7 +184,7 @@ $$
 
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/0CAMx7F.png" alt="" width="70%">
+    <img src="https://i.imgur.com/0CAMx7F.png" alt="" width="90%">
   </figure>
 </div>
 
