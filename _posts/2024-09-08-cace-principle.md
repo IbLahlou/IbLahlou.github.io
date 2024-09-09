@@ -10,7 +10,10 @@ tags:
   - hidden-technical-debt
 ---
 
-![[CACE.png]]
+<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/CACE.png?token=GHSAT0AAAAAACWQZXSCQIHO5HFAGORZSQNQZW6IOVQ" alt=""></center></figure>
+
+
+
 
 ## Entanglement in Machine Learning Models and the "CACE Principle"
 
@@ -76,7 +79,7 @@ model = DecisionTreeClassifier(random_state=42)
 model.fit(X_train, y_train)
 ```
 OUT[1] :
-![[output1.png]]
+<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/output1.png?token=GHSAT0AAAAAACWQZXSCM65JPUHJ43RWFESGZW6INCQ" alt=""></center></figure>
 
 #### Initial Loss Function (Cross-Entropy Loss)
 The cross-entropy loss for a classification problem can be represented as:
@@ -208,3 +211,8 @@ For each change (shift, addition, or removal), this loss difference quantifies t
    $$
 
 By analyzing $\Delta \mathcal{L}$, we can observe how modifying features alters the model's performance in terms of loss.
+
+
+<script type="text/javascript"
+  async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
