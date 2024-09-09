@@ -89,9 +89,9 @@ $$
 $$
 
 where:
-- $N$ is the total number of samples,
-- $y_i$ is the true label of sample $i$,
-- $\hat{y}_i$ is the predicted probability of the positive class for sample $i$.
+- $$N$$ is the total number of samples,
+- $$y_i$$ is the true label of sample $$i$$,
+- $$\hat{y}_i$$ is the predicted probability of the positive class for sample $$i$$.
 
 
 ##### 2. Model Evaluation
@@ -110,32 +110,31 @@ Initial Accuracy: 0.9433
 #### Loss After Feature Modification
 
 1. **Change in Input Distribution**: 
-   Let $x_1' = x_1 + \Delta x_1$ represent the shifted feature. The new model predictions will depend on this change, and the new loss becomes:
+   Let $$x_1' = x_1 + \Delta x_1$$ represent the shifted feature. The new model predictions will depend on this change, and the new loss becomes:
 
    $$
    \mathcal{L'} = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(\hat{y}'_i) + (1 - y_i) \log(1 - \hat{y}'_i) \right]
    $$
 
-   where $\hat{y}'_i$ represents the updated predictions based on the shifted feature $x_1'$.
+   where $$\hat{y}'_i$$ represents the updated predictions based on the shifted feature $$x_1'$$.
 
 2. **Adding a New Feature**:
-   If we add a new feature $x_{n+1}$, the model updates its predictions to account for this new feature. The updated loss can be written as:
+   If we add a new feature $$x_{n+1}$$, the model updates its predictions to account for this new feature. The updated loss can be written as:
 
    $$
    \mathcal{L''} = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(\hat{y}''_i) + (1 - y_i) \log(1 - \hat{y}''_i) \right]
    $$
 
-   where $\hat{y}''_i$ is the prediction made by the model after incorporating the new feature $x_{n+1}$.
+   where $$\hat{y}''_i$$ is the prediction made by the model after incorporating the new feature $$x_{n+1}$$.
 
 3. **Removing a Feature**:
-   If we remove feature $x_j$, the model must make predictions based on the remaining features. The new loss is:
+   If we remove feature $$x_j$$, the model must make predictions based on the remaining features. The new loss is:
 
    $$
    \mathcal{L^{(j)}} = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(\hat{y}^{(j)}_i) + (1 - y_i) \log(1 - \hat{y}^{(j)}_i) \right]
    $$
 
-   where $\hat{y}^{(j)}_i$ are the predictions made without feature $x_j$.
-
+   where $$\hat{y}^{(j)}_i$$ are the predictions made without feature $$x_j$$.
 
 ##### 3.  Change 1: Shift in input distribution of x1
 
@@ -178,6 +177,7 @@ X_test_reduced = X_test.drop(columns=['x2'])
 model_with_removed_feature = DecisionTreeClassifier(random_state=42)
 model_with_removed_feature.fit(X_train_reduced, y_train)
 
+
 y_pred_removed_feature = model_with_removed_feature.predict(X_test_reduced)
 print(f"Accuracy after removing feature x2: {accuracy_score(y_test, y_pred_removed_feature):.4f}")
 
@@ -189,7 +189,7 @@ Accuracy after removing feature x2: 0.9200
 ```
 
 ### Loss Difference:
-The difference between the original loss $\mathcal{L}$ and the loss after the feature modification can be expressed as:
+The difference between the original loss $$\mathcal{L}$$ and the loss after the feature modification can be expressed as:
 
 $$
 \Delta \mathcal{L} = \mathcal{L'} - \mathcal{L}
@@ -197,20 +197,20 @@ $$
 
 For each change (shift, addition, or removal), this loss difference quantifies the impact of the feature modification:
 
-1. After shifting $x_1$:
+1. After shifting $$x_1$$:
    $$
    \Delta \mathcal{L}_1 = \mathcal{L'} - \mathcal{L}
    $$
-2. After adding $x_{n+1}$:
+2. After adding $$x_{n+1}$$:
    $$
    \Delta \mathcal{L}_2 = \mathcal{L''} - \mathcal{L}
    $$
-3. After removing $x_j$:
+3. After removing $$x_j$$:
    $$
    \Delta \mathcal{L}_3 = \mathcal{L^{(j)}} - \mathcal{L}
    $$
 
-By analyzing $\Delta \mathcal{L}$, we can observe how modifying features alters the model's performance in terms of loss.
+By analyzing $$\Delta \mathcal{L}$$, we can observe how modifying features alters the model's performance in terms of loss.
 
 
 <script type="text/javascript"
