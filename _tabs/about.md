@@ -4,12 +4,8 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-# About Me
+## Intro
 
-
-
-
-## Introduction
 👋 Hello! I'm **Ibrahim Lahlou**, a passionate **Jr ML Engineer** with a strong interest in **MLOps Engineering**. I love to explore how to build strong APIs 🚀 and use them for various projects, including **geospatial** 🌍 applications. I'm constantly looking for new challenges to expand my knowledge and skills 📚.
 
 <figure><center><img src="https://gcloud.devoteam.com/wp-content/uploads/sites/32/2022/03/new-innovation-in-AI-banner.jpeg" alt=""></center></figure>
