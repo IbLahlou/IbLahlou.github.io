@@ -46,7 +46,10 @@ There's 3 main subcategories (covariate shift , Prior probability shift &  Sampl
 
 Covariate shift occurs when the distribution of the input features (i.e., the characteristics or attributes) changes between the training and test data, but the way the features relate to the target (the thing you're trying to predict) remains the same.
 
+
+<center>
 <figure><center><img src="https://i.imgur.com/fg5GrSy.png" alt="" width="50%" ></center></figure>
+</center>
 
 $$P_{\text{train}}(X) \neq P_{\text{test}}(X) \ \text{, but} \ P_{\text{train}}(Y \mid X) = P_{\text{test}}(Y \mid X)$$
 
@@ -80,10 +83,12 @@ $$P_{\text{observed}}(X) \neq P_{\text{true}}(X)$$
 
 Prior probability shift happens when the overall proportion of the different classes or categories in the target variable changes between training and test data, but the relationship between the features and the target stays consistent.
 
+<center>
 <figure><center><img src="https://i.imgur.com/BJWCzc4.png" alt="" width="50%" ></center></figure>
+</center>
 
   $$P_{train}(Y) \neq P_{\text{test}}(Y)\ \text{, but } P_{\text{train}}(X \mid Y) = P_{\text{test}}(X \mid Y)$$ 
-  
+
 **1. Prior Probability Shift (PPS)**
 This shift occurs when the prior probability distribution of the labels changes between the training and testing phases, without affecting the covariates:
 
