@@ -57,7 +57,9 @@ $P_{t1}(Y \mid X) \neq P_{t2}(Y \mid X)$, where $t1$ and $t2$ represent differen
 - **d) Recurrent:** Concepts change but can return to previous states
 - **e) Temporary:** Temporary change that quickly returns to the original state
 
-<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/Concept_Drift_subtypes.png?token=GHSAT0AAAAAACWQZXSCFZNTNO2KRDLFH76EZW6J3IQ" width="75%" alt=""></center><center><em><figcaption>Concept Drift Subcategories</figcaption></em></center></figure>
+<br>
+
+<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/Concept_Drift_subtypes.png?token=GHSAT0AAAAAACWQZXSCPFHCQNVDYXFUMQX4ZW6VEFQ" width="75%" alt=""></center><center><em><figcaption>Concept Drift Subcategories</figcaption></em></center></figure>
 
 
 
@@ -87,7 +89,7 @@ Performance and stability tests are crucial for ensuring the robustness and reli
 The Kolmogorov-Smirnov (KS) test is used to compare the distribution of features between the training and test data.
 
 
-<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/Kolmogrov-smirnov_test.png?token=GHSAT0AAAAAACWQZXSD5Y6MTNL3R3NOQ73YZW6J4JA" width="75%" alt=""></center><center><em><figcaption>CDF Graphs to calculate KS test metric</figcaption></em></center></figure>
+<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/Kolmogrov-smirnov_test.png?token=GHSAT0AAAAAACWQZXSDIY3U7BOO5OJ5DMWGZW6VDKQ" width="75%" alt=""></center><center><em><figcaption>CDF Graphs to calculate KS test metric</figcaption></em></center></figure>
 
 
 
