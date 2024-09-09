@@ -5,6 +5,9 @@ date: 2024-09-09
 categories:
   - MLOPs
   - ML
+  - Statistics
+  - Probability
+  - Metrics
 tags:
   - MLOps
   - data-drift
@@ -26,9 +29,7 @@ tags:
 - $$P_{\text{test}}$$: Distribution of the test or production data
 - $$X$$: Input variables (features)
 - $$Y$$: Target variable (to be predicted)
-
-$$C$$
-: A confounding variable that affect X or Y 
+- $$C$$: the counfounders or covariate
 
 
 **Mathematical Formulation :**
@@ -129,9 +130,34 @@ $$
   
 #### c) Sample Selection Bias:
 
-Sample selection bias occurs when the training data is not a good representation of the real-world population or the test data. This typically happens because the data used for training is collected in a biased or unrepresentative way.
+<center>
+<figure><center><img src="https://i.imgur.com/0CAMx7F.png" alt="" width="75%" ></center></figure>
+</center>
+
+Sample selection bias occurs when the training data is not representative of the real-world population, leading to incorrect conclusions because the data comes from a skewed subset.
 
 
+1. **Target Population vs. Sampling Population**:  
+   - **Target Population**: This is the group you're really interested in for your study.
+   - **Sampling Population**: This is the group from which your sample is actually drawn. Ideally, this group would match the target population. However, due to practical constraints or selection 
+
+
+2. **Selection Mechanism**:  
+   The **selection mechanism** refers to the factors that determine whether someone is included in your sample. It could involve different reasons, such as:
+   - **Refusal**: People might refuse to participate in the study.
+   - **Dropout**: Some participants might leave the study before it's completed.
+   - **Death**: In longitudinal studies, individuals might die before the study is complete, leading to their exclusion.
+
+   All of these factors cause the sampling population to be systematically different from the target population, introducing bias.
+
+4. **The Problem with Selection Bias**:  
+   The goal of most studies is to make conclusions about the **target population**. However, when there's selection bias, the results of your analysis may only apply to the **sampling population**. 
+
+5. **Stratum-Specific vs. Marginal Parameters**:  
+   The text uses a model to describe how outcomes differ between the sampling and target populations:
+   - **Stratum-specific parameters** are estimates that apply only to those selected into the sample (S = 1). These reflect the relationships in the **sampling population**.
+   - **Marginal parameters** are estimates that average over both selected (S = 1) and non-selected individuals (S = 0), reflecting the relationships in the **target population**.
+   Selection bias occurs when you want to estimate the marginal parameters (target population), but your data only provides stratum-specific parameters (sampling population).
 
 
 
