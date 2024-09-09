@@ -4,18 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "9ae721f461ed9d15",
+        "id": "5a4f0c0b675e6190",
         "type": "tabs",
         "children": [
           {
-            "id": "356b8197a97c4217",
+            "id": "11716677be232072",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "_posts/2024-09-08-drift-in-ml.md",
                 "mode": "preview",
-                "source": true
+                "source": false
               }
             }
           }
@@ -146,10 +146,15 @@
       "command-palette:Ouvrir la palette de commandes": false
     }
   },
-  "active": "356b8197a97c4217",
+  "active": "11716677be232072",
   "lastOpenFiles": [
-    "_posts/2024-09-08-cace-principle.md",
+    "covariate-shift.excalidraw.svg",
     "_posts/2024-09-08-drift-in-ml.md",
+    "_posts/2024-09-08-cace-principle.md",
+    "_tabs/certificate.md",
+    "_tabs/about.md",
+    "_tabs/archives.md",
+    "_tabs/categories.md",
     "assets/2024-09/output1.png",
     "assets/2024-09/CACE.png",
     "assets/2024-09",

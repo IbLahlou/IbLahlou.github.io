@@ -24,6 +24,8 @@ My expertise lies in **Model Serving**, and I have a strong background in **Bent
 ## Education
 🎓 **State Engineer Diploma** in **Data Science & Cloud Computing Engineering**, ENSA Oujda | UMP – 2019-2024  
 Relevant coursework:  
+- Machine Learning
+- Marketing
 - Distributed Systems  
 - Cloud Native  
 - Software Development  
