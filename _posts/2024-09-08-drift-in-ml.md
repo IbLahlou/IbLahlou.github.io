@@ -19,17 +19,19 @@ tags:
 
 **1. Data Drift**
 
-**Notation:**
+**Notation :**
 
 - $P_{\text{train}}$: Distribution of the training data
 - $P_{\text{test}}$: Distribution of the test or production data
 - $X$: Input variables (features)
 - $Y$: Target variable (to be predicted)
-- $P(X)$: Marginal distribution of the input variables
-- $P(Y \mid X)$: Conditional distribution of $Y$ given $X$
 
-**Mathematical formulation:**  
-$P_{\text{train}}(X, Y) \neq P_{\text{test}}(X, Y)$ [Moreno-Torres et al., 2012]
+**Mathematical Formulation :**
+
+$$
+P_{\text{train}}(X, Y) \neq P_{\text{test}}(X, Y) \quad \text{[Moreno-Torres et al., 2012]}
+$$
+
 
 **Subcategories:**
 
@@ -109,7 +111,7 @@ The formula for the KS test is given by:
 
 $$D_{n,m} = \sup_x |F_n(x) - F_m(x)|$$
 
-where \( F_n(x) \) and \( F_m(x) \) represent the empirical cumulative distribution functions (CDFs) of the two respective samples. \\
+where $F_n(x)$ and $F_m(x)$ represent the empirical cumulative distribution functions (CDFs) of the two respective samples. 
 
 
 
@@ -147,7 +149,7 @@ The formula for PSI is:
 
 $$\text{PSI} = \sum_{i=1}^{k} (O_i - E_i) \log\left(\frac{O_i}{E_i}\right)$$
 
-where \( O_i \) and \( E_i \) refer to the observed and expected frequencies in segment \( i \), respectively. \\
+where $O_i$ and $E_i$ refer to the observed and expected frequencies in segment $i$, respectively. 
 
 
 ```python
