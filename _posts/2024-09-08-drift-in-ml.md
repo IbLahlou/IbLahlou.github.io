@@ -55,13 +55,13 @@ $P_{t1}(Y \mid X) \neq P_{t2}(Y \mid X)$, where $t1$ and $t2$ represent differen
 - **b) Gradual:** Progressive change over time
 - **c) Incremental:** Small continuous changes
 - **d) Recurrent:** Concepts change but can return to previous states
-- **e) Temporary:** Temporary change that quickly returns to the original state
+- **e) Blips:** Temporary change that quickly returns to the original state
 
 <br>
 
-<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/Concept_Drift_subtypes.png?token=GHSAT0AAAAAACWQZXSCPFHCQNVDYXFUMQX4ZW6VEFQ" width="75%" alt=""></center><center><em><figcaption>Concept Drift Subcategories</figcaption></em></center></figure>
+<figure><center><img src="https://i.imgur.com/hjnpK24.png" width="75%" alt=""></center><center><em><figcaption>Concept Drift Subcategories</figcaption></em></center></figure>
 
-
+<br>
 
 ---
 
@@ -89,7 +89,7 @@ Performance and stability tests are crucial for ensuring the robustness and reli
 The Kolmogorov-Smirnov (KS) test is used to compare the distribution of features between the training and test data.
 
 
-<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/Kolmogrov-smirnov_test.png?token=GHSAT0AAAAAACWQZXSDIY3U7BOO5OJ5DMWGZW6VDKQ" width="75%" alt=""></center><center><em><figcaption>CDF Graphs to calculate KS test metric</figcaption></em></center></figure>
+<figure><center><img src="https://i.imgur.com/XTSlx6T.png" width="75%" alt=""></center><center><em><figcaption>CDF Graphs to calculate KS test metric</figcaption></em></center></figure>
 
 
 
@@ -226,3 +226,16 @@ results.plot()
 ```
 
 NannyML uses advanced techniques to estimate drift without access to the target variable in production, making it highly suitable for production monitoring where the ground truth is not available in real-time.
+
+<script type="text/javascript"
+  async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>

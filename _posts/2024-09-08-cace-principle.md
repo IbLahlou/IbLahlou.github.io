@@ -10,7 +10,7 @@ tags:
   - hidden-technical-debt
 ---
 
-<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/CACE.png?token=GHSAT0AAAAAACWQZXSDQP5APFBKOBJLJZTWZW6VFUQ" alt=""></center></figure>
+<figure><center><img src="https://i.imgur.com/dBrQcyN.png" alt=""></center></figure>
 
 
 
@@ -79,7 +79,7 @@ model = DecisionTreeClassifier(random_state=42)
 model.fit(X_train, y_train)
 ```
 OUT[1] :
-<figure><center><img src="https://raw.githubusercontent.com/IbLahlou/my-files/main/output1.png?token=GHSAT0AAAAAACWQZXSDJ7FPSK5GZ36DPQ5CZW6VGTQ" alt=""></center></figure>
+<figure><center><img src="https://i.imgur.com/rI4OI6j.png" alt=""></center></figure>
 
 #### Initial Loss Function (Cross-Entropy Loss)
 The cross-entropy loss for a classification problem can be represented as:
@@ -215,4 +215,13 @@ By analyzing $\Delta \mathcal{L}$, we can observe how modifying features alters 
 
 <script type="text/javascript"
   async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
 </script>
