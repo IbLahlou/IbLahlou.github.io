@@ -10,7 +10,7 @@ tags:
   - HTD
 ---
 
-<img src="_posts/asset/2024-09/CACE.png">
+![[CACE.png]]
 
 ## Entanglement in Machine Learning Models and the "CACE Principle"
 
@@ -76,8 +76,7 @@ model = DecisionTreeClassifier(random_state=42)
 model.fit(X_train, y_train)
 ```
 OUT[1] :
-
-<img src="_posts/asset/2024-09/output1.png">
+![[output1.png]]
 
 #### Initial Loss Function (Cross-Entropy Loss)
 The cross-entropy loss for a classification problem can be represented as:
