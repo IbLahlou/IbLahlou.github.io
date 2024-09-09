@@ -1,5 +1,5 @@
 ---
-title: typology of data drift
+title: Data drift overview
 description: Writting about drift in data and what's the impact of it
 date: 2024-09-09
 categories:
