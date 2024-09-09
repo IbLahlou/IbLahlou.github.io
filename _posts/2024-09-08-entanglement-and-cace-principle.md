@@ -225,3 +225,9 @@ By analyzing $$\Delta \mathcal{L}$$, we can observe how modifying features alter
     }
   });
 </script>
+
+
+Reference :
+
+- D. Sculley et al. « Hidden Technical Debt in Machine Learning Systems ». In : Advances in
+Neural Information Processing Systems (2015), p. 2503-2511.

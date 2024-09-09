@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2024-09-08-entanglement-and-cace-principle.md",
+                "file": "_posts/2024-09-09-A-data-drift-theory.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/2024-09-08-entanglement-and-cace-principle.md",
+                "file": "_posts/2024-09-09-A-data-drift-theory.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "_posts/2024-09-08-entanglement-and-cace-principle.md",
+                "file": "_posts/2024-09-09-A-data-drift-theory.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "_posts/2024-09-08-entanglement-and-cace-principle.md"
+                "file": "_posts/2024-09-09-A-data-drift-theory.md"
               }
             }
           }
@@ -148,14 +148,16 @@
   },
   "active": "11716677be232072",
   "lastOpenFiles": [
-    "_posts/2024-09-09-A-data-drift-in-ml.md",
-    "_posts/2024-09-08-entanglement-and-cace-principle.md",
+    "_posts/2024-09-09-A-data-drift-in-practice.md",
+    "Sans titre.md",
+    "_posts/2024-09-09-A-data-drift-theory.md",
     "_posts/2024-09-09-B-concept-drift-in-ml.md",
-    "covariate-shift.excalidraw.svg",
+    "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "_tabs/certificate.md",
-    "_tabs/about.md",
-    "_tabs/archives.md",
     "_tabs/categories.md",
+    "_tabs/archives.md",
+    "covariate-shift.excalidraw.svg",
+    "_tabs/about.md",
     "assets/2024-09/output1.png",
     "assets/2024-09/CACE.png",
     "assets/2024-09",
