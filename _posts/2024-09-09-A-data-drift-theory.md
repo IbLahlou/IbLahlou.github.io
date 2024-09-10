@@ -4,10 +4,6 @@ description: Writing on data drift and its various types
 date: 2024-09-09
 categories:
   - MLOPs
-  - ML
-  - Statistics
-  - Probability
-  - Metrics
 tags:
   - MLOps
   - data-drift
@@ -15,6 +11,10 @@ tags:
   - sample-selection-biais
   - model-observability
   - stability-metric
+  - statistics
+  - probability
+  - complexity-debt
+  - machine-learning
 pin: true
 math: true
 mermaid: true
