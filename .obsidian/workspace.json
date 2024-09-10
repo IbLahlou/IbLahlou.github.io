@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2024-09-09-A-data-drift-theory.md",
-                "mode": "preview",
+                "file": "_posts/2024-09-10-batch-stream-Inferencing.md",
+                "mode": "source",
                 "source": true
               }
             }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/2024-09-09-A-data-drift-theory.md",
+                "file": "_posts/2024-09-10-batch-stream-Inferencing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "_posts/2024-09-09-A-data-drift-theory.md",
+                "file": "_posts/2024-09-10-batch-stream-Inferencing.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "_posts/2024-09-09-A-data-drift-theory.md"
+                "file": "_posts/2024-09-10-batch-stream-Inferencing.md"
               }
             }
           }
@@ -148,12 +148,13 @@
   },
   "active": "11716677be232072",
   "lastOpenFiles": [
+    "assets/img/mlops/panel2@4x.png",
+    "_posts/2024-09-09-data-drift-overview.md",
+    "_posts/2024-09-10-batch-stream-Inferencing.md",
+    "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "assets/img/mlops/panel1@4x.png",
     "assets/img/mlops",
     "assets/img",
-    "_posts/2024-09-10-B-bentoml-batchable -mode.md",
-    "_posts/2024-09-09-A-data-drift-theory.md",
-    "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "_tabs/about.md",
     "_tabs/archives.md",
     "_tabs/categories.md",

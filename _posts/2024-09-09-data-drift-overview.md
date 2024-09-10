@@ -21,9 +21,10 @@ mermaid: true
 image:
   path: /assets/img/mlops/panel1@4x.png
 ---
----
+
 
 <figure><center><img src="https://i.imgur.com/VLKoYT5.png" alt=""></center></figure>
+
 ## What's Data Drift ?
 
 
