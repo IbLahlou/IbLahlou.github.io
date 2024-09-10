@@ -15,6 +15,12 @@ tags:
   - sample-selection-biais
   - model-observability
   - stability-metric
+pin: true
+math: true
+mermaid: true
+image:
+  path: /assets/img/mlops/panel1@4x.png
+---
 ---
 
 <figure><center><img src="https://i.imgur.com/VLKoYT5.png" alt=""></center></figure>
@@ -69,7 +75,7 @@ Covariate shift occurs when the distribution of the input features (i.e., the ch
 
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/fg5GrSy.png" alt="" width="75%">
+    <img src="https://i.imgur.com/fg5GrSy.png" alt="" width="50%">
   </figure>
 </div>
 
@@ -126,7 +132,7 @@ $$P_{\text{observed}}(X) \neq P_{\text{true}}(X)$$
 Prior probability shift happens when the overall proportion of the different classes or categories in the target variable changes between training and test data, but the relationship between the features and the target stays consistent.
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/BJWCzc4.png" alt="" width="75%">
+    <img src="https://i.imgur.com/BJWCzc4.png" alt="" width="50%">
   </figure>
 </div>
 
@@ -184,7 +190,7 @@ $$
 
 <div style="text-align: center;">
   <figure>
-    <img src="https://i.imgur.com/0CAMx7F.png" alt="" width="90%">
+    <img src="https://i.imgur.com/0CAMx7F.png" alt="" width="70%">
   </figure>
 </div>
 
