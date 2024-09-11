@@ -18,6 +18,8 @@ image:
   path: /assets/img/panels/panel3@4x.png
 ---
 
+<link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
+
 ## Overview
 
 Convolutional Neural Networks (ConvNets or CNNs) are a type of neural network where the primary operation is the convolution of data matrices. Technically, they use cross-correlation instead of convolution. Cross-correlation is similar to convolution, but without flipping the kernel. The kernel, a smaller matrix that moves over the input, performs the convolution operation to extract features.

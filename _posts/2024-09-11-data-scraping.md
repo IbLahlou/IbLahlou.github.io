@@ -18,6 +18,8 @@ image:
   path: /assets/img/panels/panel4@4x.png
 ---
 
+<link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
+
 ### Introduction :
 
 Every data scientist requires data to perform their work. The process of collecting data can be challenging, especially when dealing with incompatible software or when a quick search for the required data is needed ,

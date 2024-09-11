@@ -22,7 +22,7 @@ image:
   path: /assets/img/panels/panel1@4x.png
 ---
 
-
+<link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
 <figure><center><img src="https://i.imgur.com/VLKoYT5.png" alt=""></center></figure>
 
 ## What's Data Drift ?

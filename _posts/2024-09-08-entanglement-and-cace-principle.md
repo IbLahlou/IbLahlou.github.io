@@ -10,7 +10,7 @@ tags:
   - hidden-technical-debt
 ---
 
-<style></style>
+<link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
 
 <figure><center><img src="https://i.imgur.com/dBrQcyN.png" alt=""></center></figure>
 
