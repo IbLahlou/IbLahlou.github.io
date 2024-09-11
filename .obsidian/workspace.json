@@ -159,8 +159,11 @@
       "command-palette:Ouvrir la palette de commandes": false
     }
   },
-  "active": "db2942cd7a259b4d",
+  "active": "0d21266621043dc8",
   "lastOpenFiles": [
+    "_includes/head.html",
+    "_includes",
+    "_include",
     "_posts/2024-09-09-data-drift-overview.md",
     "_posts/2024-09-10-batch-stream-Inferencing.md",
     "_posts/2024-09-11-convolutional-neural-networks.md",
