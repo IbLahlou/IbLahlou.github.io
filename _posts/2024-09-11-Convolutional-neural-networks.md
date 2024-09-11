@@ -1,4 +1,3 @@
-
 ---
 title: Convolutional neural networks
 description: Describing Convolutional neural networks
