@@ -15,7 +15,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/mlops/panel3@4x.png
+  path: /assets/img/panels/panel3@4x.png
 ---
 
 ## Overview
