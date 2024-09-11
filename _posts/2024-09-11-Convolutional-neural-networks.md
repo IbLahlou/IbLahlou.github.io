@@ -407,23 +407,24 @@ Flattening is essential because fully connected layers expect a one-dimensional 
 
 **Formula :**
 
-Given an input tensor \( S \) of shape \( (N, C, H, W) \), where:
-- \( N \) is the batch size,
-- \( C \) is the number of channels (or depth),
-- \( H \) is the height of the feature map,
-- \( W \) is the width of the feature map,
+Given an input tensor $$ S $$ of shape $$ (N, C, H, W) $$, where:
+- $$ N $$ is the batch size,
+- $$ C $$ is the number of channels (or depth),
+- $$ H $$ is the height of the feature map,
+- $$ W $$ is the width of the feature map,
 
-Flattening converts the tensor into a vector of size \( (N, C \times H \times W) \). The general formula for flattening is simply:
+Flattening converts the tensor into a vector of size $$ (N, C \times H \times W) $$. The general formula for flattening is simply:
 
-\[
+$$
 f(S) = \text{reshape}(S, (N, C \times H \times W))
-\]
+$$
 
 The output is a one-dimensional vector that retains all the values from the original multi-dimensional array but without the spatial structure.
 
 **Use Case :**
 
 - **Feature Extraction**: After convolution and pooling layers have extracted high-level features, flattening prepares the data for fully connected layers that perform the final classification.
+
 - **Dimensionality Reduction**: Although flattening does not reduce the total number of elements, it reduces the dimensions to a one-dimensional vector, suitable for input to classifiers.
 
 #### Implementation with pytorch
@@ -440,9 +441,6 @@ flatten_layer = nn.Flatten()
 flattened_output = flatten_layer(input_tensor)
 ```
 
-
-
-
 ### Other Operations in CNNs
 
 #### **Normalization Layer**
@@ -452,7 +450,7 @@ Normalization layers are used to standardize input data by scaling them to a sta
 
 #### **ReLU (Rectified Linear Unit) Layer**
 
-The ReLU layer applies the activation function \( f(x) = \max(0, x) \), which introduces non-linearity into the model by zeroing out negative values. This makes it one of the most commonly used activation functions in CNNs.
+The ReLU layer applies the activation function $$ f(x) = \max(0, x) $$, which introduces non-linearity into the model by zeroing out negative values. This makes it one of the most commonly used activation functions in CNNs.
 
 Relu allows the model to learn complex patterns by introducing non-linear behavior, making it easier for the network to converge.
 
@@ -495,7 +493,6 @@ class ConvNet(nn.Module):
 
 model = ConvNet(num_classes).to(device)
 ```
-
 
 <div style="text-align: center;">
   <figure>
