@@ -15,6 +15,8 @@ image:
   path: /assets/img/panels/panel2@4x.png
 ---
 
+<link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
+
 ## Overview 
 
 Microbatch inference is a machine learning technique that processes data in smaller, more frequent batches compared to traditional batch processing methods, enabling faster and more responsive model updates.
