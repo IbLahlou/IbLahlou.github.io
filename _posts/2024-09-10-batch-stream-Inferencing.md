@@ -1,7 +1,7 @@
 ---
 title: Batch & Stream inferencing
 description: What's a batch microbatch & stream inferencing and how to implement it
-date: 2024-09-09
+date: 2024-09-10
 categories:
   - MLOPs
 tags:
