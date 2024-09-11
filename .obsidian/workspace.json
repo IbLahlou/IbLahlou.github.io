@@ -25,8 +25,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2024-09-11-data-scraping.md",
-                "mode": "preview",
+                "file": "_posts/2024-09-08-entanglement-and-cace-principle.md",
+                "mode": "source",
                 "source": true
               }
             }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/2024-09-11-data-scraping.md",
+                "file": "_posts/2024-09-08-entanglement-and-cace-principle.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "_posts/2024-09-11-data-scraping.md",
+                "file": "_posts/2024-09-08-entanglement-and-cace-principle.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "_posts/2024-09-11-data-scraping.md"
+                "file": "_posts/2024-09-08-entanglement-and-cace-principle.md"
               }
             }
           }
@@ -161,18 +161,18 @@
   },
   "active": "db2942cd7a259b4d",
   "lastOpenFiles": [
-    "_posts/2024-09-11-convolutional-neural-networks.md",
-    "_posts/2024-09-11-data-scraping.md",
-    "assets/img/mlops/panel4@4x.png",
-    "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "_posts/2024-09-09-data-drift-overview.md",
     "_posts/2024-09-10-batch-stream-Inferencing.md",
-    "assets/img/mlops/panel3@4x.png",
+    "_posts/2024-09-11-convolutional-neural-networks.md",
+    "_posts/2024-09-11-data-scraping.md",
+    "assets/img/panels/panel4@4x.png",
+    "_posts/2024-09-08-entanglement-and-cace-principle.md",
+    "assets/img/panels/panel3@4x.png",
     "Pasted image 20240911103544.png",
     "Pasted image 20240911103519.png",
-    "assets/img/mlops/panel2@4x.png",
-    "assets/img/mlops/panel1@4x.png",
-    "assets/img/mlops",
+    "assets/img/panels/panel2@4x.png",
+    "assets/img/panels/panel1@4x.png",
+    "assets/img/panels",
     "assets/img",
     "_tabs/about.md",
     "_tabs/archives.md",
