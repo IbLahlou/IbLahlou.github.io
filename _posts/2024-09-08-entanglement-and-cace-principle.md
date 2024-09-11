@@ -10,6 +10,8 @@ tags:
   - hidden-technical-debt
 ---
 
+<style></style>
+
 <figure><center><img src="https://i.imgur.com/dBrQcyN.png" alt=""></center></figure>
 
 
