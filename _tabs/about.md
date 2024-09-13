@@ -41,7 +41,7 @@ Scan this QR Code
 
 <div style="text-align: center;">
   <figure style="margin: 0; padding: 0;">
-    <img src="https://i.imgur.com/VyrpZWn.png" alt="QR Code" style="width: 60%; max-width: 300px; height: auto;">
+    <img src="https://i.imgur.com/VyrpZWn.png" alt="QR Code" style="width: 80%; max-width: 300px; height: auto;">
   </figure>
 </div>
 
