@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2024-09-11-virtualization in Unix-based system.md",
-                "mode": "source",
+                "file": "_tabs/about.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/2024-09-11-virtualization in Unix-based system.md",
+                "file": "_tabs/about.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "_posts/2024-09-11-virtualization in Unix-based system.md",
+                "file": "_tabs/about.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "_posts/2024-09-11-virtualization in Unix-based system.md"
+                "file": "_tabs/about.md"
               }
             }
           }
@@ -148,16 +148,19 @@
   },
   "active": "11716677be232072",
   "lastOpenFiles": [
-    "_posts/2024-09-11-data-scraping.md",
+    "_tabs/tags.md",
     "_posts/2024-09-11-virtualization in Unix-based system.md",
+    "_tabs/about.md",
+    "_posts/2024-09-12-testing-in-mlops.md",
+    "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "_posts/2024-09-09-data-drift-overview.md",
     "_posts/2024-09-10-batch-stream-Inferencing.md",
+    "_posts/2024-09-11-convolutional-neural-networks.md",
+    "_posts/2024-09-11-data-scraping.md",
     "assets/img/panels/panel5@4x.png",
-    "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "_includes/head.html",
     "_includes",
     "_include",
-    "_posts/2024-09-11-convolutional-neural-networks.md",
     "assets/img/panels/panel4@4x.png",
     "assets/img/panels/panel3@4x.png",
     "Pasted image 20240911103544.png",
@@ -166,7 +169,6 @@
     "assets/img/panels/panel1@4x.png",
     "assets/img/panels",
     "assets/img",
-    "_tabs/about.md",
     "_tabs/archives.md",
     "_tabs/categories.md",
     "_tabs/certificate.md",
