@@ -1,5 +1,5 @@
 ---
-title: virtualization in Unix-based system
+title: Virtualization in Unix-based system
 description: Explaining virtualisation & containerisation using a unix-based os
 date: 2024-09-11
 categories:

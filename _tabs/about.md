@@ -34,3 +34,20 @@ Relevant coursework:
 - Stochastic Analysis  
 - Data Mining  
 - Big Data
+
+## More Information
+
+Scan this QR Code 
+
+<div style="text-align: center;">
+  <figure style="margin: 0; padding: 0;">
+    <img src="https://i.imgur.com/VyrpZWn.png" alt="QR Code" style="width: 60%; max-width: 300px; height: auto;">
+  </figure>
+</div>
+
+
+
+QR codes offer a fast and touchless way to access content with just your smartphone camera. By simply pointing the camera at the code, it instantly directs you to the relevant digital resource—no need to type URLs or download special apps. This makes QR codes highly convenient for users and a powerful tool for businesses to track engagement and enhance marketing efficiency.
+
+
+
