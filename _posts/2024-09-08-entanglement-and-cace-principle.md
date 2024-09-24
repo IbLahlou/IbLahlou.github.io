@@ -21,7 +21,7 @@ tags:
 
 In machine learning, **entanglement** refers to the complex interdependencies between features, where modifying one feature can affect the behavior of others. This phenomenon is captured by the **"CACE Principle"** (Changing Anything Changes Everything) also called "cake" principle 🎂, which highlights how altering any feature can influence the model’s overall predictions.
 
-Machine learning models use a set of features $x_1, x_2, \dots, x_n$, and the relationships between them are often non-linear. Any change, such as shifts in input distribution, adding new features, or removing existing ones, can disrupt the model’s learned dynamics.
+Machine learning models use a set of features $$x_1, x_2, \dots, x_n$$, and the relationships between them are often non-linear. Any change, such as shifts in input distribution, adding new features, or removing existing ones, can disrupt the model’s learned dynamics.
 
 ### Types of Feature Changes:
 
@@ -30,11 +30,11 @@ Machine learning models use a set of features $x_1, x_2, \dots, x_n$, and the re
 
 
 
-2. **Adding a New Feature** $x_{n+1}$: Introducing new data alters the balance of the model, potentially impacting existing features.
+2. **Adding a New Feature** $$x_{n+1}$$: Introducing new data alters the balance of the model, potentially impacting existing features.
 
 
 
-3. **Removing a Feature** $x_j$: Excluding a feature forces the model to redistribute its reliance on remaining features, often unpredictably.
+3. **Removing a Feature** $$x_j$$: Excluding a feature forces the model to redistribute its reliance on remaining features, often unpredictably.
 
 
 ### Mitigation Strategies:
@@ -222,7 +222,7 @@ By analyzing $$\Delta \mathcal{L}$$, we can observe how modifying features alter
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
     tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']],
+      inlineMath: [['$$','$$'], ['\\(','\\)']],
       processEscapes: true
     }
   });
