@@ -485,8 +485,14 @@ The Dravidian language family is primarily spoken in South India and parts of Ce
 
 ### Altaic Languages
 
+
 The Altaic language family is a controversial grouping that includes languages spoken in Central Asia, Siberia, and parts of East Asia. Here’s a detailed look at its key branches, features, and sub-branches:
 
+<div style="text-align: center;">
+  <figure>
+    <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--sTx9daof--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://cdn-images-1.medium.com/max/1024/1%2AzhZVosQmUM5fk9GuNSfsyg.png" alt="" width="105%">
+  </figure>
+</div>
 
 
 **Definition:** A proposed language family that includes Turkic, Mongolic, and Tungusic languages.
@@ -507,11 +513,15 @@ The Altaic language family is a controversial grouping that includes languages s
 
 ---
 
-## Austroasiatic Languages
+### Austroasiatic Languages
 
 The Austroasiatic language family is spoken in Southeast Asia and parts of India. Here’s a detailed look at its key branches, features, and sub-branches:
 
-<div style=“text-align: center;”> <figure> <img src=“https://upload.wikimedia.org/wikipedia/commons/6/6b/Austroasiatic_languages.png” alt=“” width=“105%”> </figure> </div>
+<div style="text-align: center;">
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Austroasiatic-en.svg/1200px-Austroasiatic-en.svg.png" alt="" width="105%">
+  </figure>
+</div>
 
 **Definition:** A language family spoken in Southeast Asia and parts of India.
 
@@ -532,6 +542,7 @@ The Austroasiatic language family is spoken in Southeast Asia and parts of India
 ****
 
 ## Why Languages Change
+
 
 Languages change due to a variety of social, cultural, and technological factors. Social factors include language contact, where speakers of different languages interact and influence each other. Cultural factors involve shifts in societal norms and values, while technological advancements can introduce new vocabulary and expressions. For example, the rise of the internet has led to the creation of new words and phrases. Research papers such as "Language Change: Progress or Decay?" by Jean Aitchison explore the mechanisms and motivations behind language change.
 
