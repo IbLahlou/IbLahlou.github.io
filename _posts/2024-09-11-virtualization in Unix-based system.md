@@ -8,11 +8,7 @@ categories:
 tags:
   - Computing
   - Infrastracture
-  - Provisionning
   - Virtualisation
-  - Unix
-  - QEMU
-  - KVM
   - DevOps
 pin: true
 math: true

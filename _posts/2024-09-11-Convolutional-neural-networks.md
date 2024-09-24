@@ -277,7 +277,7 @@ Since the stride is $$ \text{stride} = 2 $$, the kernel moves 2 steps at a time 
    = (1+0+1+0+1+0+1+0+1) = 5
    $$
 
-#### Step 4: Output matrix
+##### Step 4: Output matrix
 
 $$
 \begin{pmatrix}
