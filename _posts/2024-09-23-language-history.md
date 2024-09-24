@@ -1,9 +1,10 @@
 ---
-title: language-processing
-description: Describing text preprocessing operations
+title: language-history
+description: Archived insight from languages before talking about natural languages
 date: 2024-09-20
 categories:
   - Language History
+  - knowledge-base
 tags:
   - Language
   - Natural-language-processing
