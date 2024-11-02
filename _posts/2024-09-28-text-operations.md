@@ -1,7 +1,7 @@
 ---
 title: Text operations in neural networks
 description: Describing text operations and transformations in neural networks
-date: 2024-02-11
+date: 2024-11-01
 categories:
   - Machine Learning
   - Natural Language Processing
