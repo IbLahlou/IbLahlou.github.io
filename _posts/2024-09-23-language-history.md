@@ -8,6 +8,7 @@ categories:
 tags:
   - Language
   - Natural-language-processing
+  - historical-linguistic
 pin: true
 math: true
 mermaid: true
@@ -123,7 +124,7 @@ The Indo-European language family is one of the largest and most widely spoken i
 
 ---
 
-### Indo-Iranian Language
+### Indo-Aryan Language
 
 <div style="text-align: center;">
   <figure>
