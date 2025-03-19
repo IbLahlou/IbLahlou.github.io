@@ -8,17 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "11716677be232072",
+            "id": "70dba44aa744e527",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2024-09-28-text-operations.md",
+                "file": "_posts/2025-03-19-ML System Overview.md",
                 "mode": "source",
-                "source": true
+                "source": false
               },
               "icon": "lucide-file",
-              "title": "2024-09-28-text-operations"
+              "title": "2025-03-19-ML System Overview"
             }
           }
         ]
@@ -40,10 +40,11 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": true
               },
               "icon": "lucide-folder-closed",
-              "title": "Explorateur de fichiers"
+              "title": "Files"
             }
           },
           {
@@ -93,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/2024-09-23-language-history.md",
+                "file": "_posts/2025-03-19-ML System Overview.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Rétrolien pour 2024-09-23-language-history"
+              "title": "Backlinks for 2025-03-19-ML System Overview"
             }
           },
           {
@@ -154,22 +155,29 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Ouvrir le sélecteur rapide": false,
-      "graph:Ouvrir la vue graphique": false,
-      "canvas:Créer une nouvelle toile": false,
-      "daily-notes:Ouvrir la note quotidienne": false,
-      "templates:Insérer le modèle": false,
-      "command-palette:Ouvrir la palette de commandes": false
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
     }
   },
-  "active": "11716677be232072",
+  "active": "70dba44aa744e527",
   "lastOpenFiles": [
+    "_posts/2025-03-20-Planning in ML System.md",
+    "_posts/2025-03-19-ML System Overview.md",
+    "_posts/2024-09-09-data-drift-overview.md",
+    "_posts/2024-09-28-text-operations.md",
+    "Pasted image 20250319230116.png",
+    "Pasted image 20250319223809.png",
+    "_posts/Conception et Développement d'un voice agent intélligent.md",
+    "_posts/2024-09-11-Convolutional-neural-networks.md",
+    "_posts/2024-09-23-language-history.md",
     "assets/img/panels/panel7@4x.png",
     "_posts/Sans titre.md",
-    "_posts/2024-09-28-text-operations.md",
     "assets/img/panels/panel6@4x.png",
     "assets/img/panels/panel5@4x.png",
-    "_posts/2024-09-23-language-history.md",
     "Pasted image 20241102145707.png",
     "Pasted image 20241102145655.png",
     "Pasted image 20241102145332.png",
@@ -179,18 +187,14 @@
     "_posts/2024-09-11-data-scraping.md",
     "assets/img/panels/panel4@4x.png",
     "_posts/2024-09-11-virtualization in Unix-based system.md",
-    "Pasted image 20240923195902.png",
     "_tabs/about.md",
     "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "_posts/2024-09-10-batch-stream-Inferencing.md",
-    "_posts/2024-09-09-data-drift-overview.md",
     "_tabs/tags.md",
     "_posts/2024-09-12-testing-in-mlops.md",
     "_includes/head.html",
     "_includes",
     "_include",
-    "assets/img/panels/panel3@4x.png",
-    "Pasted image 20240911103544.png",
     "assets/img/panels",
     "assets/img",
     "_tabs/archives.md",
@@ -203,8 +207,6 @@
     "_posts/asset/Sans titre.md",
     "_posts/asset/2024-09",
     "_posts/asset",
-    "_posts/2024-09-08-python_package.md",
-    "_posts/test.md",
-    "_posts/2024-08-09-hello-world.md"
+    "_posts/2024-09-08-python_package.md"
   ]
 }
