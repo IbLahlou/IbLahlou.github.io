@@ -1,7 +1,7 @@
 ---
 title: Planning in ML System
 description: From Research to Production
-date: 2024-11-01
+date: 2025-03-20
 categories:
   - MLOPs
 tags:
