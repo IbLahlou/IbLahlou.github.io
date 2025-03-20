@@ -13,15 +13,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2025-03-19-ML System Overview.md",
+                "file": "_posts/2025-03-20-Planning in ML System.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025-03-19-ML System Overview"
+              "title": "2025-03-20-Planning in ML System"
+            }
+          },
+          {
+            "id": "58c1c0c8183677ab",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "_posts/2025-03-20-Planning in ML System.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-03-20-Planning in ML System"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -163,8 +178,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "70dba44aa744e527",
+  "active": "58c1c0c8183677ab",
   "lastOpenFiles": [
+    "_posts/Untitled.md",
     "_posts/2025-03-20-Planning in ML System.md",
     "_posts/2025-03-19-ML System Overview.md",
     "_posts/2024-09-09-data-drift-overview.md",
