@@ -1,6 +1,6 @@
 ---
 title: Planning in ML System
-description: From Research to Production
+description: Project Management for ML Developpement
 date: 2025-03-20
 categories:
   - MLOPs
