@@ -16,6 +16,8 @@ tags:
 pin: true
 math: true
 mermaid: true
+image:
+  path: /assets/img/panels/panel8@4x.png
 ---
 ## The Evolving Ecosystem
 

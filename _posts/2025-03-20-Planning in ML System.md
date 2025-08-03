@@ -15,6 +15,8 @@ tags:
 pin: true
 math: true
 mermaid: true
+image:
+  path: /assets/img/panels/panel9@4x.png
 ---
 
 
