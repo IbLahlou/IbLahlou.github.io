@@ -1,23 +1,19 @@
 ---
-title: The 7 big time series fundamentals
+title: The 7 big time series fundamentals and operations
 description:
-date: 2025-09-29
+date: 2025-08-13
 categories:
-  - MLOPs
+  - Machine Learning
 tags:
-  - MLOps
   - Machine
   - Learning
-  - System
-  - MQTT
-  - Mosquitto
-  - Streaming
-  - Real Time
+  - Time Series
+  - Autocorrelation
 pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel9@4x.png
+  path: /assets/img/panels/panel11@4x.png
 ---
 
 ## 0. **Heuristic Models (Baseline and Simple Methods)**

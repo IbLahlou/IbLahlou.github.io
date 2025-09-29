@@ -43,7 +43,7 @@
               "state": {
                 "file": "_posts/2025-09-29-big-time-series-fundamentals.md",
                 "mode": "source",
-                "source": false
+                "source": true
               },
               "icon": "lucide-file",
               "title": "2025-09-29-big-time-series-fundamentals"
@@ -193,8 +193,10 @@
       "command-palette:Ouvrir la palette de commandes": false
     }
   },
-  "active": "0d21266621043dc8",
+  "active": "47ca8bd4f7dc7fd3",
   "lastOpenFiles": [
+    "assets/img/panels/panel11@4x.png",
+    "_posts/2025-09-29-big-time-series-fundamentals.md",
     "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "_posts/2025-08-2025-Real time model inference.md",
     "_posts/2025-03-20-Planning in ML System.md",
@@ -215,7 +217,6 @@
     "assets/img/panels/panel6@4x.png",
     "assets/img/panels/panel5@4x.png",
     "Pasted image 20241102145707.png",
-    "Pasted image 20241102145655.png",
     "_posts/2024-10-08-driving-car-behaviour.md",
     "_posts/2024-09-11-convolutional-neural-networks.md",
     "_posts/2024-09-11-data-scraping.md",
@@ -234,9 +235,7 @@
     "_tabs/certificate.md",
     "_posts/2024-09-08-drift-in-ml.md",
     "_posts/2024-09-09-A-data-drift-in-practice.md",
-    "_posts/2024-09-09-B-concept-drift-in-ml.md",
     "assets/2024-09",
-    "_posts/asset/Sans titre.md",
     "_posts/asset/2024-09",
     "_posts/asset"
   ]
