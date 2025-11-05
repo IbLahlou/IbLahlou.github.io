@@ -67,23 +67,27 @@ $$\hat{y}_{t+1} = \frac{1}{k}\sum_{i=0}^{k-1} y_{t-i}$$
 
 Noise variance drops to $\sigma^2/k$, but with a linear trend $y_t = a + bt + \epsilon_t$, you get bias: $b \cdot \frac{k+1}{2}$ because the average lags behind.
 
-> **Tip:** With seasonality, use seasonal smoothing (e.g., average each month across years) to avoid blurring the seasonal pattern.
+> **Tip:**
+> With seasonality, use seasonal smoothing (e.g., average each month across years) to avoid blurring the seasonal pattern.
+> {: .prompt-info }
 
 ### Simple Exponential Smoothing (SES)
 
-Assign more weight to recent points:
+Assigns more weight to recent observations:
 
-$$\hat{y}_{t+1} = \alpha y_t + (1-\alpha)\hat{y}_t$$
+$$ \hat{l}_t = \alpha y_t + (1 - \alpha) \hat{l}_{t-1}, $$
 
-where $0<\alpha<1$.
-Large $\alpha$ reacts quickly; small $\alpha$ smooths more.
-But SES produces flat multi-step forecasts:
+$$ \hat{y}\_{t+1}^{\text{SES}} = \hat{l}\_t, $$
 
-$$\hat{y}_{t+h}^{\text{SES}} = \hat{y}_{t+1}$$,
+where $0 < \alpha < 1$. Large $\alpha$ reacts quickly; small $\alpha$ smooths more. SES produces flat multi-step forecasts:
 
-causing horizon-$h$ bias:
+$$ \hat{y}_{t+h}^{\text{SES}} = \hat{y}_{t+1}, $$
 
-$$\mathbb{E}[\hat{y}_{t+h}^{\text{SES}} - y_{t+h}] \approx -bh$$ under trends.
+causing horizon-$h$ bias under a linear trend:
+
+$$ \mathbb{E}[\hat{y}_{t+h}^{\text{SES}} - y_{t+h}] \approx -b \left( h + \frac{1 - \alpha}{\alpha} \right), $$
+
+where $b$ is the trend slope.
 
 ### Holt (Linear Trend)
 
@@ -100,6 +104,7 @@ $$
 Now forecasts grow along slope $T_t$, eliminating trend bias. But seasonal effects remain in residuals.
 
 > **Option:** Use damped trend by multiplying $T_t$ by $\phi^h$ where $0<\phi<1$ when long-run growth shouldn't explode.
+> {: .prompt-info }
 
 ### Holt–Winters
 
@@ -116,7 +121,7 @@ $$
 
 Multiplicative version: $\hat{y}_{t+h} = (L_t + hT_t)\times S_{t+h-s}$. Choose additive when seasonal amplitude is constant; multiplicative when it grows with the level. Understanding these simple methods teaches you about the fundamental components of time series and provides benchmarks that sophisticated models must beat.
 
-### ⚠️ Important Note
+**⚠️ Important Note**
 
 These heuristic methods are not just academic exercises—they often outperform complex ML models in practice, especially with limited data (<100 observations) or stable patterns. **Always benchmark against them.** They're also:
 
@@ -124,14 +129,14 @@ These heuristic methods are not just academic exercises—they often outperform 
 - **Interpretable:** Each parameter has clear meaning ($\alpha$ = responsiveness, $s$ = season length)
 - **Robust:** Less prone to overfitting than models with many parameters
 
-### When they fail
+**When they fail**
 
 - Multiple seasonal patterns (daily + weekly + yearly)
 - External regressors needed (promotions, holidays, weather)
 - Structural breaks or regime changes
 - Non-stationary variance requiring transformations beyond log/sqrt
 
-### Validation
+**Validation**
 
 Never use random train/test splits—use time-ordered splits or expanding window CV. A model that "predicts the past" using future information is worthless. Test on out-of-sample horizons matching your actual forecasting task.
 
@@ -174,6 +179,7 @@ The test statistic follows a non-standard Dickey-Fuller distribution because und
 
 ![Autocorrelation Examples](https://i.imgur.com/2KmgDCH.png){: width="100%"}
 
+![[img1_autocorrelation.png]]
 #### Autocorrelation at lag $h$
 
 $$\rho(h) = \frac{\gamma(h)}{\gamma(0)} = \frac{\text{Cov}(X_t, X_{t+h})}{\text{Var}(X_t)} = \frac{E[(X_t - \mu)(X_{t+h} - \mu)]}{\sigma^2}$$
@@ -218,7 +224,7 @@ Uninformative lags exhibit:
 These concepts reveal temporal dependencies in your data. The **ACF (Autocorrelation Function)** shows correlation between a value and its lags, while **PACF (Partial Autocorrelation Function)** shows the direct relationship after removing indirect effects.
 
 ![ACF PACF Comparison](https://i.imgur.com/Jlqq14T.png){: width="100%"}
-
+![[Pasted image 20251105223617.png]]
 #### Autocorrelation Function
 
 $$\rho(h) = \frac{\gamma(h)}{\gamma(0)} = \frac{\text{Cov}(X_t, X_{t+h})}{\text{Var}(X_t)}$$
@@ -380,7 +386,8 @@ dw = durbin_watson(model.resid)
 
 State space models separate observed measurements from underlying hidden states, allowing you to model complex dynamics while accounting for measurement noise and uncertainty.
 
-![State Space Diagram](https://i.imgur.com/qtbBpJ5.png){: width="100%"}
+![[imgx_kallmanfiltering.png]]
+
 
 The general form consists of two equations:
 
@@ -480,8 +487,8 @@ $$
 
 While most work happens in the time domain, spectral analysis transforms data into the frequency domain using Fourier transforms and periodograms. This reveals cyclical patterns, seasonal components, and hidden periodicities that are difficult to detect in raw time series.
 
-![Frequency Domain](https://i.imgur.com/XXgzc5N.png){: width="100%"}
 
+![[imgx_frequency_domain.png]]
 ### Discrete Fourier Transform
 
 The **Discrete Fourier Transform (DFT)** decomposes a time series into sinusoidal components:
@@ -588,7 +595,7 @@ This establishes a fundamental limit on simultaneous time and frequency resoluti
 - High temporal resolution at high frequencies (small $a$) to capture rapid changes
 - High frequency resolution at low frequencies (large $a$) to identify long-term trends
 
-### When to Use Spectral Methods
+#### When to Use Spectral Methods
 
 **Spectral methods excel when your data has complex cyclical structures:**
 
@@ -615,6 +622,7 @@ Move beyond univariate analysis to understand relationships between multiple tim
 **Granger causality** tests whether one time series helps predict another beyond what the target series' own history provides. This doesn't prove true causation, but identifies predictive relationships that inform modeling decisions.
 
 > **Critical for:** Economic modeling, financial systems, sensor networks, and any domain where multiple interacting processes evolve together. Understanding these relationships often matters more than predicting any single series accurately.
+> {: .prompt-warning }
 
 ---
 
@@ -627,3 +635,4 @@ In **non-ergodic systems** (financial markets, evolutionary processes, path-depe
 This fundamentally changes forecasting: traditional methods assume the future resembles the past statistically. In non-ergodic systems, this breaks down. You need robust decision-making frameworks rather than point forecasts.
 
 > **Why it matters:** Understanding ergodicity helps you recognize when traditional forecasting fails, why backtesting can be misleading, and when you should focus on risk management instead of prediction. This concept bridges statistics, physics, and philosophy—fundamentally changing how you think about uncertainty.
+> {: .prompt-info }
