@@ -193,6 +193,9 @@
   },
   "active": "0d21266621043dc8",
   "lastOpenFiles": [
+    "_site/2025-11-18-acoustic-models.html",
+    "2025-11-18-acoustic-models.md",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763491070322",
     "_site/assets/img/panels/panel12@4x.png",
     "assets/img/panels/panel12@4x.png",
     "_site/assets/img/panels/panel12 copy@4x.png",
@@ -203,7 +206,6 @@
     "assets/img/panels/panel12x@4x.png",
     "_site/assets/img/panels/panel12@4x copy.png",
     "assets/img/panels/panel12@4x copy.png",
-    "_site/assets/img/panels/panel3 copy 3@4x.png",
     "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486340697",
     "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486332044",
     "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486324089",
@@ -213,7 +215,6 @@
     "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486013647",
     "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486006440",
     "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763485999333",
-    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763485992591",
     "_posts/2025-11-18-acoustic-models.md",
     "_posts/2025-11-20-acoustic-models.md",
     "_posts/2024-09-11-Convolutional-neural-networks.md",
@@ -237,7 +238,6 @@
     "_tabs/tags.md",
     "_posts/2024-09-12-testing-in-mlops.md",
     "_tabs/archives.md",
-    "_tabs/categories.md",
-    "_tabs/certificate.md"
+    "_tabs/categories.md"
   ]
 }
