@@ -92,8 +92,8 @@ A window function tapers the frame smoothly to zero at the edges:
 With these foundational operations established, we can now build speech processing systems. The first step is often **filtering**—selectively passing or blocking certain frequencies to prepare the signal for analysis.
 
 <!-- TODO: Add images when available
-![Filtering Dark Mode](../assets/img/graphics/post_12/dark/img1_filtering.png){: .dark }
-![Filtering Light Mode](../assets/img/graphics/post_12/light/img1_filtering.png){: .light }
+<!-- ![Filtering Dark Mode](../assets/img/graphics/post_12/dark/img1_filtering.png){: .dark } -->
+<!-- ![Filtering Light Mode](../assets/img/graphics/post_12/light/img1_filtering.png){: .light } -->
 _Figure 1.0: Filter types and their frequency responses_
 -->
 
@@ -162,8 +162,8 @@ The glottal source (vocal cord vibration) has a natural spectral tilt: energy de
 
 Now that we can filter and shape the spectrum, we need a way to **separate** the two main components of speech: the excitation source (vocal cords) and the vocal tract filter. The cepstrum provides exactly this capability.
 
-![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/img7_cepstrum.png){: .dark }
-![Cepstrum Light Mode](../assets/img/graphics/post_12/light/img7_cepstrum.png){: .light }
+<!-- ![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/img7_cepstrum.png){: .dark } -->
+<!-- ![Cepstrum Light Mode](../assets/img/graphics/post_12/light/img7_cepstrum.png){: .light } -->
 _Figure 2.0: Cepstrum separating source and filter_
 
 ### Homomorphic Deconvolution
@@ -207,8 +207,8 @@ where $l[n]$ is a low-pass lifter.
 
 The cepstrum works on linear frequency. But human hearing doesn't perceive frequencies linearly—we're more sensitive to differences at low frequencies than high. The **mel scale** models this perception, leading to **MFCCs (Mel-Frequency Cepstral Coefficients)**—the most widely used features in speech recognition.
 
-![Mel Scale Dark Mode](../assets/img/graphics/post_12/dark/img8_mel.png){: .dark }
-![Mel Scale Light Mode](../assets/img/graphics/post_12/light/img8_mel.png){: .light }
+<!-- ![Mel Scale Dark Mode](../assets/img/graphics/post_12/dark/img8_mel.png){: .dark } -->
+<!-- ![Mel Scale Light Mode](../assets/img/graphics/post_12/light/img8_mel.png){: .light } -->
 _Figure 3.0: Mel filterbank on linear frequency axis_
 
 ### Mel Scale
@@ -281,8 +281,8 @@ This captures both "what sound" and "how it's changing"—essential for distingu
 
 The **DCT (Discrete Cosine Transform)** is a transform similar to the DFT but uses only cosine functions, producing real-valued coefficients. It's widely used in compression (JPEG, MP3) because it concentrates signal energy into fewer coefficients than the DFT.
 
-![DCT Dark Mode](../assets/img/graphics/post_12/dark/img9_dct.png){: .dark }
-![DCT Light Mode](../assets/img/graphics/post_12/light/img9_dct.png){: .light }
+<!-- ![DCT Dark Mode](../assets/img/graphics/post_12/dark/img9_dct.png){: .dark } -->
+<!-- ![DCT Light Mode](../assets/img/graphics/post_12/light/img9_dct.png){: .light } -->
 _Figure 4.0: DCT basis functions and energy compaction_
 
 ### Definition (DCT-II)
@@ -312,8 +312,8 @@ MFCCs capture spectral shape through filterbanks. **LPC (Linear Predictive Codin
 
 **Formants** are the resonance frequencies of the vocal tract (labeled F1, F2, F3...). They determine vowel identity—for example, the difference between /i/ ("ee") and /a/ ("ah") is primarily in F1 and F2 positions.
 
-![LPC Dark Mode](../assets/img/graphics/post_12/dark/img10_lpc.png){: .dark }
-![LPC Light Mode](../assets/img/graphics/post_12/light/img10_lpc.png){: .light }
+<!-- ![LPC Dark Mode](../assets/img/graphics/post_12/dark/img10_lpc.png){: .dark } -->
+<!-- ![LPC Light Mode](../assets/img/graphics/post_12/light/img10_lpc.png){: .light } -->
 _Figure 5.0: Linear prediction as all-pole filter modeling_
 
 ### The Model
@@ -391,8 +391,8 @@ So far we've focused on the vocal tract (formants, spectral envelope). But the o
 
 **F0 (Fundamental Frequency)** is the rate at which the vocal cords vibrate during voiced speech—it determines the perceived pitch. F0 carries prosodic information: intonation, stress, emotion. Estimating it reliably is essential for many applications.
 
-![Pitch Detection Dark Mode](../assets/img/graphics/post_12/dark/img11_pitch.png){: .dark }
-![Pitch Detection Light Mode](../assets/img/graphics/post_12/light/img11_pitch.png){: .light }
+<!-- ![Pitch Detection Dark Mode](../assets/img/graphics/post_12/dark/img11_pitch.png){: .dark } -->
+<!-- ![Pitch Detection Light Mode](../assets/img/graphics/post_12/light/img11_pitch.png){: .light } -->
 _Figure 6.0: Pitch detection methods_
 
 ### Autocorrelation Method
@@ -430,8 +430,8 @@ RESEARCH & EXPLAIN:
 
 Speech can be viewed as a slowly-varying envelope (amplitude modulation) riding on rapidly-varying carriers (formants). Extracting these modulations provides yet another perspective on the signal—one that connects to neural processing of speech and alternative feature representations.
 
-![Modulation Dark Mode](../assets/img/graphics/post_12/dark/img12_modulation.png){: .dark }
-![Modulation Light Mode](../assets/img/graphics/post_12/light/img12_modulation.png){: .light }
+<!-- ![Modulation Dark Mode](../assets/img/graphics/post_12/dark/img12_modulation.png){: .dark } -->
+<!-- ![Modulation Light Mode](../assets/img/graphics/post_12/light/img12_modulation.png){: .light } -->
 _Figure 7.0: AM, FM, and the analytic signal_
 
 ### Amplitude Modulation
