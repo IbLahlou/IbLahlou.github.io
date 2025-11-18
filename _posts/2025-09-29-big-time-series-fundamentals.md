@@ -26,6 +26,10 @@ Time series analysis evolved from early astronomical observations and economic s
 
 Before jumping to complex models, master the foundational heuristic approaches that often serve as surprisingly strong baselines. These include naive forecasting, seasonal naive, moving averages, and exponential smoothing methods.
 
+![Heuristic Models Dark Mode](../assets/img/graphics/post_11/dark/img0_heuristic.png){: .dark }
+![Heuristic Models Light Mode](../assets/img/graphics/post_11/light/img0_heuristic.png){: .light }
+_Figure 0.0: Boxplot-based group analysis (left) and time series with reference thresholds (right) for rule-based forecasting_
+
 ### Rule-Based (EDA-driven)
 
 Start with the simplest setting: few discrete features and stable statistics. Using boxplots per group, test whether the median in group $g$ is stable across time. If stable, forecast that median. If recent means are more stable, use a moving mean. When seasonality dominates, repeat the seasonal lag value:
@@ -67,9 +71,14 @@ $$\hat{y}_{t+1} = \frac{1}{k}\sum_{i=0}^{k-1} y_{t-i}$$
 
 Noise variance drops to $\sigma^2/k$, but with a linear trend $y_t = a + bt + \epsilon_t$, you get bias: $b \cdot \frac{k+1}{2}$ because the average lags behind.
 
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
+
 > **Tip:**
 > With seasonality, use seasonal smoothing (e.g., average each month across years) to avoid blurring the seasonal pattern.
-> {: .prompt-info }
+{: .prompt-info }
+
+<!-- markdownlint-restore -->
 
 ### Simple Exponential Smoothing (SES)
 
@@ -104,7 +113,7 @@ $$
 Now forecasts grow along slope $T_t$, eliminating trend bias. But seasonal effects remain in residuals.
 
 > **Option:** Use damped trend by multiplying $T_t$ by $\phi^h$ where $0<\phi<1$ when long-run growth shouldn't explode.
-> {: .prompt-info }
+{: .prompt-info }
 
 ### Holt–Winters
 
@@ -146,7 +155,9 @@ Never use random train/test splits—use time-ordered splits or expanding window
 
 A stationary series has constant mean, variance, and autocovariance over time. Most forecasting methods assume stationarity, making it crucial to master differencing, detrending, and transformation techniques.
 
-![Stationarity Visualization](https://i.imgur.com/nE7KxN0.png){: width="100%"}
+![Stationnarity Illustration Dark Mode](../assets/img/graphics/post_11/dark/img1_stationnarity.png){: .dark }
+![Stationnarity Illustration Light Mode](../assets/img/graphics/post_11/light/img1_stationnarity.png){: .light }
+_Figure 1.0 : Random walk vs Stationnary series Illustration_
 
 ### Weak Stationarity
 
@@ -177,9 +188,10 @@ The test statistic follows a non-standard Dickey-Fuller distribution because und
 
 **Autocorrelation** (serial correlation) quantifies the linear relationship between a time series and a lagged version of itself. It measures temporal dependence—the degree to which past values inform future values.
 
-![Autocorrelation Examples](https://i.imgur.com/2KmgDCH.png){: width="100%"}
+![Stationnarity Illustration Dark Mode](../assets/img/graphics/post_11/dark/img2_autocorrelation.png){: .dark }
+![Stationnarity Illustration Light Mode](../assets/img/graphics/post_11/light/img2_autocorrelation.png){: .light }
+_Figure 2.0 : Simple Autocorrelation Illustration_
 
-![[img1_autocorrelation.png]]
 #### Autocorrelation at lag $h$
 
 $$\rho(h) = \frac{\gamma(h)}{\gamma(0)} = \frac{\text{Cov}(X_t, X_{t+h})}{\text{Var}(X_t)} = \frac{E[(X_t - \mu)(X_{t+h} - \mu)]}{\sigma^2}$$
@@ -223,19 +235,23 @@ Uninformative lags exhibit:
 
 These concepts reveal temporal dependencies in your data. The **ACF (Autocorrelation Function)** shows correlation between a value and its lags, while **PACF (Partial Autocorrelation Function)** shows the direct relationship after removing indirect effects.
 
-![ACF PACF Comparison](https://i.imgur.com/Jlqq14T.png){: width="100%"}
-![[Pasted image 20251105223617.png]]
+![ACF Dark Mode](../assets/img/graphics/post_11/dark/imgx_autocorrelation_function.png){: .dark }
+![ACF Light Mode](../assets/img/graphics/post_11/light/imgx_autocorrelation_function.png){: .light }
+_Figure 2.1: ACF plots showing exponential decay patterns, confidence bounds, and interpretation for AR processes, random walks, and white noise_
+
 #### Autocorrelation Function
 
 $$\rho(h) = \frac{\gamma(h)}{\gamma(0)} = \frac{\text{Cov}(X_t, X_{t+h})}{\text{Var}(X_t)}$$
 
 where $\gamma(h) = \text{Cov}(X_t, X_{t+h})$ is the autocovariance at lag $h$, and $\gamma(0) = \text{Var}(X_t)$ normalizes the measure to the range $[-1, 1]$.
 
-![ACF Plot](https://i.imgur.com/LJhMKod.png){: width="100%"}
-
 #### Partial Autocorrelation Function
 
 **Partial autocorrelation** $\phi_{hh}$ measures correlation between $X_t$ and $X_{t+h}$ after removing the linear dependence on intermediate lags $X_{t+1}, \ldots, X_{t+h-1}$. This isolates the unique, direct contribution of lag $h$ beyond what's already explained by shorter lags.
+
+![PACF Dark Mode](../assets/img/graphics/post_11/dark/imgx_partial_autocorrelation_function.png){: .dark }
+![PACF Light Mode](../assets/img/graphics/post_11/light/imgx_partial_autocorrelation_function.png){: .light }
+_Figure 2.2: PACF plots showing sharp cutoffs for AR processes, with comparison between white noise and random walk behavior_
 
 ### Pattern Recognition: Model Selection Guide
 
@@ -386,8 +402,9 @@ dw = durbin_watson(model.resid)
 
 State space models separate observed measurements from underlying hidden states, allowing you to model complex dynamics while accounting for measurement noise and uncertainty.
 
-![[imgx_kallmanfiltering.png]]
-
+![Kalman Filtering Dark Mode](../assets/img/graphics/post_11/dark/imgx_kallmanfiltering.png){: .dark }
+![Kalman Filtering Light Mode](../assets/img/graphics/post_11/light/imgx_kallmanfiltering.png){: .light }
+_Figure 3.0: State space representation showing level and slope components with observation noise, illustrating the Local Linear Trend Model_
 
 The general form consists of two equations:
 
@@ -487,8 +504,10 @@ $$
 
 While most work happens in the time domain, spectral analysis transforms data into the frequency domain using Fourier transforms and periodograms. This reveals cyclical patterns, seasonal components, and hidden periodicities that are difficult to detect in raw time series.
 
+![Frequency Domain Dark Mode](../assets/img/graphics/post_11/dark/imgx_frequency_domain.png){: .dark }
+![Frequency Domain Light Mode](../assets/img/graphics/post_11/light/imgx_frequency_domain.png){: .light }
+_Figure 4.0: Time domain to frequency domain transformation via DFT, showing how sinusoidal components map to frequency magnitudes_
 
-![[imgx_frequency_domain.png]]
 ### Discrete Fourier Transform
 
 The **Discrete Fourier Transform (DFT)** decomposes a time series into sinusoidal components:
@@ -622,7 +641,7 @@ Move beyond univariate analysis to understand relationships between multiple tim
 **Granger causality** tests whether one time series helps predict another beyond what the target series' own history provides. This doesn't prove true causation, but identifies predictive relationships that inform modeling decisions.
 
 > **Critical for:** Economic modeling, financial systems, sensor networks, and any domain where multiple interacting processes evolve together. Understanding these relationships often matters more than predicting any single series accurately.
-> {: .prompt-warning }
+{: .prompt-warning }
 
 ---
 
@@ -635,4 +654,4 @@ In **non-ergodic systems** (financial markets, evolutionary processes, path-depe
 This fundamentally changes forecasting: traditional methods assume the future resembles the past statistically. In non-ergodic systems, this breaks down. You need robust decision-making frameworks rather than point forecasts.
 
 > **Why it matters:** Understanding ergodicity helps you recognize when traditional forecasting fails, why backtesting can be misleading, and when you should focus on risk management instead of prediction. This concept bridges statistics, physics, and philosophy—fundamentally changing how you think about uncertainty.
-> {: .prompt-info }
+{: .prompt-info }

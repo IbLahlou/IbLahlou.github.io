@@ -39,14 +39,12 @@
             "id": "2244a7dbba69dad6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "_posts/2025-09-29-big-time-series-fundamentals.md",
-                "mode": "source",
-                "source": false
+                "file": "assets/img/graphics/post_11/light/imgx_kallmanfiltering.png"
               },
-              "icon": "lucide-file",
-              "title": "2025-09-29-big-time-series-fundamentals"
+              "icon": "lucide-image",
+              "title": "imgx_kallmanfiltering"
             }
           }
         ],
@@ -107,7 +105,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 594.5
+    "width": 293.5
   },
   "right": {
     "id": "56da1e01f01468d1",
@@ -195,22 +193,33 @@
   },
   "active": "0d21266621043dc8",
   "lastOpenFiles": [
-    "assets/img/graphics/post_11/light/Pasted image 20251105223617.png",
-    "assets/img/graphics/post_11/light/imgx_kallmanfiltering.png",
-    "assets/img/graphics/post_11/light/imgx_frequency_domain.png",
-    "assets/img/graphics/post_11/light/img1_autocorrelation.png",
-    "_posts/2025-09-29-big-time-series-fundamentals.md",
-    "Pasted image 20251105222935.png",
-    "Pasted image 20251105222942.png",
-    "Pasted image 20251105222650.png",
-    "assets/img/graphics/post_11/light",
+    "_site/assets/img/panels/panel12@4x.png",
+    "assets/img/panels/panel12@4x.png",
+    "_site/assets/img/panels/panel12 copy@4x.png",
+    "assets/img/panels/panel12 copy@4x.png",
+    "_site/assets/img/panels/panel12_1@4x.png",
+    "assets/img/panels/panel12_1@4x.png",
+    "_site/assets/img/panels/panel12x@4x.png",
+    "assets/img/panels/panel12x@4x.png",
+    "_site/assets/img/panels/panel12@4x copy.png",
+    "assets/img/panels/panel12@4x copy.png",
+    "_site/assets/img/panels/panel3 copy 3@4x.png",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486340697",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486332044",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486324089",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486312650",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486304948",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486185922",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486013647",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763486006440",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763485999333",
+    "_posts/2025-11-18-acoustic-models.md.tmp.693120.1763485992591",
+    "_posts/2025-11-18-acoustic-models.md",
+    "_posts/2025-11-20-acoustic-models.md",
     "_posts/2024-09-11-Convolutional-neural-networks.md",
+    "_posts/2025-09-29-big-time-series-fundamentals.md",
     "_posts/2025-03-19-ML System Overview.md",
     "_posts/2025-03-20-Planning in ML System.md",
-    "assets/img/panels/panel11@4x.png",
-    "Pasted image 20251031233042.png",
-    "geogebra-export.png",
-    "Pasted image 20251026105800.png",
     "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "_posts/2025-08-2025-Real time model inference.md",
     "_posts/2024-11-30-ensemble learning overview.md",
@@ -227,18 +236,8 @@
     "_posts/2024-09-10-batch-stream-Inferencing.md",
     "_tabs/tags.md",
     "_posts/2024-09-12-testing-in-mlops.md",
-    "_includes/head.html",
-    "_includes",
-    "_include",
-    "assets/img/panels",
-    "assets/img",
     "_tabs/archives.md",
     "_tabs/categories.md",
-    "_tabs/certificate.md",
-    "_posts/2024-09-08-drift-in-ml.md",
-    "_posts/2024-09-09-A-data-drift-in-practice.md",
-    "assets/2024-09",
-    "_posts/asset/2024-09",
-    "_posts/asset"
+    "_tabs/certificate.md"
   ]
 }
