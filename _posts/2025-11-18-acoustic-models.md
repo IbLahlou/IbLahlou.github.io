@@ -22,28 +22,88 @@ image:
 
 # Introduction
 
-**ASR (Automatic Speech Recognition)** systems transform audio waveforms into text. At the heart of this process lies the **acoustic model**—a statistical mapping from audio features to linguistic units called **phonemes**.
+**ASR (Automatic Speech Recognition)** systems transform audio waveforms into text. At the heart of this process lies the **acoustic model**—a statistical mapping from audio features to sound units called **phone**.
 
-### What is a Phoneme?
 
-A phoneme is the smallest unit of sound that distinguishes meaning. English has ~44 phonemes , French has 37 , Arabic has 32 :
+### What's a Phone
 
-English and French sound rich because they have many different vowel and consonant sounds.
-Arabic has fewer basic sounds, but they change shape depending on the letters around them.
-So English and French are rich in number, while Arabic is rich in variation.
+The minimal, perceptually isolable segment of sound—the atomic, boundary-defined unit that any hearing system (human or machine) treats as a single entity. From Greek phōnḗ (“sound/voice”), it stays deliberately pre-linguistic, pre-musical, and pre-semantic: the raw quantum from which every audible stream is built, universally accepted in speech tech, music information retrieval, bioacoustics, and forensic audio. Core contemporary representations of the phone (what people actually use in 2025 models)
 
-| Type       | Examples           | Words              |
-| ---------- | ------------------ | ------------------ |
-| Consonants | /b/, /p/, /t/, /k/ | bat, pat, tap, cap |
-| Vowels     | /æ/, /ɪ/, /uː/     | cat, sit, boot     |
+- Wavelets – localized oscillatory atoms; perfect reconstruction + multi-resolution sparsity (denoising, compression, transient capture)
+- Shapelets – mined discriminative subsequences; shape-focused, highly interpretable for classification
+- MFCCs / Log-Mel frames – 20–40 ms perceptual coefficients; still the workhorse of legacy and lightweight systems
+- CQ-Transform or Gammatone bins – constant-Q or auditory-filterbank responses; preferred for music and environmental sound
+- Self-supervised embeddings (Wav2Vec 2.0, HuBERT, Audio-ALiBi, etc.) – dense vectors learned from raw audio; current state-of-the-art for almost everything
+- Neural codec tokens (EnCodec, SoundStream, DAC) – discrete 50–1500 Hz tokens; the new standard for generative and ultra-low-bitrate pipelines
+- Sinusoidal + residual tracks – high-quality parametric modeling for voice conversion and music
 
-Changing one phoneme changes the word: "bat" → "mat" (/b/ → /m/). We will talk in another post later about phonemes .
+From this neutral phone, only three classic domain-specific abstractions emerge:
+
+- Phoneme – bundle of phones that are contrastive in a given language
+- Grapheme – written symbol(s) conventionally linked to a phoneme
+- Note – phone whose dominant attribute is stable perceived pitch (musical domain)
+
+
+**Example Illustration**
+
+When a singer or a piano plays the first four notes of “Do–Ré–Mi–Fa”, your ears receive exactly four raw phones: four short, perceptually distinct bursts of acoustic energy with stable pitch.
+
+That’s all that physically exists.
+
+Everything else is just the question we decide to ask those same four phones:
+- What was the word that being sung
+- What pitches are these, regardless of words?
+- What are the exact pitches , frequencies and how it is structure in form of data ?
+
+The table below shows, row by row, how the exact same four phones travel through every major abstraction layer we use today
+
+
+| What you actually hear (four raw phones) | Solfege syllable (human sings) | Grapheme (how we write the syllable)      | Phonemic transcription (IPA, language lens) | Note abstraction (music lens)                                     | Typical model that extracts this layer |
+| ---------------------------------------- | ------------------------------ | ----------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------- | -------------------------------------- |
+| 4 distinct, stable pitched sounds        | Do  –  Ré  –  Mi  –  Fa        | Do  –  Ré  –  Mi  –  Fa                   | /do/  –  /ʁe/  –  /mi/  –  /fa/             | Do (C)  –  Ré (D)  –  Mi (E)  –  Fa (F)                           | –                                      |
+| Same four phones                         | Do  –  Ré  –  Mi  –  Fa        | Do  –  Ré  –  Mi  –  Fa                   | /do/  –  /ʁe/  –  /mi/  –  /fa/             | C4  –  D4  –  E4  –  F4 (fixed-Do) or movable-Do position 1-2-3-4 | CREPE, Basic Pitch, mt3                |
+| Same four phones                         | Do  –  Ré  –  Mi  –  Fa        | C   –  D   –  E   –  F   (staff notation) | –                                           | C4  –  D4  –  E4  –  F4                                           | Shazam, SoundHound, Spotify song ID    |
+| Same four phones                         | Do  –  Ré  –  Mi  –  Fa        | –                                         | –                                           | midi: 60  –  62  –  64  –  65                                     | Any MIDI transcription model           |
+| Same four phones                         | Do  –  Ré  –  Mi  –  Fa        | –                                         | –                                           | freq: 261.63 – 293.66 – 329.63 – 349.23 Hz                        | YIN, pYIN, SPICE                       |
+| Same four phones (neural codec view)     | Do  –  Ré  –  Mi  –  Fa        | –                                         | –                                           | token seq: [234][567][891]…                                       | EnCodec / Descript Audio Codec         |
+| Same four phones (embedding view)        | Do  –  Ré  –  Mi  –  Fa        | –                                         | –                                           | 1024-dim vectors × 4                                              | HuBERT / AudioLM                       |
+
+The crucial mapping in one line:
+
+**Do Ré Mi Fa** (sung syllables)  
+→ **/do ʁe mi fa/** (phonemic, language treats them as spoken words)  
+→ **Do, Ré, Mi, Fa** (graphemic, solfège spelling)  
+→ **C4 D4 E4 F4** or simply **Do Ré Mi Fa** (note abstraction, music treats the exact same phones as pure pitch classes)
+
 
 ### The Acoustic Model Pipeline
 
 ```
-Audio → Framing → Windowing → FFT → Mel Filterbank → Log → DCT → MFCCs → Model → Phonemes
+Raw audio (48–96 kHz PCM)  
+→ Phone segmentation (onset, boundary, or change-point detection)  
+→ Short-time framing & windowing (10–50 ms frames, 10–25 ms hop)  
+→ Time-frequency representation  
+    ├─ STFT (most common)  
+    ├─ Constant-Q Transform (CQT) – music & pitched sources  
+    ├─ Continuous/Discrete Wavelet Transform – transients & non-stationary signals  
+    └─ Gammatone or ERB filterbanks – auditory modeling  
+→ Perceptual compression  
+    └─ Mel / Bark / ERB scaling + logarithmic energy (standard)  
+→ Representation layer (multiple parallel paths coexist in 2025)  
+    ├─ DCT → MFCCs / GFCCs (legacy, lightweight devices)  
+    ├─ Convolutional / Transformer front-ends → dense embeddings (Wav2Vec 2.0, HuBERT, Audio-ALiBi, BEATs)  
+    ├─ Vector quantization → discrete neural tokens (EnCodec, SoundStream, Descript Audio Codec, DAC)  
+    └─ Parametric decomposition → sinusoids + residual (DDSP, Diff-PTC)  
+→ Temporal sequence modeling  
+    └─ Conformer, Transformer, Mamba/State-Space, or CRNN architectures  
+→ Task-specific symbolic decoder (final divergence point)  
+    ├─ Phonemes → Graphemes → Text (speech & lyrics)  
+    ├─ Notes / Chords / Pitch classes → MIDI or music notation (instrumental & vocal music)  
+    ├─ Solfege or scale degrees (Do–Ré–Mi systems)  
+    ├─ Sound-event / scene labels (AudioSet, VGGSound, industrial monitoring)  
+    ├─ Bioacoustic call types (bird, whale, bat, anuran)  
 ```
+This unified pipeline is effectively domain-agnostic through the sequence-modeling stage. The same pretrained front-end (e.g., HuBERT Large, Audio-ALiBi-XXL, or EnCodec 48 kHz) can be fine-tuned or directly used for speech recognition, music transcription, environmental sound classification, or generative synthesis with only the decoder and loss function changed. Classic DSP remains the foundation; contemporary neural architectures have internalized and extended it rather than replaced it.
 
 This article covers the mathematical operations in this pipeline. Understanding these fundamentals is essential—neural networks don't replace DSP (Digital Signal Processing), they build upon it.
 

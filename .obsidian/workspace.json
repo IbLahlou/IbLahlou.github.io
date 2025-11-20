@@ -39,12 +39,14 @@
             "id": "2244a7dbba69dad6",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "assets/img/graphics/post_11/light/imgx_kallmanfiltering.png"
+                "file": "_posts/2025-11-18-acoustic-models.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "imgx_kallmanfiltering"
+              "icon": "lucide-file",
+              "title": "2025-11-18-acoustic-models"
             }
           }
         ],
@@ -191,20 +193,23 @@
       "bases:Create new base": false
     }
   },
-  "active": "0d21266621043dc8",
+  "active": "2244a7dbba69dad6",
   "lastOpenFiles": [
-    "_site/posts/acoustic-models/index.html",
-    "_site/posts/acoustic-models",
-    "_site/categories/speech-processing/index.html",
-    "_site/categories/speech-processing",
-    "_site/categories/signal-processing/index.html",
-    "_site/categories/signal-processing",
-    "_site/tags/convolution/index.html",
-    "_site/tags/convolution",
-    "_site/tags/filtering/index.html",
-    "_site/tags/filtering",
-    "_site/tags/fourier-transform/index.html",
+    "_posts/2025-11-20-git-github-actions-devsecops.md",
     "_posts/2025-11-18-acoustic-models.md",
+    "_posts/2024-09-09-data-drift-overview.md",
+    "assets/img/graphics/post_11/light/imgx_kallmanfiltering.png",
+    "_posts/2025-11-18-git-github-actions-devsecops.md.tmp.693120.1763502293733",
+    "_posts/2025-11-18-git-github-actions-devsecops.md.tmp.693120.1763502160910",
+    "_posts/2025-11-18-git-github-actions-devsecops.md.tmp.693120.1763502002306",
+    "_posts/2025-11-17-git-github-actions-devsecops.md",
+    "_site/posts/git-github-actions-devsecops/index.html",
+    "_site/posts/git-github-actions-devsecops",
+    "_site/categories/software-engineering/index.html",
+    "_site/categories/software-engineering",
+    "_site/categories/security/index.html",
+    "_site/categories/security",
+    "_site/tags/cryptography/index.html",
     "2025-11-18-acoustic-models.md",
     "_site/assets/img/panels/panel12@4x.png",
     "assets/img/panels/panel12@4x.png",
@@ -215,7 +220,6 @@
     "_site/assets/img/panels/panel12x@4x.png",
     "assets/img/panels/panel12x@4x.png",
     "_site/assets/img/panels/panel12@4x copy.png",
-    "assets/img/panels/panel12@4x copy.png",
     "_posts/2025-11-20-acoustic-models.md",
     "_posts/2024-09-11-Convolutional-neural-networks.md",
     "_posts/2025-09-29-big-time-series-fundamentals.md",
@@ -225,7 +229,6 @@
     "_posts/2025-08-2025-Real time model inference.md",
     "_posts/2024-11-30-ensemble learning overview.md",
     "_posts/2024-09-28-text-operations.md",
-    "_posts/2024-09-09-data-drift-overview.md",
     "_posts/Conception et Développement d'un voice agent intélligent.md",
     "_posts/2024-09-23-language-history.md",
     "_posts/Sans titre.md",
@@ -235,9 +238,6 @@
     "_posts/2024-09-11-virtualization in Unix-based system.md",
     "_tabs/about.md",
     "_posts/2024-09-10-batch-stream-Inferencing.md",
-    "_tabs/tags.md",
-    "_posts/2024-09-12-testing-in-mlops.md",
-    "_tabs/archives.md",
-    "_tabs/categories.md"
+    "_tabs/tags.md"
   ]
 }
