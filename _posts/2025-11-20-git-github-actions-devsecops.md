@@ -14,8 +14,6 @@ tags:
   - Cryptography
 pin: false
 math: true
-image:
-  path: /assets/img/panels/panel13@4x.png
 ---
 
 # Introduction
@@ -500,54 +498,58 @@ Even imperfect layers compound into strong protection.
 
 Same defenses, different syntax:
 
-| Defense | GitHub Actions | GitLab CI | Jenkins | Bitbucket |
-|---------|---------------|-----------|---------|-----------|
-| **Secret Scan** | `gitleaks/gitleaks-action@v2` | `secrets` analyzer | `gitleaks detect` | `gitleaks` image |
-| **Dependency Scan** | `aquasecurity/trivy-action` | `gemnasium` analyzer | `trivy fs` | `trivy` image |
-| **Config Reset** | `run:` block | `before_script:` | `sh` step | `script:` block |
+| Defense             | GitHub Actions                | GitLab CI            | Jenkins           | Bitbucket        |
+| ------------------- | ----------------------------- | -------------------- | ----------------- | ---------------- |
+| **Secret Scan**     | `gitleaks/gitleaks-action@v2` | `secrets` analyzer   | `gitleaks detect` | `gitleaks` image |
+| **Dependency Scan** | `aquasecurity/trivy-action`   | `gemnasium` analyzer | `trivy fs`        | `trivy` image    |
+| **Config Reset**    | `run:` block                  | `before_script:`     | `sh` step         | `script:` block  |
 
 ### SAST Tools by Language
 
-| Language | Tool | Command |
-|----------|------|---------|
-| **Python** | Bandit | `bandit -r src/ -ll` |
-| **JavaScript/TS** | ESLint + security plugin | `eslint --ext .js,.ts src/` |
-| **Java** | SpotBugs + Find Security Bugs | `mvn spotbugs:check` |
-| **Go** | Gosec | `gosec ./...` |
-| **Rust** | cargo-audit | `cargo audit` |
-| **Ruby** | Brakeman | `brakeman -q` |
-| **PHP** | PHPStan + security rules | `phpstan analyse src/` |
-| **.NET** | Security Code Scan | `dotnet build /p:EnableNETAnalyzers=true` |
-| **Multi-language** | Semgrep | `semgrep --config auto .` |
+| Language           | Tool                          | Command                                   |
+| ------------------ | ----------------------------- | ----------------------------------------- |
+| **Python**         | Bandit                        | `bandit -r src/ -ll`                      |
+| **JavaScript/TS**  | ESLint + security plugin      | `eslint --ext .js,.ts src/`               |
+| **Java**           | SpotBugs + Find Security Bugs | `mvn spotbugs:check`                      |
+| **Go**             | Gosec                         | `gosec ./...`                             |
+| **Rust**           | cargo-audit                   | `cargo audit`                             |
+| **Ruby**           | Brakeman                      | `brakeman -q`                             |
+| **PHP**            | PHPStan + security rules      | `phpstan analyse src/`                    |
+| **.NET**           | Security Code Scan            | `dotnet build /p:EnableNETAnalyzers=true` |
+| **Multi-language** | Semgrep                       | `semgrep --config auto .`                 |
 
 > **Semgrep** is recommended for polyglot codebases—one tool, consistent rules across all languages.
-{: .prompt-tip }
+> {: .prompt-tip }
 
 ### Key Commands
 
 **Secret scanning:**
+
 ```bash
 gitleaks detect --source . --verbose
 ```
 
 **Dependency scanning:**
+
 ```bash
 trivy fs --severity HIGH,CRITICAL --exit-code 1 .
 ```
 
 **SAST:**
+
 ```bash
 bandit -r src/ -ll
 ```
 
 **Git config reset** (critical for self-hosted runners):
+
 ```bash
 git config --global --unset-all credential.helper || true
 git config --global --unset http.proxy || true
 ```
 
 > Self-hosted runners persist between jobs. Always reset Git config to prevent cross-job contamination from hook attacks.
-{: .prompt-warning }
+> {: .prompt-warning }
 
 ---
 
