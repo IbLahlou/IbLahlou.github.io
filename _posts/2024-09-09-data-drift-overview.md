@@ -23,7 +23,10 @@ image:
 ---
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
-<figure><center><img src="https://i.imgur.com/VLKoYT5.png" alt=""></center></figure>
+
+![Data Drift](/assets/img/graphics/post_1/data-drift.png){: .dark }
+![Data Drift](/assets/img/graphics/post_1/data-drift.png){: .light }
+_Figure 0.1: Data drift overview_
 
 ## What's Data Drift ?
 
@@ -73,12 +76,9 @@ There's 3 main subcategories (covariate shift , Prior probability shift &  Sampl
 
 Covariate shift occurs when the distribution of the input features (i.e., the characteristics or attributes) changes between the training and test data, but the way the features relate to the target (the thing you're trying to predict) remains the same.
 
-
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/fg5GrSy.png" alt="" width="50%">
-  </figure>
-</div>
+![Covariate Shift](/assets/img/graphics/post_1/covariate_shift.png){: .dark }
+![Covariate Shift](/assets/img/graphics/post_1/covariate_shift.png){: .light }
+_Figure 1.0: Covariate shift illustration_
 
 $$P_{\text{train}}(X) \neq P_{\text{test}}(X) \ \text{, but} \ P_{\text{train}}(Y \mid X) = P_{\text{test}}(Y \mid X)$$
 
@@ -88,12 +88,9 @@ $$P_{\text{train}}(X) \neq P_{\text{test}}(X) \ \text{, but} \ P_{\text{train}}(
 **1. Covariate Observation Shift (COS)**
 Occurs when the conditional distribution of covariates given the labels shifts between training and testing:
 
-
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/GCE9shU.png" alt="" >
-  </figure>
-</div>
+![Covariate Observation Shift](/assets/img/graphics/post_1/cos.png){: .dark }
+![Covariate Observation Shift](/assets/img/graphics/post_1/cos.png){: .light }
+_Figure 1.1: Covariate observation shift_
 
 
 $$P(X \mid Y)_{\text{train}} \neq P(X \mid Y)_{\text{test}}$$
@@ -103,11 +100,9 @@ $$P(X \mid Y)_{\text{train}} \neq P(X \mid Y)_{\text{test}}$$
 **2. Covariate Hidden Shift (CHS)**
 Involves the presence of a hidden variable $$X_H$$ that alters the covariates. The conditional distribution of hidden covariates given the observed covariates changes:
 
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/SqSWre6.png" alt="">
-  </figure>
-</div>
+![Covariate Hidden Shift](/assets/img/graphics/post_1/chs.png){: .dark }
+![Covariate Hidden Shift](/assets/img/graphics/post_1/chs.png){: .light }
+_Figure 1.2: Covariate hidden shift_
 
 $$P(X_H \mid X)_{\text{train}} \neq P(X_H \mid X)_{\text{test}}$$
 
@@ -116,11 +111,9 @@ $$P(X_H \mid X)_{\text{train}} \neq P(X_H \mid X)_{\text{test}}$$
 **3. Distorted Covariate Shift (DCS)**
 Occurs when observed covariates are noisy or distorted compared to the true covariates:
 
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/Q1HU5sl.png" alt="" >
-  </figure>
-</div>
+![Distorted Covariate Shift](/assets/img/graphics/post_1/dcs.png){: .dark }
+![Distorted Covariate Shift](/assets/img/graphics/post_1/dcs.png){: .light }
+_Figure 1.3: Distorted covariate shift_
 
 $$P_{\text{observed}}(X) \neq P_{\text{true}}(X)$$
 
@@ -131,22 +124,20 @@ $$P_{\text{observed}}(X) \neq P_{\text{true}}(X)$$
 #### b) Prior Probability Shift:
 
 Prior probability shift happens when the overall proportion of the different classes or categories in the target variable changes between training and test data, but the relationship between the features and the target stays consistent.
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/BJWCzc4.png" alt="" width="50%">
-  </figure>
-</div>
+
+![Prior Probability Shift](/assets/img/graphics/post_1/pps.png){: .dark }
+![Prior Probability Shift](/assets/img/graphics/post_1/pps.png){: .light }
+_Figure 2.0: Prior probability shift illustration_
 
   $$P_{train}(Y) \neq P_{\text{test}}(Y)\ \text{, but } P_{\text{train}}(X \mid Y) = P_{\text{test}}(X \mid Y)$$ 
 
 
 **1. Prior Probability Observation Shift (PPOS)**
 Occurs when the prior probability distribution changes, and there is also an unobserved (hidden) factor $$X_H$$ that affects the covariates. The relationship between the hidden covariate and the label changes:
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/OgUZBvn.png" alt="" >
-  </figure>
-</div>
+
+![Prior Probability Observation Shift](/assets/img/graphics/post_1/ppos.png){: .dark }
+![Prior Probability Observation Shift](/assets/img/graphics/post_1/ppos.png){: .light }
+_Figure 2.1: Prior probability observation shift_
 
 $$
 P(X_H \mid Y)_{\text{train}} \neq P(X_H \mid Y)_{\text{test}}
@@ -157,11 +148,9 @@ $$
 **2. Prior Probability Hidden Shift (PPHS)**
 This type of shift occurs when a hidden variable $$X_H$$ influences both the covariates and the labels, and its conditional distribution shifts between the training and test datasets:
 
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/ePM0NEp.png" alt="" >
-  </figure>
-</div>
+![Prior Probability Hidden Shift](/assets/img/graphics/post_1/pps.png){: .dark }
+![Prior Probability Hidden Shift](/assets/img/graphics/post_1/pps.png){: .light }
+_Figure 2.2: Prior probability hidden shift_
 
 $$
 P(X_H \mid Y)_{\text{train}} \neq P(X_H \mid Y)_{\text{test}}
@@ -172,11 +161,9 @@ $$
 **3. Distorted Prior Probability Shift (DPPS)**
 Occurs when the prior probability distribution shifts and the covariates are distorted. The observed covariates do not match the true covariates:
 
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/DgOaiV5.png" alt="">
-  </figure>
-</div>
+![Distorted Prior Probability Shift](/assets/img/graphics/post_1/dpps.png){: .dark }
+![Distorted Prior Probability Shift](/assets/img/graphics/post_1/dpps.png){: .light }
+_Figure 2.3: Distorted prior probability shift_
 
 $$
 P_{\text{observed}}(X) \neq P_{\text{true}}(X) \quad \text{and} \quad P(Y)_{\text{train}} \neq P(Y)_{\text{test}}
@@ -188,13 +175,9 @@ $$
   
 #### c) Sample Selection Bias:
 
-
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/0CAMx7F.png" alt="" width="70%">
-  </figure>
-</div>
-
+![Sample Selection Bias](/assets/img/graphics/post_1/ssb.png){: .dark }
+![Sample Selection Bias](/assets/img/graphics/post_1/ssb.png){: .light }
+_Figure 3.0: Sample selection bias illustration_
 
 Sample selection bias occurs when the training data is not representative of the real-world population, leading to incorrect conclusions because the data comes from a skewed subset.
 
