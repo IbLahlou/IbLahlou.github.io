@@ -126,11 +126,8 @@ This describes how convolution can be extended to finitely supported sequences a
 
 ### Convolution Layer
 
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/052OUD1.png" alt="" width="105%">
-  </figure>
-</div>
+![Convolution Layer](/assets/img/graphics/post_3/gray/convolution.png)
+_Figure 1.0: Convolution layer operation_
 
 1. **Output dimensions for convolution:**
 
@@ -317,11 +314,9 @@ output = F.conv2d(input_matrix, kernel, stride=2, padding=1)
 
 ****
 ### Pooling layer
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/f411b8a.png" alt="" width="105%">
-  </figure>
-</div>
+
+![Pooling Layer](/assets/img/graphics/post_3/gray/pooling.png)
+_Figure 2.0: Pooling layer operation_
 
 **Definition**:
 Pooling is a down-sampling operation used in Convolutional Neural Networks (CNNs) to reduce the spatial dimensions of input feature maps (e.g., height and width), helping to retain key features while lowering computational costs. Pooling enhances model efficiency, aids in reducing overfitting, and promotes translation invariance by making the network less sensitive to small shifts in the input.
@@ -393,12 +388,8 @@ This code demonstrates the pooling operations described earlier using PyTorch. Y
 ****
 ### Flattening layer
 
-
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/hoQSsHD.png" alt="" width="55%">
-  </figure>
-</div>
+![Flattening Layer](/assets/img/graphics/post_3/gray/flattening.png)
+_Figure 3.0: Flattening layer operation_
 
 ### Flattening in Convolutional Neural Networks (CNNs)
 
