@@ -19,12 +19,36 @@ math: true
 mermaid: true
 reading_time: 18 min
 image:
-  path: /assets/img/panels/panel13@4x.png
+  path: /assets/img/panels/panelx@4x.png
 ---
 
-# Forms of Energy
+# Physics-Informed Feature Engineering
 
-Energy is the ability to do work or cause change, and it appears in interchangeable forms. This overview lists the main categories with real-world examples, explains why each is considered a form of "energy," traces key historical discoveries, and notes the standard definitions. It also covers energy conservation, the role of SI units in measurement, and practical feature engineering guidance for data scientists working on modeling energy-related systems, such as in physics simulations, chemical reaction networks, or machine learning predictions.
+How do you build ML models that respect the laws of physics? Features derived from first principles—power, energy, dimensionless ratios—outperform purely statistical transformations in energy system modeling. This guide shows how to leverage SI units, conservation laws, and dimensional analysis to create features that generalize across operating conditions.
+
+**The Problem**: Raw sensor data lacks physical structure. Standard feature engineering ignores dimensional consistency, causing models to fail when conditions change.
+
+**The Solution**: Convert to SI units → derive physics-based quantities → create dimensionless groups → validate with conservation laws. Result: interpretable models aligned with reality.
+
+**Coverage**: Energy forms and equations • SI dimensional framework • Battery discharge case study • Physics-informed EDA
+
+---
+
+## Why Energy Matters in Physics-Based ML
+
+Energy is the universal currency of physical processes. It provides three critical advantages for modeling:
+
+1. **Conservation** (First Law): Enables prediction without tracking every intermediate step—initial states determine final states
+2. **Interconvertibility**: All technologies exploit energy transformations (kinetic ↔ potential ↔ thermal ↔ electrical)
+3. **Change Quantification**: Every process involves energy transfer; it constrains what's physically possible
+
+Ignoring energy in ML models means discarding nature's most fundamental constraint. Physics-informed features encode these principles directly.
+
+---
+
+## Forms of Energy
+
+Energy—the ability to do work or cause change—appears in interchangeable forms governed by conservation laws. Understanding kinetic, potential, and radiant energy provides the foundation for deriving meaningful features from sensor data.
 
 ## Main Categories
 
@@ -407,7 +431,7 @@ features = [
 ]
 ```
 
-Train with the suitable regressor model. Physical features improve interpretability and generalization.
+Train with any suited regressor model. Physical features improve interpretability and generalization.
 
 ---
 
@@ -429,3 +453,4 @@ Train with the suitable regressor model. Physical features improve interpretabil
 ❌ **Skipping EDA**: Missing outliers that violate conservation laws  
 ❌ **Premature scaling**: Standardizing before creating ratios  
 ❌ **Black-box selection**: Dropping `resistance_ohm` despite being known degradation marker
+
