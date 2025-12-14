@@ -7,7 +7,7 @@ order: 5
 
 ## Professional Certifications
 
-Below are my professional certifications relevant to MLOps, Data Science, and Software Engineering. Each certification represents hands-on learning and practical application in production environments.
+Certifications relevant to MLOps, Data Science, and Software Engineering. Focus is on CI/CD, reproducible experimentation, and production web/API foundations that support ML systems at scale.
 
 ---
 
@@ -16,7 +16,7 @@ Below are my professional certifications relevant to MLOps, Data Science, and So
 **Completed:** 2023
 [View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
 
-CI/CD automation, workflow orchestration, and GitHub Actions for MLOps pipelines.
+CI/CD automation and workflow orchestration for container build/test/deploy in ML pipelines.
 
 ---
 
@@ -25,7 +25,7 @@ CI/CD automation, workflow orchestration, and GitHub Actions for MLOps pipelines
 **Completed:** 2022
 [View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
 
-Advanced Python programming focusing on data structures essential for machine learning applications.
+Advanced Python programming focusing on data structures essential for ML preprocessing, feature engineering, and high‑throughput services.
 
 ---
 
@@ -34,7 +34,7 @@ Advanced Python programming focusing on data structures essential for machine le
 **Completed:** 2022
 [View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
 
-Full-stack development with React frontend and Laravel API backend, applicable to ML model serving interfaces.
+Full‑stack development with React frontend and Laravel API backend for dashboards and admin tools around ML services.
 
 ---
 
@@ -43,7 +43,7 @@ Full-stack development with React frontend and Laravel API backend, applicable t
 **Completed:** 2021
 [View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
 
-Web fundamentals for building ML dashboard interfaces and visualization tools.
+Web fundamentals for building monitoring dashboards and visualization tools for MLOps.
 
 ---
 
@@ -52,7 +52,7 @@ Web fundamentals for building ML dashboard interfaces and visualization tools.
 **Completed:** 2021
 [View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
 
-Low-level programming fundamentals, useful for understanding performance optimization in ML systems.
+Low‑level programming fundamentals useful for performance analysis and optimization of ML routines.
 
 ---
 
@@ -68,7 +68,7 @@ Moroccan National Programming Contest 2022 - Competitive programming event.
 Hackathon participation focused on innovative tech solutions and startup pitches.
 
 ### **Allam Challenge Participation**
-Arabic Large Language Model challenge - working on LLM applications and Arabic NLP.
+Arabic Large Language Model challenge — LLM applications and Arabic NLP evaluation.
 
 ---
 
