@@ -12,7 +12,9 @@ tags:
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
 
-<figure><center><img src="https://i.imgur.com/dBrQcyN.png" alt=""></center></figure>
+![Model Entanglement](/assets/img/graphics/post_8/gray/dBrQcyN.png){: .dark }
+![Model Entanglement](/assets/img/graphics/post_8/gray/dBrQcyN.png){: .light }
+_Figure 0.1: Model entanglement and CACE principle illustration_
 
 
 
@@ -81,7 +83,10 @@ model = DecisionTreeClassifier(random_state=42)
 model.fit(X_train, y_train)
 ```
 OUT[1] :
-<figure><center><img src="https://i.imgur.com/rI4OI6j.png" alt=""></center></figure>
+
+![Decision Tree Model](/assets/img/graphics/post_8/gray/rI4OI6j.png){: .dark }
+![Decision Tree Model](/assets/img/graphics/post_8/gray/rI4OI6j.png){: .light }
+_Figure 1.0: Decision tree classifier visualization_
 
 #### Initial Loss Function (Cross-Entropy Loss)
 The cross-entropy loss for a classification problem can be represented as:

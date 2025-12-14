@@ -28,25 +28,20 @@ Think about it like a physical system that continuously evolves. Similar to how 
 
 A physical system might include a mass on a 30° inclined plane with gravity and friction, a spring creating natural oscillation with specific characteristics, and an electromagnetic actuator maintaining oscillation when it diminishes. A system like that can be interpretative at first, but it can lead to chaos just by some hidden details that can emerge over time.
 
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/m0KtwR1.png" alt="" width="105%">
-  </figure>
-</div>
+![Physical System Analogy](/assets/img/graphics/post_9/gray/m0KtwR1.png){: .dark }
+![Physical System Analogy](/assets/img/graphics/post_9/gray/m0KtwR1.png){: .light }
+_Figure 1.0: Physical system analogy for ML systems_
 
 
 ## The Critical Role of Time
 
 Time is also a very important component in computer science in general. It lets us see how changes are coming. The most wise people are afraid of time.
 
-What can a wise data scientist do to an ML system, for example in time series? 
+What can a wise data scientist do to an ML system, for example in time series?
 
-
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/GTyun46.png" alt="" width="105%">
-  </figure>
-</div>
+![Time Series System](/assets/img/graphics/post_9/gray/GTyun46.png){: .dark }
+![Time Series System](/assets/img/graphics/post_9/gray/GTyun46.png){: .light }
+_Figure 2.0: Time series system with intervention mechanisms_
 
 
 Consider a time series dataset exhibiting trends, underlying causal variables with foreign key (hidden features) creating oscillatory behavior, and detection and intervention mechanisms that identify when the cyclical pattern deviates from expected behavior. These mechanisms apply immediate intervention (similar to the actuator applying force) and adaptive retraining that adjusts model parameters when drift is detected.
