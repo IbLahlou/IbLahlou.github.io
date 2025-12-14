@@ -1,6 +1,6 @@
 ---
-title: Forms of Energy and the International System of Units (SI)
-description: An overview of the main forms of energy, their interconnections, measurement using SI units, and practical considerations for modeling and feature engineering in data science applications
+title: Physics-Informed Feature Engineering
+description: A comprehensive guide to energy forms, SI measurement standards, and practical feature engineering strategies for data scientists building physics-aware ML models with real-world battery discharge example
 date: 2025-12-14
 categories:
   - Physics
@@ -12,11 +12,14 @@ tags:
   - Measurement
   - Feature Engineering
   - Dimensional Analysis
+  - Physics-Informed ML
+  - Battery Modeling
 pin: true
 math: true
 mermaid: true
+reading_time: 18 min
 image:
-  path: /assets/img/panels/panelx@4x.png
+  path: /assets/img/panels/panel13@4x.png
 ---
 
 # Forms of Energy
@@ -80,7 +83,9 @@ Energy carried by electromagnetic waves, traveling through space at the speed of
 
 - **Conservation and Conversion**: Total energy is conserved (First Law of Thermodynamics, established 1840s–1850s by Mayer, Joule, Helmholtz). Forms interconvert with efficiencies <100%; "losses" often appear as thermal energy or sound. In data science, this principle underpins loss functions in energy balance models.
 - **Storage and Transport**: Examples include batteries (chemical → electrical), pumped hydro (gravitational → kinetic), capacitors/inductors (electrical), and nuclear fuels (nuclear → thermal → mechanical → electrical). Data scientists model these for optimization in supply chain or grid management.
+
 ![Energy Conversion Map]({{ '/assets/img/graphics/project/energy/energy_conversion.svg' | relative_url }})
+
 ## The International System of Units (SI)
 
 The **International System of Units (SI)**, from the French *Système international d'unités*, is the modern metric system and the world's most widely used measurement standard. It ensures global consistency in science, engineering, industry, and trade. The Bureau International des Poids et Mesures (BIPM) maintains the SI.
@@ -122,19 +127,19 @@ The 1875 Metre Convention created the BIPM. In 1960, the 11th CGPM adopted the *
 - Power: watt (W = kg·m²·s⁻³)
 - Force: newton (N = kg·m·s⁻²)
 - Pressure: pascal (Pa = kg·m⁻¹·s⁻²)
-- 
+
 $$
 J = \mathrm{kg}\,\mathrm{m}^2\,\mathrm{s}^{-2}
 $$
--
+
 $$
 W = \mathrm{kg}\,\mathrm{m}^2\,\mathrm{s}^{-3}
 $$
--
+
 $$
 N = \mathrm{kg}\,\mathrm{m}\,\mathrm{s}^{-2}
 $$
--
+
 $$
 \mathrm{Pa} = \mathrm{kg}\,\mathrm{m}^{-1}\,\mathrm{s}^{-2}
 $$
@@ -175,3 +180,252 @@ Advanced: Use physics-informed neural networks (PINNs) to embed constraints duri
 {: .prompt-warning }
 
 ![Feature Engineering Pipeline]({{ '/assets/img/graphics/project/energy/feature_pipeline.svg' | relative_url }})
+
+---
+
+## Practical Example: Battery Discharge Modeling
+
+### Problem Context
+Predict remaining useful life (RUL) of a lithium-ion battery from discharge cycle data. Raw sensor data: voltage, current, temperature.
+
+**Raw Data Sample**: Time (min), voltage (V), current (A), temperature (°C) at 5 time points during discharge.
+
+**Problem**: Mixed units, no physical relationships captured.
+
+---
+
+### Step 1: Unit Harmonization (SI Conversion)
+
+Convert all measurements to SI base units:
+
+$$
+t[\mathrm{s}] = t[\mathrm{min}] \times 60, \quad T[\mathrm{K}] = T[^\circ\mathrm{C}] + 273.15
+$$
+
+**Use Pint or similar library** to enforce consistency across dataset.
+
+---
+
+### Step 2: Feature Creation (Physics-Derived)
+
+#### 2.1 Instantaneous Power
+$$
+P = V \cdot I \quad [\mathrm{W}] = \mathrm{kg \cdot m^2 \cdot s^{-3}}
+$$
+
+Direct application of Ohm's law. Captures energy flow rate.
+
+#### 2.2 Internal Resistance
+$$
+R = \frac{V}{I} \quad [\Omega] = \mathrm{kg \cdot m^2 \cdot s^{-3} \cdot A^{-2}}
+$$
+
+Key degradation indicator—increases as battery ages.
+
+#### 2.3 Cumulative Energy (Numerical Integration)
+$$
+E(t) = \int_0^t P(\tau) \, d\tau \quad [\mathrm{J}]
+$$
+
+Trapezoid rule for discrete data:
+$$
+E_i = E_{i-1} + \frac{P_i + P_{i-1}}{2} \cdot (t_i - t_{i-1})
+$$
+
+```python
+# Cumulative energy via trapezoid integration
+energy_j = np.zeros(len(time_s))
+for i in range(1, len(energy_j)):
+    dt = time_s[i] - time_s[i-1]
+    p_avg = (power_w[i] + power_w[i-1]) / 2
+    energy_j[i] = energy_j[i-1] + p_avg * dt
+```
+
+Represents total stress accumulated by the cell.
+
+#### 2.4 Dimensionless Features (State of Charge Proxy)
+$$
+\text{Voltage Normalized} = \frac{V(t)}{V_{\max}} \quad [\text{dimensionless}]
+$$
+
+Scale-invariant indicator. Works across different cell chemistries.
+
+#### 2.5 Per-Unit Features (Specific Power)
+$$
+P_{\text{specific}} = \frac{P}{m} \quad [\mathrm{W/kg}] = \mathrm{m^2 \cdot s^{-3}}
+$$
+
+Normalizes by cell mass. Enables comparison across designs.
+
+#### 2.6 Arrhenius Rate Factor (Thermal Effects)
+$$
+k(T) = A \exp\left(-\frac{E_a}{RT}\right)
+$$
+
+Models temperature-dependent degradation ($E_a \approx 50$ kJ/mol for Li-ion).
+
+```python
+# Arrhenius degradation rate
+R = 8.314  # J/(mol·K)
+E_a = 50000  # J/mol
+A = 1e6
+arrhenius = A * np.exp(-E_a / (R * temp_k))
+```
+
+---
+
+### Step 3: Feature Transformation
+
+#### 3.1 Standardization (Z-score)
+$$
+z = \frac{x - \mu}{\sigma}
+$$
+
+Apply **after** creating physical features. Use `StandardScaler` for power, resistance, specific power.
+
+#### 3.2 Log Transform
+$$
+\log(1 + E) \quad \text{for skewed energy distributions}
+$$
+
+Stabilizes variance for cumulative quantities.
+
+---
+
+### Step 4: Exploratory Data Analysis (EDA)
+
+#### 4.1 Dimensional Consistency Check
+Verify all features have correct SI dimensions:
+```python
+# Check units programmatically
+assert power_w.units == 'watt'
+assert resistance_ohm.units == 'ohm'
+assert energy_j.units == 'joule'
+```
+
+#### 4.2 Univariate Analysis
+
+**Distributions**: Plot histograms for each feature
+- `power_w`: Check for outliers (sensor errors)
+- `resistance_ohm`: Expect gradual increase over cycles
+- `temp_k`: Verify physical range (273–373 K typical)
+
+**Summary Statistics**:
+$$
+\text{Range, Mean, Std, Skewness, Kurtosis}
+$$
+
+Flag non-physical values (negative resistance, temp > 400 K).
+
+#### 4.3 Temporal Evolution
+
+Plot time series for physics validation:
+- **Power decay**: Should decrease monotonically during discharge
+- **Voltage-Current relationship**: Verify $V \propto 1/I$ holds (Ohm's law)
+- **Energy accumulation**: Must be monotonically increasing
+
+```python
+# Sanity check: energy conservation
+assert all(np.diff(energy_j) >= 0), "Energy must increase"
+```
+
+#### 4.4 Bivariate Relationships
+
+**Voltage vs. Resistance**: 
+$$
+R \uparrow \text{ as } V \downarrow \quad \text{(degradation signature)}
+$$
+
+**Power vs. Temperature**:
+Scatter plot with Arrhenius overlay—expect exponential relationship.
+
+**Correlation Matrix**:
+- High $|r|$ between `power_w` and `specific_power` (expected—linear scaling)
+- Moderate $|r|$ between `resistance_ohm` and target (degradation link)
+
+#### 4.5 Dimensionless Analysis
+
+Create Buckingham Π groups:
+$$
+\Pi_1 = \frac{P \cdot t}{E}, \quad \Pi_2 = \frac{R \cdot I}{V}
+$$
+
+```python
+# Dimensionless feature engineering
+pi_1 = (power_w * time_s) / (energy_j + 1e-6)  # avoid division by zero
+pi_2 = (resistance_ohm * current_a) / voltage_v
+```
+
+**Why**: Plot $\Pi_1$ vs. $\Pi_2$ colored by cycle number—should reveal operating regimes.
+
+#### 4.6 Outlier Detection (Physics-Informed)
+
+Flag measurements violating conservation laws:
+- $P > V_{\max} \cdot I_{\max}$ (power exceeds theoretical limit)
+- $\Delta E < 0$ (energy decrease impossible)
+- $R < 0$ (non-physical resistance)
+
+Use Isolation Forest or LOF on dimensionless features for robustness.
+
+#### 4.7 Feature Importance (Pre-Modeling)
+
+**Mutual Information** with target:
+```python
+from sklearn.feature_selection import mutual_info_regression
+mi_scores = mutual_info_regression(X, y)
+```
+
+Expected rankings:
+1. `v_normalized` (direct SOC indicator)
+2. `resistance_ohm` (degradation)
+3. `arrhenius` (thermal stress)
+
+---
+
+### Step 5: Feature Selection (Physics-Informed)
+
+#### Correlation with Target (RUL)
+- `v_normalized` (↓ voltage → ↓ RUL)
+- `resistance_ohm` (↑ resistance → ↓ RUL)  
+- `energy_j` (cumulative stress)
+
+#### Dimensionality Reduction
+- Remove redundant features: `power_w` vs. `specific_power` (keep per-unit version)
+- Retain dimensionless groups: $\Pi_1$, $\Pi_2$ (scale-invariant)
+
+---
+
+### Final Feature Set for Modeling
+```
+features = [
+    'v_normalized',      # Dimensionless SOC proxy
+    'resistance_ohm',    # Internal resistance (degradation)
+    'specific_power',    # Per-unit intensity
+    'log_energy',        # Transformed cumulative stress
+    'arrhenius',         # Temperature-adjusted rate
+    'pi_1', 'pi_2'       # Dimensionless groups
+]
+```
+
+Train with the suitable regressor model. Physical features improve interpretability and generalization.
+
+---
+
+## Key Takeaways
+
+✅ **Start with SI units** → Dimensional consistency  
+✅ **Derive physics-based features** → Power, energy, resistance encode real dynamics  
+✅ **Perform thorough EDA** → Validate conservation laws before modeling  
+✅ **Create dimensionless groups** → Scale-invariant, robust predictions  
+✅ **Transform after creation** → Preserve physical meaning before scaling  
+✅ **Select with domain knowledge** → Conservation laws guide relevance
+
+---
+
+## Common Pitfalls
+
+❌ **Mixing units**: `energy_kwh + energy_j` → Meaningless  
+❌ **Ignoring physics**: Treating $V$ and $I$ independently when $P = VI$  
+❌ **Skipping EDA**: Missing outliers that violate conservation laws  
+❌ **Premature scaling**: Standardizing before creating ratios  
+❌ **Black-box selection**: Dropping `resistance_ohm` despite being known degradation marker
