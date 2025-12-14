@@ -8,23 +8,6 @@ order: 5
 ## Certifications
 
 
-### **Automate your workflow with GitHub Actions**
-**Issuer:** GitHub Learning Lab
-**Completed:** 2023
-[View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
-
-CI/CD automation and workflow orchestration for container build/test/deploy in ML pipelines.
-
----
-
-### **Python Data Structure**
-**Issuer:** University of Michigan (Coursera)
-**Completed:** 2022
-[View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
-
-Advanced Python programming focusing on data structures essential for ML preprocessing, feature engineering, and high‑throughput services.
-
----
 
 ### **Automate your workflow with GitHub Actions**
 **Issuer:** Microsoft Learn 365  
@@ -134,6 +117,3 @@ Hackathon participation focused on innovative tech solutions and startup pitches
 ### **Allam Challenge Participation**
 Arabic Large Language Model challenge — LLM applications and Arabic NLP evaluation.
 
----
-
-> For complete certification details and verification, visit my [LinkedIn Profile](https://www.linkedin.com/in/ibrahim-lahlou-ild01/).
