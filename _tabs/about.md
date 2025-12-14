@@ -48,8 +48,8 @@ stack = {
     "infrastructure": ["AWS ECS/S3", "GCP", "Docker", "Kubernetes"],
     "messaging": ["MQTT"],
     "data_storage": ["S3/MinIO", "PostgreSQL", "MongoDB", "Redis"],
-    "automation": ["CI/CD", "GitHub Actions"],
-    "fundamentals": ["Adaptive batching", "Drift detection", "System design"]
+    "automation": ["CI/CD", "GitHub Actions", "Git"],
+    "fundamentals": ["Python core", "Adaptive batching", "Drift detection", "System design"]
 }
 ```
 
