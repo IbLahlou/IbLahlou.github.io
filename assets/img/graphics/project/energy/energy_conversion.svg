@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="450" viewBox="0 0 1200 450">
+  <rect width="1200" height="450" fill="#0f172a"/>
+  <style>
+    .box { fill:#1f2937; stroke:#93c5fd; stroke-width:2; rx:10; ry:10 }
+    .label { fill:#e5e7eb; font-family:Arial, Helvetica, sans-serif; font-size:16px }
+    .title { fill:#93c5fd; font-family:Arial, Helvetica, sans-serif; font-size:20px; font-weight:bold }
+    .arrow { stroke:#93c5fd; stroke-width:2; marker-end:url(#arrowhead) }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#93c5fd"/>
+    </marker>
+  </defs>
+  <text x="30" y="40" class="title">Energy Conversion Map</text>
+
+  <rect x="60" y="90" width="180" height="70" class="box"/><text x="75" y="130" class="label">Chemical</text>
+  <rect x="280" y="90" width="180" height="70" class="box"/><text x="295" y="130" class="label">Electrical</text>
+  <rect x="500" y="90" width="180" height="70" class="box"/><text x="515" y="130" class="label">Mechanical</text>
+  <rect x="720" y="90" width="180" height="70" class="box"/><text x="735" y="130" class="label">Thermal</text>
+
+  <rect x="60" y="220" width="180" height="70" class="box"/><text x="75" y="260" class="label">Gravitational</text>
+  <rect x="280" y="220" width="180" height="70" class="box"/><text x="295" y="260" class="label">Kinetic</text>
+
+  <rect x="940" y="90" width="180" height="70" class="box"/><text x="955" y="130" class="label">Radiant</text>
+  <rect x="940" y="220" width="180" height="70" class="box"/><text x="955" y="260" class="label">Nuclear</text>
+
+  <line x1="240" y1="125" x2="280" y2="125" class="arrow"/>
+  <line x1="460" y1="125" x2="500" y2="125" class="arrow"/>
+  <line x1="680" y1="125" x2="720" y2="125" class="arrow"/>
+
+  <line x1="240" y1="255" x2="280" y2="255" class="arrow"/>
+  <line x1="460" y1="255" x2="720" y2="125" class="arrow"/>
+
+  <line x1="1120" y1="125" x2="280" y2="125" class="arrow"/>
+  <line x1="1120" y1="255" x2="720" y2="125" class="arrow"/>
+</svg>

@@ -6,8 +6,6 @@ order: 6
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
 
-## Projects
-
 ### DialFlow — Gen‑AI Voice Agent (Winner, 2025)
 - Award: 1st place, First Moroccan Gen‑AI Voice Bot Hackathon by AI Crafters @ Technopark (MITC), Casablanca
 - Mission: customizable AI voice agent for multilingual customer service with task automation and analytics
@@ -31,9 +29,9 @@ order: 6
   - Retrainable workflows: templated pipelines for data updates and model refresh with CI/CD gates
 - Value: improved robustness under real‑world distribution shift, predictable latency, and safer deployments via progressive delivery
 
-### Allam LLM Educational Platform — Atlas Innovators (Finals, Riyadh 2024)
+### Child Educational Platform using SADAI/Allam LLM in IBM Cloud — Atlas Innovators (Finals, Riyadh 2024)
 - Event: Allam Challenge 2024 Finals, Riyadh (Sep 7–10); team Atlas Innovators — Othman Moussaoui, Ismail Hamdach, Hicham Maghraoui, Ibrahim Lahlou
-- Mission: interactive Arabic learning platform for children; enable Allam LLM to “see”, “hear”, “speak”, and “generate images”
+- Mission: interactive Arabic learning platform for children; enable Allam LLM in IBM WatsonX to “see”, “hear”, “speak”, and “generate images”
 - Backend role:
   - FastAPI service exposing clean endpoints for model inference and multimodal interactions
   - Child/parent management: entity modeling, authentication/authorization, and session handling
@@ -55,18 +53,3 @@ order: 6
 - Introduced data quality checks and automated QoS thresholds across multiple iterations
 - Value: reliable retraining loop with traceable artifacts and stable inference in production
 
-### OCR API Data Pipeline — LR Consulting Maroc
-- Implemented secure, offline PDF‑to‑JSON processing using Python Tabula and Pandas; avoided cloud usage to preserve confidentiality
-- Exposed well‑structured JSON for downstream HTTP integrations; enforced filtering and formatting contracts
-- Value: efficient automation with compliance constraints; maintainable API interfaces
-
-### Full‑Stack Data Visualization — Wikreate Agency
-- Developed a dynamic interface with advanced table pagination and search from Figma designs
-- React frontend with DataTables/jQuery for interaction; Laravel/PHP backend with RESTful endpoints, authentication, and Axios integration
-- Comprehensive API testing in Postman; performance tuning and responsive design
-- Value: production‑grade UI patterns applicable to ML monitoring dashboards and admin consoles
-
-### Reusable Templates & Documentation — DICE | DATALAB
-- Authored template code for model serving and workflow orchestration targeting retrainable models
-- Documented operational practices: versioning, CI/CD, monitoring, drift detection, and rollback procedures
-- Value: accelerates team velocity and improves reliability across ML services
