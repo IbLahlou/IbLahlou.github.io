@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <rect width="1200" height="600" fill="#0f172a"/>
+  <style>
+    .box { fill:#1f2937; stroke:#93c5fd; stroke-width:2; rx:10; ry:10 }
+    .label { fill:#e5e7eb; font-family:Arial, Helvetica, sans-serif; font-size:16px }
+    .title { fill:#93c5fd; font-family:Arial, Helvetica, sans-serif; font-size:20px; font-weight:bold }
+    .arrow { stroke:#93c5fd; stroke-width:2; marker-end:url(#arrowhead) }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#93c5fd"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="40" class="title">Allam LLM Educational Platform — High-Level Architecture</text>
+
+  <!-- Vector Store -->
+  <rect x="40" y="80" width="220" height="120" class="box"/>
+  <text x="60" y="110" class="label">Vector Store</text>
+  <text x="60" y="140" class="label">Semantic Search</text>
+  <text x="60" y="170" class="label">Document Embeddings</text>
+
+  <!-- LLM Serving Backend -->
+  <rect x="300" y="80" width="360" height="220" class="box"/>
+  <text x="320" y="110" class="label">LLM Serving Backend</text>
+  <text x="320" y="140" class="label">Allam + Open-Source Models</text>
+  <text x="320" y="170" class="label">Whisper Large v3 (ASR)</text>
+  <text x="320" y="200" class="label">XTTS (TTS)</text>
+  <text x="320" y="230" class="label">FLUX.1 (Text-to-Image)</text>
+  <text x="320" y="260" class="label">Vision Modules</text>
+
+  <!-- Providers -->
+  <rect x="300" y="320" width="360" height="80" class="box"/>
+  <text x="320" y="350" class="label">Providers</text>
+  <text x="320" y="380" class="label">Groq and others for acceleration</text>
+
+  <!-- Profiling Backend -->
+  <rect x="700" y="80" width="200" height="120" class="box"/>
+  <text x="720" y="110" class="label">Profiling Backend</text>
+  <text x="720" y="140" class="label">Node.js + FastAPI</text>
+  <text x="720" y="170" class="label">Endpoint Management</text>
+
+  <!-- Database -->
+  <rect x="700" y="220" width="200" height="80" class="box"/>
+  <text x="720" y="250" class="label">MySQL Database</text>
+  <text x="720" y="280" class="label">Child/Parent + Insights</text>
+
+  <!-- Frontend -->
+  <rect x="940" y="80" width="220" height="260" class="box"/>
+  <text x="960" y="110" class="label">Frontend</text>
+  <text x="960" y="140" class="label">Axios Bridge</text>
+  <text x="960" y="170" class="label">Story</text>
+  <text x="960" y="195" class="label">Chatbot</text>
+  <text x="960" y="220" class="label">Parent Interface</text>
+  <text x="960" y="245" class="label">Child Interface</text>
+  <text x="960" y="270" class="label">Authentication</text>
+  <text x="960" y="295" class="label">Quiz</text>
+
+  <!-- Arrows -->
+  <line x1="260" y1="140" x2="300" y2="140" class="arrow"/>
+  <line x1="660" y1="180" x2="700" y2="140" class="arrow"/>
+  <line x1="660" y1="240" x2="700" y2="260" class="arrow"/>
+  <line x1="900" y1="140" x2="940" y2="140" class="arrow"/>
+  <line x1="900" y1="260" x2="940" y2="180" class="arrow"/>
+</svg>

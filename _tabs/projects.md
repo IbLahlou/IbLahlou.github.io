@@ -41,7 +41,7 @@ order: 6
   - Integration as the final stage: endpoint governance, schema contracts, and reliability checks before demo
 - Architecture: modular services for perception (vision/audio), TTS/ASR, and LLM reasoning; deterministic prompt versions and telemetry for education KPIs
 - Diagram:
-  - ![Allam Platform Architecture](../assets/img/graphics/project/allam/allam_architecture.png)
+  - ![Allam Platform Architecture]({{ '/assets/img/graphics/project/allam/allam_architecture.svg' | relative_url }})
   - Components:
     - Vector store and document embeddings for semantic search over educational content
     - LLM serving backend with Allam and open‑source models: Whisper Large v3 (ASR), XTTS (TTS), FLUX.1 (text‑to‑image), vision modules
