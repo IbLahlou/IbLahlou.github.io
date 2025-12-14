@@ -40,15 +40,13 @@ order: 6
   - MySQL storage for profiles and insights (engagement, progress, comprehension metrics) to personalize learning
   - Integration as the final stage: endpoint governance, schema contracts, and reliability checks before demo
 - Architecture: modular services for perception (vision/audio), TTS/ASR, and LLM reasoning; deterministic prompt versions and telemetry for education KPIs
-- Diagram:
-  - ![Allam Platform Architecture]({{ '/assets/img/graphics/project/allam/allam_architecture.svg' | relative_url }})
   - Components:
     - Vector store and document embeddings for semantic search over educational content
     - LLM serving backend with Allam and open‑source models: Whisper Large v3 (ASR), XTTS (TTS), FLUX.1 (text‑to‑image), vision modules
     - Providers for inference acceleration and model variety (e.g., Groq)
     - Database: MySQL for child/parent profiles and insight metrics
     - Profiling backend: Node.js and FastAPI integration for endpoint management and telemetry
-    - Frontend: Axios bridge to modules (Story, Chatbot, Parent Interface, Child Interface, Authentication, Quiz)
+    - Frontend: Axios and fetch bridge to modules (Story, Chatbot, Parent Interface, Child Interface, Authentication, Quiz)
 - Value: production‑aligned backend foundation that supports safe, measurable, and adaptive learning experiences for kids
 
 ### Smart NLP Pipeline (AWS ECS) — 3D Smart Factory

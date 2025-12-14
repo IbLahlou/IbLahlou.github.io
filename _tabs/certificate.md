@@ -5,11 +5,8 @@ order: 5
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
 
-## Professional Certifications
+## Certifications
 
-Certifications relevant to MLOps, Data Science, and Software Engineering. Focus is on CI/CD, reproducible experimentation, and production web/API foundations that support ML systems at scale.
-
----
 
 ### **Automate your workflow with GitHub Actions**
 **Issuer:** GitHub Learning Lab
@@ -29,30 +26,94 @@ Advanced Python programming focusing on data structures essential for ML preproc
 
 ---
 
-### **Application ReactJS + Laravel API**
-**Issuer:** Professional Development
-**Completed:** 2022
-[View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
-
-Full‑stack development with React frontend and Laravel API backend for dashboards and admin tools around ML services.
-
----
-
-### **HTML**
-**Issuer:** SoloLearn
-**Completed:** 2021
-[View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
-
-Web fundamentals for building monitoring dashboards and visualization tools for MLOps.
+### **Automate your workflow with GitHub Actions**
+**Issuer:** Microsoft Learn 365  
+**Completed:** Jul 2024  
+**Credential ID:** aewcn427  
+Show credential
 
 ---
 
-### **C Programming**
-**Issuer:** SoloLearn
-**Completed:** 2021
-[View Certificate on LinkedIn](https://www.linkedin.com/in/ibrahim-lahlou-ild01/)
+### **Google Cloud Fundamentals: Core Infrastructure**
+**Issuer:** Google Cloud Training Online  
+**Completed:** Jan 2024  
+**Credential ID:** LCTYYLQ8AHM9  
+Show credential
 
-Low‑level programming fundamentals useful for performance analysis and optimization of ML routines.
+Completion Certificate for Google Cloud Fundamentals: Core Infrastructure
+
+---
+
+### **Fundamentals of Kubernetes Deployment**
+**Issuer:** LearnQuest  
+**Completed:** Sep 2023  
+Show credential  
+Skills: Kubernetes
+
+Completion Certificate for Fundamentals of Kubernetes Deployment
+
+---
+
+### **AWS Cloud Practitioner Essentials**
+**Issuer:** Amazon Web Services (AWS)  
+**Completed:** Aug 2023  
+**Credential ID:** Q49CL4NSRWP3  
+Show credential  
+Skills: Amazon Web Services (AWS)
+
+Completion Certificate for AWS Cloud Practitioner Essentials
+
+---
+
+### **Geospatial Analysis**
+**Issuer:** Kaggle  
+**Completed:** Aug 2023  
+Show credential
+
+Ibrahim Lahlou completed the Geospatial Analysis course on Kaggle!
+
+---
+
+### **Introduction to Agile Development and Scrum**
+**Issuer:** IBM  
+**Completed:** Aug 2023  
+**Credential ID:** 8GMR3HKWYL4V  
+Show credential  
+Skills: Scrum · Agile Methodologies
+
+Completion Certificate for Introduction to Agile Development and Scrum
+
+---
+
+### **Data Cleaning**
+**Issuer:** Kaggle  
+**Completed:** Jul 2023  
+Show credential  
+Skills: Data Cleaning
+
+Ibrahim Lahlou completed the Data Cleaning course on Kaggle!
+
+---
+
+### **Neural Networks and Deep Learning**
+**Issuer:** DeepLearning.AI  
+**Completed:** Jul 2023  
+**Credential ID:** E79Q4ZT7T5PP  
+Show credential  
+Skills: Machine Learning · Deep Learning
+
+Completion Certificate for Neural Networks and Deep Learning
+
+---
+
+### **Python Skill Certificate**
+**Issuer:** HackerRank  
+**Completed:** Jul 2023  
+**Credential ID:** 999fa3b51025  
+Show credential  
+Skills: Python
+
+HackerRank Skill Certificate
 
 ---
 
