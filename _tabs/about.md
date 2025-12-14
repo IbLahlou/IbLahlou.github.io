@@ -6,25 +6,13 @@ order: 4
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
 
-## TL;DR
+## About Me
 
-ML Engineer building production-grade systems. I turn research papers into scalable infrastructure—then watch them drift and fix them in production.
+I'm **Ibrahim Lahlou**, an ML Engineer focused on building and maintaining production machine learning systems. My work centers on the operational aspects of ML—model serving, monitoring, and infrastructure.
 
----
+I specialize in designing ML pipelines that handle real-world production challenges: data drift detection, inference optimization, and system reliability. My approach combines understanding the mathematical foundations (statistical process control, time series analysis, distribution shift theory) with hands-on implementation using modern MLOps tools.
 
-## The Long Version
-
-I'm **Ibrahim Lahlou**, an ML Engineer who believes that **getting models to production is the easy part**. The hard part? Keeping them there.
-
-My work sits at the intersection of machine learning and systems engineering, where I spend most of my time thinking about:
-
-- **Why your model's accuracy dropped from 94% to 78% overnight** (spoiler: data drift)
-- **How to serve 1000 req/s without melting your GPU** (batching strategies that actually work)
-- **What happens when your training distribution looks nothing like production** (covariate shift is real)
-
-### What I Do
-
-**MLOps Engineering** — The unglamorous work that keeps ML systems alive in the wild:
+## Technical Skills
 
 ```python
 stack = {
@@ -39,46 +27,39 @@ stack = {
 }
 ```
 
-**Core Focus:** Building production ML systems with modern tools while understanding the underlying principles. I know *why* adaptive batching works, *when* to use stream vs. batch processing, and *how* statistical drift tests actually function—not just which framework to `pip install`.
+**Primary Focus Areas:**
+- Model serving architectures and inference optimization
+- Statistical drift detection and monitoring systems
+- ML pipeline orchestration and automation
+- Cloud infrastructure for ML workloads
 
-### Background
+## Background
 
-**State Engineering Diploma** — Data Science & Cloud Computing
+**State Engineering Diploma in Data Science & Cloud Computing**
 ENSA Oujda | UMP (2019-2024)
 
-Key areas: ML systems, distributed computing, stochastic processes, cloud-native architecture.
+Coursework: Machine Learning, Distributed Systems, Stochastic Processes, Cloud-Native Architecture, Software Engineering, Statistics, Data Mining.
 
-**2 years** building MLOps pipelines with FastAPI, orchestrating workflows in Prefect, tracking experiments in MLflow, and deploying on GCP. I understand the theory behind adaptive batching and drift detection, then implement it with tools that work.
+**Experience:** 2 years in MLOps engineering, building production ML systems—model serving APIs, workflow orchestration, experiment tracking, and cloud deployment on GCP.
 
-### Technical Writing
+## Writing
 
-I write about the messy realities of production ML:
+I document technical concepts and production challenges in ML systems:
 
-- **Time series fundamentals** — ACF/PACF, Kalman filtering, spectral methods
-- **Data drift taxonomy** — Covariate shift vs. prior probability shift vs. sample selection bias
-- **CNN architectures** — Convolution math, pooling strategies, implementation patterns
-- **Inference optimization** — Batch/stream/microbatch tradeoffs, latency budgets
+- Time series analysis (ACF/PACF, Kalman filtering, spectral methods)
+- Data drift detection (covariate shift, prior probability shift, sample selection bias)
+- Neural network architectures (CNNs, convolution operations, pooling strategies)
+- Inference optimization (batching strategies, processing patterns)
 
-You'll find mathematical rigor, implementation details, and the kind of edge cases that only surface at 3 AM in production.
-
-### Philosophy
-
-**Code is static. Data evolves. Models decay.**
-
-The best ML systems aren't the ones with the highest accuracy—they're the ones that *detect when they're wrong* and *recover gracefully*.
-
-I design for observability first, performance second, and accuracy third. Because a model you can't monitor is a model you can't trust.
+Posts include mathematical foundations, implementation details, and code examples.
 
 ---
 
-## Connect
+## Contact
 
-- **GitHub:** [@IbLahlou](https://github.com/IbLahlou)
-- **Twitter:** [@ILoDo01](https://twitter.com/ILoDo01)
-- **Email:** ibrahimlahlou021@gmail.com
-
-> "In theory, theory and practice are the same. In practice, they're not."
-> — Every MLOps engineer ever
+**GitHub:** [@IbLahlou](https://github.com/IbLahlou)
+**Twitter:** [@ILoDo01](https://twitter.com/ILoDo01)
+**Email:** ibrahimlahlou021@gmail.com
 
 
 
