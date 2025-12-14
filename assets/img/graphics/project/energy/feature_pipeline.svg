@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+  <rect width="1200" height="400" fill="#0f172a"/>
+  <style>
+    .box { fill:#1f2937; stroke:#93c5fd; stroke-width:2; rx:10; ry:10 }
+    .label { fill:#e5e7eb; font-family:Arial, Helvetica, sans-serif; font-size:16px }
+    .title { fill:#93c5fd; font-family:Arial, Helvetica, sans-serif; font-size:20px; font-weight:bold }
+    .arrow { stroke:#93c5fd; stroke-width:2; marker-end:url(#arrowhead) }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#93c5fd"/>
+    </marker>
+  </defs>
+  <text x="30" y="40" class="title">Feature Engineering Pipeline (Energy)</text>
+
+  <rect x="40" y="120" width="200" height="80" class="box"/><text x="55" y="150" class="label">Data Preparation</text><text x="55" y="175" class="label">(Cleaning + SI Conversion)</text>
+  <rect x="280" y="120" width="220" height="80" class="box"/><text x="295" y="150" class="label">1. Feature Creation</text><text x="295" y="175" class="label">(Dimless, Per-unit, Domain-specific)</text>
+  <rect x="540" y="120" width="220" height="80" class="box"/><text x="555" y="150" class="label">2. Transformation</text><text x="555" y="175" class="label">(Scaling, Log, Encoding)</text>
+  <rect x="800" y="120" width="220" height="80" class="box"/><text x="815" y="150" class="label">3. Selection</text><text x="815" y="175" class="label">(Correlation, RFE, LASSO)</text>
+  <rect x="280" y="240" width="220" height="80" class="box"/><text x="295" y="270" class="label">Modeling / Training</text>
+  <rect x="540" y="240" width="220" height="80" class="box"/><text x="555" y="270" class="label">Evaluation & Validation</text><text x="555" y="295" class="label">(Physical Consistency)</text>
+
+  <line x1="240" y1="160" x2="280" y2="160" class="arrow"/>
+  <line x1="500" y1="160" x2="540" y2="160" class="arrow"/>
+  <line x1="760" y1="160" x2="800" y2="160" class="arrow"/>
+  <line x1="390" y1="200" x2="390" y2="240" class="arrow"/>
+  <line x1="500" y1="280" x2="540" y2="280" class="arrow"/>
+</svg>
