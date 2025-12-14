@@ -1,4 +1,4 @@
-#!/bin/bash
+ma#!/bin/bash
 
 # Set up gem environment
 export GEM_HOME="$HOME/.gem"
