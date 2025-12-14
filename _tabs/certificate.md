@@ -58,6 +58,9 @@ Low‑level programming fundamentals useful for performance analysis and optimiz
 
 ## Honors & Awards
 
+### **Winner — Gen‑AI Voice Bot Hackathon (2025)**
+First Moroccan Gen‑AI Voice Bot Hackathon — AI Crafters @ Technopark (MITC), Casablanca. Project: DialFlow, a customizable AI voice agent for multilingual customer service, automation, and analytics.
+
 ### **Member of The Year**
 Recognition for outstanding contribution and leadership in technical community.
 

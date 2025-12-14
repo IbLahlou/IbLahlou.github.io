@@ -31,6 +31,7 @@ ML Engineer specialized in MLOps and cloud‑native AI systems. I design, contai
 
 ## Experience Snapshots
 
+- DialFlow (Winner 2025): Gen‑AI voice agent using Twilio, FastAPI, Redis, ElevenLabs, and LangChain; streaming pipeline, prompt governance, and service KPIs for reliability and cost control
 - UM6P — DICE | DATALAB: built forensic image feature‑matching service; template code for retrainable workflows; online drift monitoring on scores and latency with KS tests
 - 3D Smart Factory: NLP pipeline with S3 storage, SymSpell normalization, retraining loop; Flask + WSGI serving on AWS ECS
 - LR Consulting Maroc: confidential PDF‑to‑JSON API (Tabula/Pandas) with offline processing guarantees
