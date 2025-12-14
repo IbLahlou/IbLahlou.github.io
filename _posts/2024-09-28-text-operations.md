@@ -40,12 +40,9 @@ Text processing typically follows a pipeline of operations: tokenization, embedd
 
 Tokenization is the process of breaking text into smaller units (tokens) such as words, subwords, or characters. Different tokenization strategies exist:
 
-
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/ChSqlAz.png" alt="" width="105%">
-  </figure>
-</div>
+![Tokenization Methods](/assets/img/graphics/post_4/gray/ChSqlAz.png){: .dark }
+![Tokenization Methods](/assets/img/graphics/post_4/gray/ChSqlAz.png){: .light }
+_Figure 1.0: Different tokenization strategies_
 
 #### BPE (Byte-Pair Encoding) Algorithm:
 
@@ -241,11 +238,9 @@ Let me explain each of these text processing concepts in simple terms:
 **2. Normalization:**
 - **Lemmatization**: Converting words to their dictionary base form
 
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/w5FFhSi.png" alt="" width="105%">
-  </figure>
-</div>
+![Lemmatization](/assets/img/graphics/post_4/gray/w5FFhSi.png){: .dark }
+![Lemmatization](/assets/img/graphics/post_4/gray/w5FFhSi.png){: .light }
+_Figure 2.0: Lemmatization process_
 
 
   ```python
@@ -257,11 +252,9 @@ Let me explain each of these text processing concepts in simple terms:
 
 - **Stemming**: Cutting off word endings to get a common base (faster but rougher than lemmatization)
 
-<div style="text-align: center;">
-  <figure>
-    <img src="https://i.imgur.com/b8hvqj1.png" alt="" width="105%">
-  </figure>
-</div>
+![Stemming](/assets/img/graphics/post_4/gray/b8hvqj1.png){: .dark }
+![Stemming](/assets/img/graphics/post_4/gray/b8hvqj1.png){: .light }
+_Figure 3.0: Stemming process_
 
 
   ```python

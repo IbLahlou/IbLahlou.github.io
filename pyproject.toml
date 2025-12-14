@@ -1,58 +1,9 @@
 [project]
-name = "imgur-scraper"
-version = "1.0.0"
-description = "Scrape and download imgur images from Jekyll blog posts"
-requires-python = ">=3.8"
-license = {text = "MIT"}
-authors = [
-    { name = "Your Name", email = "your.email@example.com" }
-]
-
+name = "portfolio"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
 dependencies = [
-    "seleniumbase>=4.0.0",
+    "seleniumbase>=4.45.2",
 ]
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.0.0",
-    "black>=23.0.0",
-    "ruff>=0.1.0",
-]
-
-[project.scripts]
-scrape-imgur = "scrape_imgur_images:main"
-scrape-imgur-sb = "scrape_imgur_selenium:main"
-
-[build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-py-modules = ["scrape_imgur_images", "scrape_imgur_selenium"]
-
-[tool.black]
-line-length = 100
-target-version = ['py38', 'py39', 'py310', 'py311']
-
-[tool.ruff]
-line-length = 100
-target-version = "py38"
-
-[tool.ruff.lint]
-select = [
-    "E",   # pycodestyle errors
-    "W",   # pycodestyle warnings
-    "F",   # pyflakes
-    "I",   # isort
-    "B",   # flake8-bugbear
-    "C4",  # flake8-comprehensions
-    "UP",  # pyupgrade
-]
-ignore = [
-    "E501",  # line too long (handled by black)
-]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-python_functions = ["test_*"]
