@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2025-11-18-acoustic-models.md",
-                "mode": "source",
-                "source": false
+                "file": "_posts/2025-11-20-git-best-practice-devsecops.md",
+                "mode": "preview",
+                "source": true
               },
               "icon": "lucide-file",
-              "title": "2025-11-18-acoustic-models"
+              "title": "2025-11-20-git-best-practice-devsecops"
             }
           }
         ],
@@ -195,9 +195,14 @@
   },
   "active": "2244a7dbba69dad6",
   "lastOpenFiles": [
-    "commit-code.json",
-    "_posts/2025-11-20-git-github-actions-devsecops.md",
+    "assets/img/graphics/post_11/light/data-viz-figure-alibaba.png.crswap",
+    "assets/img/graphics/post_11/light/data-viz-figure-alibaba.png",
+    "assets/img/graphics/post_11/light/Untitled-2025-09-24-1639.excalidraw.png",
     "_posts/2025-11-18-acoustic-models.md",
+    "_posts/2025-11-20-git-best-practice-devsecops.md",
+    "_posts/2025-09-29-big-time-series-fundamentals.md",
+    "_posts/2025-03-19-ML System Overview.md",
+    "commit-code.json",
     "_posts/2024-09-09-data-drift-overview.md",
     "assets/img/graphics/post_11/light/imgx_kallmanfiltering.png",
     "_posts/2025-11-18-git-github-actions-devsecops.md.tmp.693120.1763502293733",
@@ -210,7 +215,6 @@
     "_site/categories/software-engineering",
     "_site/categories/security/index.html",
     "_site/categories/security",
-    "_site/tags/cryptography/index.html",
     "2025-11-18-acoustic-models.md",
     "_site/assets/img/panels/panel12@4x.png",
     "assets/img/panels/panel12@4x.png",
@@ -219,12 +223,8 @@
     "_site/assets/img/panels/panel12_1@4x.png",
     "assets/img/panels/panel12_1@4x.png",
     "_site/assets/img/panels/panel12x@4x.png",
-    "assets/img/panels/panel12x@4x.png",
-    "_site/assets/img/panels/panel12@4x copy.png",
     "_posts/2025-11-20-acoustic-models.md",
     "_posts/2024-09-11-Convolutional-neural-networks.md",
-    "_posts/2025-09-29-big-time-series-fundamentals.md",
-    "_posts/2025-03-19-ML System Overview.md",
     "_posts/2025-03-20-Planning in ML System.md",
     "_posts/2024-09-08-entanglement-and-cace-principle.md",
     "_posts/2025-08-2025-Real time model inference.md",

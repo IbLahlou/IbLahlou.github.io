@@ -149,7 +149,7 @@ A window function tapers the frame smoothly to zero at the edges:
 
 ## 1. Filtering - Frequency Selection
 
-With these foundational operations established, we can now build speech processing systems. The first step is often **filtering**—selectively passing or blocking certain frequencies to prepare the signal for analysis.
+With these foundational operations established, we can now build speech processing systems. The first step is often **filtering** selectively passing or blocking certain frequencies to prepare the signal for analysis.
 
 <!-- TODO: Add images when available
 <!-- ![Filtering Dark Mode](../assets/img/graphics/post_12/dark/img1_filtering.png){: .dark } -->
