@@ -5,8 +5,6 @@ order: 5
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
 
-## Certifications
-
 
 
 ### **Automate your workflow with GitHub Actions**
