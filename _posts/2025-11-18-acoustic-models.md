@@ -26,7 +26,7 @@ image:
 
 ### What's a Phone
 
-The minimal, perceptually isolable segment of sound—the atomic, boundary-defined unit that any hearing system (human or machine) treats as a single entity. From Greek phōnḗ (“sound/voice”), it stays deliberately pre-linguistic, pre-musical, and pre-semantic: the raw quantum from which every audible stream is built, universally accepted in speech tech, music information retrieval, bioacoustics, and forensic audio. Core contemporary representations of the phone (what people actually use in 2025 models)
+The minimal, perceptually isolable segment of sound the atomic, boundary-defined unit that any hearing system (human or machine) treats as a single entity. From Greek phōnḗ (“sound/voice”), it stays deliberately pre-linguistic, pre-musical, and pre-semantic: the raw quantum from which every audible stream is built, universally accepted in speech tech, music information retrieval, bioacoustics, and forensic audio. Core contemporary representations of the phone (what people actually use in 2025 models)
 
 - Wavelets – localized oscillatory atoms; perfect reconstruction + multi-resolution sparsity (denoising, compression, transient capture)
 - Shapelets – mined discriminative subsequences; shape-focused, highly interpretable for classification
@@ -170,7 +170,7 @@ A **recursive filter** incorporates feedback—output depends on past outputs as
 
 $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k] - \sum_{k=1}^{N} a_k \cdot y[n-k]$$
 
-**Intuition:** Output depends on past inputs AND past outputs (feedback). An impulse can theoretically ring forever—hence "infinite impulse response." The feedback creates resonances that achieve sharp frequency responses with fewer coefficients.
+**Intuition:** Output depends on past inputs AND past outputs (feedback). An impulse can theoretically ring forever hence "infinite impulse response." The feedback creates resonances that achieve sharp frequency responses with fewer coefficients.
 
 | Property         | Explanation                                                                   |
 | ---------------- | ----------------------------------------------------------------------------- |
@@ -188,6 +188,9 @@ $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k] - \sum_{k=1}^{N} a_k \cdot y[n-k]$$
 
 #### Pre-emphasis Filter
 
+
+
+
 $$y[n] = x[n] - \alpha x[n-1], \quad \alpha \approx 0.97$$
 
 **Transfer function:** $H(z) = 1 - \alpha z^{-1}$
@@ -195,6 +198,12 @@ $$y[n] = x[n] - \alpha x[n-1], \quad \alpha \approx 0.97$$
 **Frequency response:** $\lvert H(e^{i\omega}) \rvert = \sqrt{1 + \alpha^2 - 2\alpha\cos\omega}$
 
 Boosts high frequencies ~6 dB/octave.
+
+![Pre-emphasis Filtering Light Mode](../assets/img/graphics/post_12/light/pre-emphasis-filter.png)
+{: .light}
+
+![Pre-emphasis Filtering Dark Mode](../assets/img/graphics/post_12/dark/pre-emphasis-filter.png){: .dark }
+_Figure 1.2:  Pre-Emphasis Filter Design types_
 
 #### Why Pre-emphasis?
 
@@ -217,10 +226,19 @@ The glottal source (vocal cord vibration) has a natural spectral tilt: energy de
 
 Now that we can filter and shape the spectrum, we need a way to **separate** the two main components of speech: the excitation source (vocal cords) and the vocal tract filter. The cepstrum provides exactly this capability.
 
-<!-- ![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/img7_cepstrum.png){: .dark } -->
-<!-- ![Cepstrum Light Mode](../assets/img/graphics/post_12/light/img7_cepstrum.png){: .light } -->
+![Cepstrum Time domain Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_time.png)
+{: .dark }
 
-_Figure 2.0: Cepstrum separating source and filter_
+![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_time.png){: .light }
+
+_Figure 2.0: Cepstrum separating source and filter in time domain_
+
+
+ ![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_frequency.png){: .dark } 
+ ![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_frequency.png){: .light } 
+
+_Figure 2.1: Cepstrum separating source and filter in frequency domain_
+
 
 ### Homomorphic Deconvolution
 
@@ -248,6 +266,13 @@ Keep only low-quefrency components:
 $$\hat{c}[n] = c[n] \cdot l[n]$$
 
 where $l[n]$ is a low-pass lifter.
+
+
+
+![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_quefrency.png){: .dark } 
+![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_quefrency.png){: .light } 
+
+_Figure 2.1: Cepstrum separating source and filter in quefrency domain_
 
 ### Cepstrum Intuition
 
