@@ -76,7 +76,7 @@ A window function tapers the frame smoothly to zero at the edges:
 **Trade-off:** Narrower main lobe = better frequency resolution. Lower side lobes = less leakage. You can't optimize both—this is the **time-frequency uncertainty principle**.
 
 > For speech processing, **Hamming window** is the standard choice: good balance between frequency resolution and leakage suppression.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 **STFT (Short-Time Fourier Transform)** $X[m,k]$ — sliding window DFT producing spectrograms. For speech: 20-30ms frames, 10ms hop. Time-frequency uncertainty: $\Delta t \cdot \Delta f \geq 1/4\pi$.
 
@@ -144,7 +144,7 @@ The magnitude response $|H(j\omega)|$ characterizes how a filter attenuates sign
 > - Alternates between 0 and ±1, creating equiripple in both bands
 > - $\xi$ controls transition sharpness
 > - 📖 [Wikipedia: Jacobian Elliptic Functions](https://en.wikipedia.org/wiki/Jacobi_elliptic_functions)
->   {: .prompt-info }
+{: .prompt-info }
 
 ### 1.3 Digital Filter Implementations
 
@@ -269,8 +269,8 @@ where $l[n]$ is a low-pass lifter.
 
 
 
-![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_quefrency.png){: .dark } 
-![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_quefrency.png){: .light } 
+![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_quefrency.png){: .light } 
+![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_quefrency.png){: .dark } 
 
 _Figure 2.1: Cepstrum separating source and filter in quefrency domain_
 
