@@ -24,7 +24,6 @@ image:
 
 **ASR (Automatic Speech Recognition)** systems transform audio waveforms into text. At the heart of this process lies the **acoustic model**—a statistical mapping from audio features to sound units called **phone**.
 
-
 ### What's a Phone
 
 The minimal, perceptually isolable segment of sound—the atomic, boundary-defined unit that any hearing system (human or machine) treats as a single entity. From Greek phōnḗ (“sound/voice”), it stays deliberately pre-linguistic, pre-musical, and pre-semantic: the raw quantum from which every audible stream is built, universally accepted in speech tech, music information retrieval, bioacoustics, and forensic audio. Core contemporary representations of the phone (what people actually use in 2025 models)
@@ -43,26 +42,25 @@ From this neutral phone, only three classic domain-specific abstractions emerge:
 - Grapheme – written symbol(s) conventionally linked to a phoneme
 - Note – phone whose dominant attribute is stable perceived pitch (musical domain)
 
-
 ---
 
 ## 0. Digital Signal Processing Foundations Recap
 
 These operations are covered in detail in previous posts. Here's the quick reference for speech processing:
 
-**Convolution** $(x * h)[n]$ 
+**Convolution** $(x * h)[n]$
 
- — how filters and systems transform signals. Convolution in time = multiplication in frequency (FFT—Fast Fourier Transform—speedup).
+— how filters and systems transform signals. Convolution in time = multiplication in frequency (FFT—Fast Fourier Transform—speedup).
 
-**Correlation** $R_{xx}[n]$ 
+**Correlation** $R_{xx}[n]$
 
 — measures self-similarity at different lags. Peaks in autocorrelation reveal pitch period.
 
-**DFT (Discrete Fourier Transform)** $X[k] = \sum_n x[n] e^{-i2\pi kn/N}$ 
+**DFT (Discrete Fourier Transform)** $X[k] = \sum_n x[n] e^{-i2\pi kn/N}$
 
 — decomposes signal into frequency components. Magnitude = "how much", phase = "when".
 
-**Windowing** 
+**Windowing**
 
 — When we extract a finite frame from a continuous signal, the abrupt edges create artificial discontinuities. The DFT assumes periodicity, so these sharp cuts cause **spectral leakage**—energy spreading into adjacent frequency bins where it shouldn't be.
 
@@ -78,21 +76,20 @@ A window function tapers the frame smoothly to zero at the edges:
 **Trade-off:** Narrower main lobe = better frequency resolution. Lower side lobes = less leakage. You can't optimize both—this is the **time-frequency uncertainty principle**.
 
 > For speech processing, **Hamming window** is the standard choice: good balance between frequency resolution and leakage suppression.
-{: .prompt-tip }
+> {: .prompt-tip }
 
 **STFT (Short-Time Fourier Transform)** $X[m,k]$ — sliding window DFT producing spectrograms. For speech: 20-30ms frames, 10ms hop. Time-frequency uncertainty: $\Delta t \cdot \Delta f \geq 1/4\pi$.
 
 ---
 
 ## 1. Filtering - Frequency Selection
+
 With these foundational operations established, we can now build speech processing systems. The first step is often **filtering**: selectively passing or blocking certain frequencies to prepare the signal for analysis. Frequency notation can be $\omega$ or $f$ or $\nu$.
 
+![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtre.png){: .dark }
 
- ![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtre.png){: .dark }
- 
 ![Filtering Light Mode](../assets/img/graphics/post_12/light/filtre.png){: .light }
 _Figure 1.0: Filter types and their frequency responses_
-
 
 ### 1.1 Filter Types by Frequency Response
 
@@ -107,25 +104,19 @@ Filters are categorized by which frequencies they allow through:
 
 ### 1.2 Filter Design: Magnitude Response Characteristics
 
+![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtredesign.png){: .light}
 
-
- ![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtredesign.png){: .dark }
- 
-![Filtering Light Mode](../assets/img/graphics/post_12/light/filtredesign.png){: .light }
-_Figure 1.1: Filter types and their frequency responses_
-
-
+![Filtering Light Mode](../assets/img/graphics/post_12/light/filtredesign.png){: .dark }
+_Figure 1.1: Filter Design types_
 
 While the filter type determines **which frequencies** to pass or block, the **filter design** determines **how** this transition occurs. Different filter approximations offer trade-offs between passband flatness, stopband attenuation, transition sharpness, and phase response.
 
 The magnitude response $|H(j\omega)|$ characterizes how a filter attenuates signals at different frequencies. Key design considerations include:
 
 - **Passband ripple**: Oscillations in the passband (ideally zero)
-- **Stopband ripple**: Oscillations in the stopband  
+- **Stopband ripple**: Oscillations in the stopband
 - **Transition bandwidth**: Width of the transition between passband and stopband
 - **Rolloff rate**: How quickly attenuation increases in the transition band
-
-
 
 | Type         | Passband | Stopband | Transition | Use Case                                                                                                    |
 | ------------ | -------- | -------- | ---------- | ----------------------------------------------------------------------------------------------------------- |
@@ -136,24 +127,24 @@ The magnitude response $|H(j\omega)|$ characterizes how a filter attenuates sign
 | Elliptic     | Ripple   | Ripple   | Sharpest   | Trades ripples in both bands for minimal transition width; used when filter order must be minimized.        |
 
 > **Notation Guide**
-> 
+>
 > **$\Omega$ (Omega):** Normalized frequency = $\omega/\omega_c$ (dimensionless ratio)
-> 
+>
 > **$\varepsilon$ (Epsilon):** Ripple factor controlling passband/stopband ripple amplitude $$\varepsilon = \sqrt{10^{R_p/10} - 1}$$ where $R_p$ is passband ripple in dB. Example: $\varepsilon = 0.5 \Rightarrow R_p \approx 0.97$ dB
-> 
-> **$B_n(s)$:** Reverse Bessel polynomial of order $n$ $$B_n(s) = \sum_{k=0}^{n} \frac{(2n-k)!}{2^{n-k} \cdot k! \cdot (n-k)!} s^k$$ Examples: $B_1(s) = s+1$, $B_3(s) = s^3 + 6s^2 + 15s + 15$ 
+>
+> **$B_n(s)$:** Reverse Bessel polynomial of order $n$ $$B_n(s) = \sum_{k=0}^{n} \frac{(2n-k)!}{2^{n-k} \cdot k! \cdot (n-k)!} s^k$$ Examples: $B_1(s) = s+1$, $B_3(s) = s^3 + 6s^2 + 15s + 15$
 > 📖 [Wikipedia: Bessel Filter](https://en.wikipedia.org/wiki/Bessel_filter) | [Bessel Polynomials](https://en.wikipedia.org/wiki/Bessel_polynomials)
-> 
-> **$C_n(x)$:** Chebyshev polynomial of the first kind $$C_n(x) = \begin{cases} \cos(n \arccos x) & |x| \leq 1 \ \cosh(n \text{ arccosh } x) & |x| > 1 \end{cases}$$ Examples: 
->  $C_0(x) = 1$, $C_1(x) = x$, $C_2(x) = 2x^2-1$, $C_3(x) = 4x^3-3x$ 
+>
+> **$C_n(x)$:** Chebyshev polynomial of the first kind $$C_n(x) = \begin{cases} \cos(n \arccos x) & |x| \leq 1 \ \cosh(n \text{ arccosh } x) & |x| > 1 \end{cases}$$ Examples:
+> $C_0(x) = 1$, $C_1(x) = x$, $C_2(x) = 2x^2-1$, $C_3(x) = 4x^3-3x$
 > 📖 [Wikipedia: Chebyshev Polynomials](https://en.wikipedia.org/wiki/Chebyshev_polynomials)
-> 
+>
 > **$R_n(\xi, x)$:** Jacobian elliptic rational function (order $n$, selectivity $\xi$)
-> 
+>
 > - Alternates between 0 and ±1, creating equiripple in both bands
-> - $\xi$ controls transition sharpness 
-> - 📖 [Wikipedia: Jacobian Elliptic Functions](https://en.wikipedia.org/wiki/Jacobi_elliptic_functions) 
-{: .prompt-info }
+> - $\xi$ controls transition sharpness
+> - 📖 [Wikipedia: Jacobian Elliptic Functions](https://en.wikipedia.org/wiki/Jacobi_elliptic_functions)
+>   {: .prompt-info }
 
 ### 1.3 Digital Filter Implementations
 
@@ -188,9 +179,10 @@ $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k] - \sum_{k=1}^{N} a_k \cdot y[n-k]$$
 | Phase distortion | Different frequencies delayed differently (problematic for some applications) |
 
 > Recursive filters can become unstable if not designed carefully. Always verify that all poles are inside the unit circle in the z-plane.
-{: .prompt-warning }
+> {: .prompt-warning }
 
 **In speech processing:**
+
 - **Non-recursive (FIR):** Mel filterbanks (linear phase preserves temporal structure)
 - **Recursive (IIR):** Pre-emphasis (simple 1st-order, low latency)
 
@@ -227,6 +219,7 @@ Now that we can filter and shape the spectrum, we need a way to **separate** the
 
 <!-- ![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/img7_cepstrum.png){: .dark } -->
 <!-- ![Cepstrum Light Mode](../assets/img/graphics/post_12/light/img7_cepstrum.png){: .light } -->
+
 _Figure 2.0: Cepstrum separating source and filter_
 
 ### Homomorphic Deconvolution
@@ -272,6 +265,7 @@ The cepstrum works on linear frequency. But human hearing doesn't perceive frequ
 
 <!-- ![Mel Scale Dark Mode](../assets/img/graphics/post_12/dark/img8_mel.png){: .dark } -->
 <!-- ![Mel Scale Light Mode](../assets/img/graphics/post_12/light/img8_mel.png){: .light } -->
+
 _Figure 3.0: Mel filterbank on linear frequency axis_
 
 ### Mel Scale
@@ -334,7 +328,7 @@ $$\Delta c_t = \frac{\sum_{n=1}^{N} n(c_{t+n} - c_{t-n})}{2\sum_{n=1}^{N} n^2}$$
 - 13 delta-delta
 
 > The 39-dimensional MFCC+delta+delta-delta feature vector has been the de facto standard for speech recognition for decades. Even with modern neural approaches, it remains a strong baseline.
-{: .prompt-info }
+> {: .prompt-info }
 
 This captures both "what sound" and "how it's changing"—essential for distinguishing coarticulated phonemes.
 
@@ -346,6 +340,7 @@ The **DCT (Discrete Cosine Transform)** is a transform similar to the DFT but us
 
 <!-- ![DCT Dark Mode](../assets/img/graphics/post_12/dark/img9_dct.png){: .dark } -->
 <!-- ![DCT Light Mode](../assets/img/graphics/post_12/light/img9_dct.png){: .light } -->
+
 _Figure 4.0: DCT basis functions and energy compaction_
 
 ### Definition (DCT-II)
@@ -377,6 +372,7 @@ MFCCs capture spectral shape through filterbanks. **LPC (Linear Predictive Codin
 
 <!-- ![LPC Dark Mode](../assets/img/graphics/post_12/dark/img10_lpc.png){: .dark } -->
 <!-- ![LPC Light Mode](../assets/img/graphics/post_12/light/img10_lpc.png){: .light } -->
+
 _Figure 5.0: Linear prediction as all-pole filter modeling_
 
 ### The Model
@@ -438,7 +434,7 @@ These have a physical interpretation—they represent the reflection at each "st
 **Stability guarantee:** If $|k_i| < 1$ for all $i$, the filter is stable. This is always true when computed from valid autocorrelation (positive definite).
 
 > Unlike general IIR filter design, Levinson-Durbin always produces stable filters when starting from a valid autocorrelation sequence—no need for manual stability checks.
-{: .prompt-info }
+> {: .prompt-info }
 
 ### Applications
 
@@ -456,6 +452,7 @@ So far we've focused on the vocal tract (formants, spectral envelope). But the o
 
 <!-- ![Pitch Detection Dark Mode](../assets/img/graphics/post_12/dark/img11_pitch.png){: .dark } -->
 <!-- ![Pitch Detection Light Mode](../assets/img/graphics/post_12/light/img11_pitch.png){: .light } -->
+
 _Figure 6.0: Pitch detection methods_
 
 ### Autocorrelation Method
@@ -495,6 +492,7 @@ Speech can be viewed as a slowly-varying envelope (amplitude modulation) riding 
 
 <!-- ![Modulation Dark Mode](../assets/img/graphics/post_12/dark/img12_modulation.png){: .dark } -->
 <!-- ![Modulation Light Mode](../assets/img/graphics/post_12/light/img12_modulation.png){: .light } -->
+
 _Figure 7.0: AM, FM, and the analytic signal_
 
 ### Amplitude Modulation
@@ -541,12 +539,12 @@ Traditional approach modeling temporal variability:
 
 A **DNN (Deep Neural Network)** is a neural network with multiple hidden layers. Evolution of architectures:
 
-| Era | Architecture | Approach |
-| --- | ------------ | -------- |
-| 2012+ | DNN-HMM hybrid | DNN replaces GMM for emission probabilities |
-| 2015+ | LSTM/GRU | Recurrent networks with CTC loss |
-| 2017+ | Transformer | Attention-based, parallel training |
-| 2020+ | Self-supervised | Pre-trained representations |
+| Era   | Architecture    | Approach                                    |
+| ----- | --------------- | ------------------------------------------- |
+| 2012+ | DNN-HMM hybrid  | DNN replaces GMM for emission probabilities |
+| 2015+ | LSTM/GRU        | Recurrent networks with CTC loss            |
+| 2017+ | Transformer     | Attention-based, parallel training          |
+| 2020+ | Self-supervised | Pre-trained representations                 |
 
 ### Modern Approach: Self-Supervised Speech Embeddings
 
@@ -555,14 +553,14 @@ Traditional MFCCs are hand-crafted features. Modern systems learn representation
 **Wav2Vec 2.0** (Facebook/Meta, 2020): Learns speech representations by predicting masked portions of the audio. Pre-trained on 60k hours of unlabeled speech, then fine-tuned on small labeled datasets.
 
 > Wav2Vec 2.0 achieves strong ASR results with just 10 minutes of labeled data—a massive reduction from traditional systems requiring thousands of hours.
-{: .prompt-info }
+> {: .prompt-info }
 
 **HuBERT** (Hidden-Unit BERT): Similar approach but uses offline clustering to create pseudo-labels for masked prediction.
 
 **Whisper** (OpenAI, 2022): Trained on 680k hours of weakly-supervised data. Robust to accents, background noise, and technical language.
 
 > Whisper is particularly useful for real-world applications due to its robustness to noise and ability to handle multiple languages without explicit language identification.
-{: .prompt-tip }
+> {: .prompt-tip }
 
 These models output **embeddings**—dense vector representations that capture phonetic, speaker, and linguistic information. They can replace or augment traditional MFCC pipelines:
 
