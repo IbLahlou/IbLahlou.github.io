@@ -44,69 +44,6 @@ From this neutral phone, only three classic domain-specific abstractions emerge:
 - Note – phone whose dominant attribute is stable perceived pitch (musical domain)
 
 
-**Example Illustration**
-
-When a singer or a piano plays the first four notes of “Do–Ré–Mi–Fa”, your ears receive exactly four raw phones: four short, perceptually distinct bursts of acoustic energy with stable pitch.
-
-That’s all that physically exists.
-
-Everything else is just the question we decide to ask those same four phones:
-- What was the word that being sung
-- What pitches are these, regardless of words?
-- What are the exact pitches , frequencies and how it is structure in form of data ?
-
-The table below shows, row by row, how the exact same four phones travel through every major abstraction layer we use today
-
-
-| What you actually hear (four raw phones) | Solfege syllable (human sings) | Grapheme (how we write the syllable)      | Phonemic transcription (IPA, language lens) | Note abstraction (music lens)                                     | Typical model that extracts this layer |
-| ---------------------------------------- | ------------------------------ | ----------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------- | -------------------------------------- |
-| 4 distinct, stable pitched sounds        | Do  –  Ré  –  Mi  –  Fa        | Do  –  Ré  –  Mi  –  Fa                   | /do/  –  /ʁe/  –  /mi/  –  /fa/             | Do (C)  –  Ré (D)  –  Mi (E)  –  Fa (F)                           | –                                      |
-| Same four phones                         | Do  –  Ré  –  Mi  –  Fa        | Do  –  Ré  –  Mi  –  Fa                   | /do/  –  /ʁe/  –  /mi/  –  /fa/             | C4  –  D4  –  E4  –  F4 (fixed-Do) or movable-Do position 1-2-3-4 | CREPE, Basic Pitch, mt3                |
-| Same four phones                         | Do  –  Ré  –  Mi  –  Fa        | C   –  D   –  E   –  F   (staff notation) | –                                           | C4  –  D4  –  E4  –  F4                                           | Shazam, SoundHound, Spotify song ID    |
-| Same four phones                         | Do  –  Ré  –  Mi  –  Fa        | –                                         | –                                           | midi: 60  –  62  –  64  –  65                                     | Any MIDI transcription model           |
-| Same four phones                         | Do  –  Ré  –  Mi  –  Fa        | –                                         | –                                           | freq: 261.63 – 293.66 – 329.63 – 349.23 Hz                        | YIN, pYIN, SPICE                       |
-| Same four phones (neural codec view)     | Do  –  Ré  –  Mi  –  Fa        | –                                         | –                                           | token seq: [234][567][891]…                                       | EnCodec / Descript Audio Codec         |
-| Same four phones (embedding view)        | Do  –  Ré  –  Mi  –  Fa        | –                                         | –                                           | 1024-dim vectors × 4                                              | HuBERT / AudioLM                       |
-
-The crucial mapping in one line:
-
-**Do Ré Mi Fa** (sung syllables)  
-→ **/do ʁe mi fa/** (phonemic, language treats them as spoken words)  
-→ **Do, Ré, Mi, Fa** (graphemic, solfège spelling)  
-→ **C4 D4 E4 F4** or simply **Do Ré Mi Fa** (note abstraction, music treats the exact same phones as pure pitch classes)
-
-
-### The Acoustic Model Pipeline
-
-```
-Raw audio (48–96 kHz PCM)  
-→ Phone segmentation (onset, boundary, or change-point detection)  
-→ Short-time framing & windowing (10–50 ms frames, 10–25 ms hop)  
-→ Time-frequency representation  
-    ├─ STFT (most common)  
-    ├─ Constant-Q Transform (CQT) – music & pitched sources  
-    ├─ Continuous/Discrete Wavelet Transform – transients & non-stationary signals  
-    └─ Gammatone or ERB filterbanks – auditory modeling  
-→ Perceptual compression  
-    └─ Mel / Bark / ERB scaling + logarithmic energy (standard)  
-→ Representation layer (multiple parallel paths coexist in 2025)  
-    ├─ DCT → MFCCs / GFCCs (legacy, lightweight devices)  
-    ├─ Convolutional / Transformer front-ends → dense embeddings (Wav2Vec 2.0, HuBERT, Audio-ALiBi, BEATs)  
-    ├─ Vector quantization → discrete neural tokens (EnCodec, SoundStream, Descript Audio Codec, DAC)  
-    └─ Parametric decomposition → sinusoids + residual (DDSP, Diff-PTC)  
-→ Temporal sequence modeling  
-    └─ Conformer, Transformer, Mamba/State-Space, or CRNN architectures  
-→ Task-specific symbolic decoder (final divergence point)  
-    ├─ Phonemes → Graphemes → Text (speech & lyrics)  
-    ├─ Notes / Chords / Pitch classes → MIDI or music notation (instrumental & vocal music)  
-    ├─ Solfege or scale degrees (Do–Ré–Mi systems)  
-    ├─ Sound-event / scene labels (AudioSet, VGGSound, industrial monitoring)  
-    ├─ Bioacoustic call types (bird, whale, bat, anuran)  
-```
-This unified pipeline is effectively domain-agnostic through the sequence-modeling stage. The same pretrained front-end (e.g., HuBERT Large, Audio-ALiBi-XXL, or EnCodec 48 kHz) can be fine-tuned or directly used for speech recognition, music transcription, environmental sound classification, or generative synthesis with only the decoder and loss function changed. Classic DSP remains the foundation; contemporary neural architectures have internalized and extended it rather than replaced it.
-
-This article covers the mathematical operations in this pipeline. Understanding these fundamentals is essential—neural networks don't replace DSP (Digital Signal Processing), they build upon it.
-
 ---
 
 ## 0. Digital Signal Processing Foundations Recap
@@ -148,33 +85,87 @@ A window function tapers the frame smoothly to zero at the edges:
 ---
 
 ## 1. Filtering - Frequency Selection
+With these foundational operations established, we can now build speech processing systems. The first step is often **filtering**: selectively passing or blocking certain frequencies to prepare the signal for analysis. Frequency notation can be $\omega$ or $f$ or $\nu$.
 
-With these foundational operations established, we can now build speech processing systems. The first step is often **filtering** selectively passing or blocking certain frequencies to prepare the signal for analysis.
 
-<!-- TODO: Add images when available
-<!-- ![Filtering Dark Mode](../assets/img/graphics/post_12/dark/img1_filtering.png){: .dark } -->
-<!-- ![Filtering Light Mode](../assets/img/graphics/post_12/light/img1_filtering.png){: .light } -->
+ ![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtre.png){: .dark }
+ 
+![Filtering Light Mode](../assets/img/graphics/post_12/light/filtre.png){: .light }
 _Figure 1.0: Filter types and their frequency responses_
--->
 
-### Filter Types
 
-| Type      | Passes                 | Blocks          | Use Case                  |
-| --------- | ---------------------- | --------------- | ------------------------- |
-| Low-pass  | $f < f_c$              | $f > f_c$       | Anti-aliasing, smoothing  |
-| High-pass | $f > f_c$              | $f < f_c$       | Remove DC, pre-emphasis   |
-| Band-pass | $f_1 < f < f_2$        | else            | Filterbank channels       |
-| Band-stop | $f < f_1$ or $f > f_2$ | $f_1 < f < f_2$ | Notch filter (remove hum) |
+### 1.1 Filter Types by Frequency Response
 
-### FIR vs IIR
+Filters are categorized by which frequencies they allow through:
 
-Digital filters come in two fundamental types, distinguished by whether they use feedback.
+| Type      | Passes                 | Blocks          | Use Case                                                                                                                 |
+| --------- | ---------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Low-pass  | $f < f_c$              | $f > f_c$       | Attenuates high frequencies; used to reduce hiss, emphasize bass, or prevent aliasing in digital audio recording.        |
+| High-pass | $f > f_c$              | $f < f_c$       | Attenuates low frequencies; used to remove rumble, DC offset, or low-end noise in microphones and mixers.                |
+| Band-pass | $f_1 < f < f_2$        | else            | Passes a specific frequency range; used in equalizers, crossovers, or to isolate instruments/vocals in audio production. |
+| Band-stop | $f < f_1$ or $f > f_2$ | $f_1 < f < f_2$ | Rejects a specific frequency range; used to eliminate hum, feedback, or unwanted resonances in sound systems.            |
 
-**FIR (Finite Impulse Response):** A filter whose output depends only on current and past inputs—no feedback.
+### 1.2 Filter Design: Magnitude Response Characteristics
+
+
+
+ ![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtredesign.png){: .dark }
+ 
+![Filtering Light Mode](../assets/img/graphics/post_12/light/filtredesign.png){: .light }
+_Figure 1.1: Filter types and their frequency responses_
+
+
+
+While the filter type determines **which frequencies** to pass or block, the **filter design** determines **how** this transition occurs. Different filter approximations offer trade-offs between passband flatness, stopband attenuation, transition sharpness, and phase response.
+
+The magnitude response $|H(j\omega)|$ characterizes how a filter attenuates signals at different frequencies. Key design considerations include:
+
+- **Passband ripple**: Oscillations in the passband (ideally zero)
+- **Stopband ripple**: Oscillations in the stopband  
+- **Transition bandwidth**: Width of the transition between passband and stopband
+- **Rolloff rate**: How quickly attenuation increases in the transition band
+
+
+
+| Type         | Passband | Stopband | Transition | Use Case                                                                                                    |
+| ------------ | -------- | -------- | ---------- | ----------------------------------------------------------------------------------------------------------- |
+| Butterworth  | Flat     | Flat     | Moderate   | Maximally flat response; used when minimal distortion and good phase response are critical.                 |
+| Bessel       | Flat     | Flat     | Slow       | Linear phase and constant group delay; used when preserving waveform shape is critical (pulse/audio).       |
+| Chebyshev I  | Ripple   | Flat     | Sharp      | Accepts passband ripple for sharper rolloff; used when steep cutoff is needed with good stopband rejection. |
+| Chebyshev II | Flat     | Ripple   | Sharp      | Maintains flat passband with stopband ripple; used when pristine passband quality is essential.             |
+| Elliptic     | Ripple   | Ripple   | Sharpest   | Trades ripples in both bands for minimal transition width; used when filter order must be minimized.        |
+
+> **Notation Guide**
+> 
+> **$\Omega$ (Omega):** Normalized frequency = $\omega/\omega_c$ (dimensionless ratio)
+> 
+> **$\varepsilon$ (Epsilon):** Ripple factor controlling passband/stopband ripple amplitude $$\varepsilon = \sqrt{10^{R_p/10} - 1}$$ where $R_p$ is passband ripple in dB. Example: $\varepsilon = 0.5 \Rightarrow R_p \approx 0.97$ dB
+> 
+> **$B_n(s)$:** Reverse Bessel polynomial of order $n$ $$B_n(s) = \sum_{k=0}^{n} \frac{(2n-k)!}{2^{n-k} \cdot k! \cdot (n-k)!} s^k$$ Examples: $B_1(s) = s+1$, $B_3(s) = s^3 + 6s^2 + 15s + 15$ 
+> 📖 [Wikipedia: Bessel Filter](https://en.wikipedia.org/wiki/Bessel_filter) | [Bessel Polynomials](https://en.wikipedia.org/wiki/Bessel_polynomials)
+> 
+> **$C_n(x)$:** Chebyshev polynomial of the first kind $$C_n(x) = \begin{cases} \cos(n \arccos x) & |x| \leq 1 \ \cosh(n \text{ arccosh } x) & |x| > 1 \end{cases}$$ Examples: 
+>  $C_0(x) = 1$, $C_1(x) = x$, $C_2(x) = 2x^2-1$, $C_3(x) = 4x^3-3x$ 
+> 📖 [Wikipedia: Chebyshev Polynomials](https://en.wikipedia.org/wiki/Chebyshev_polynomials)
+> 
+> **$R_n(\xi, x)$:** Jacobian elliptic rational function (order $n$, selectivity $\xi$)
+> 
+> - Alternates between 0 and ±1, creating equiripple in both bands
+> - $\xi$ controls transition sharpness 
+> - 📖 [Wikipedia: Jacobian Elliptic Functions](https://en.wikipedia.org/wiki/Jacobi_elliptic_functions) 
+{: .prompt-info }
+
+### 1.3 Digital Filter Implementations
+
+Digital filters are fundamentally distinguished by their use of feedback in the difference equation.
+
+#### Non-Recursive Filters (FIR)
+
+A **non-recursive filter** computes output using only current and past inputs—no feedback loop.
 
 $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k]$$
 
-**Intuition:** Output is a weighted sum of the current and past $M$ input samples only. If you feed an impulse (single spike), the output dies after $M$ samples—hence "finite."
+**Intuition:** Output is a weighted sum of the current and past $M$ input samples only. If you feed an impulse (single spike), the output dies after $M$ samples—hence "finite impulse response."
 
 | Property            | Explanation                                    |
 | ------------------- | ---------------------------------------------- |
@@ -182,11 +173,13 @@ $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k]$$
 | Linear phase        | Symmetric coefficients preserve waveform shape |
 | Higher order needed | Need many taps for sharp cutoffs               |
 
-**IIR (Infinite Impulse Response):** A filter with feedback—output depends on past outputs too.
+#### Recursive Filters (IIR)
+
+A **recursive filter** incorporates feedback—output depends on past outputs as well as inputs.
 
 $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k] - \sum_{k=1}^{N} a_k \cdot y[n-k]$$
 
-**Intuition:** Output depends on past inputs AND past outputs (feedback). An impulse can theoretically ring forever—hence "infinite." The feedback creates resonances that achieve sharp frequency responses with fewer coefficients.
+**Intuition:** Output depends on past inputs AND past outputs (feedback). An impulse can theoretically ring forever—hence "infinite impulse response." The feedback creates resonances that achieve sharp frequency responses with fewer coefficients.
 
 | Property         | Explanation                                                                   |
 | ---------------- | ----------------------------------------------------------------------------- |
@@ -194,15 +187,14 @@ $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k] - \sum_{k=1}^{N} a_k \cdot y[n-k]$$
 | Lower order      | Feedback provides "free" filtering; 2nd-order IIR ≈ 50th-order FIR            |
 | Phase distortion | Different frequencies delayed differently (problematic for some applications) |
 
-> IIR filters can become unstable if not designed carefully. Always verify that all poles are inside the unit circle in the z-plane.
+> Recursive filters can become unstable if not designed carefully. Always verify that all poles are inside the unit circle in the z-plane.
 {: .prompt-warning }
 
 **In speech processing:**
+- **Non-recursive (FIR):** Mel filterbanks (linear phase preserves temporal structure)
+- **Recursive (IIR):** Pre-emphasis (simple 1st-order, low latency)
 
-- **FIR:** Mel filterbanks (linear phase preserves temporal structure)
-- **IIR:** Pre-emphasis (simple 1st-order, low latency)
-
-### Pre-emphasis Filter
+#### Pre-emphasis Filter
 
 $$y[n] = x[n] - \alpha x[n-1], \quad \alpha \approx 0.97$$
 
@@ -212,9 +204,20 @@ $$y[n] = x[n] - \alpha x[n-1], \quad \alpha \approx 0.97$$
 
 Boosts high frequencies ~6 dB/octave.
 
-### Why Pre-emphasis?
+#### Why Pre-emphasis?
 
 The glottal source (vocal cord vibration) has a natural spectral tilt: energy decreases ~20 dB/decade at higher frequencies. Pre-emphasis compensates for this, giving high-frequency formants more weight in analysis. Without it, low frequencies would dominate MFCC computation.
+
+### 1.4 Common Filter Artifacts and Phenomena
+
+| Artifact         | Cause                                    | Manifestation                            | Mitigation                                                                 |
+| ---------------- | ---------------------------------------- | ---------------------------------------- | -------------------------------------------------------------------------- |
+| Gibbs Phenomenon | Brick-wall ideal filters (discontinuity) | ~9% overshoot, persistent ringing        | Use realizable filters with gradual transitions; apply window functions.   |
+| Ringing          | Sharp cutoff filters                     | Temporal oscillations near transients    | Lower filter order; use Butterworth over Chebyshev/Elliptic.               |
+| Passband Ripple  | Chebyshev I, Elliptic designs            | Amplitude variations in passband         | Use Butterworth or Chebyshev II if flat passband is critical.              |
+| Stopband Ripple  | Chebyshev II, Elliptic designs           | Incomplete attenuation in stopband       | Increase filter order or use Butterworth/Chebyshev I for better rejection. |
+| Phase Distortion | Recursive filters (non-linear phase)     | Frequency components delayed differently | Use non-recursive filters for linear phase; minimize with Butterworth.     |
+| Pre-ringing      | Non-causal or symmetric non-recursive    | Oscillations before transient            | Accept for offline processing; use minimum-phase designs for real-time.    |
 
 ---
 
@@ -601,18 +604,3 @@ model.summary()
 
 **Input:** (batch, time_steps, 39) — sequence of MFCC frames
 **Output:** (batch, time_steps, 40) — phoneme probabilities per frame
-
----
-
-## References
-
-<!--
-ADD YOUR OWN:
-- DSP textbooks you used
-- Tutorials that helped
--->
-
-1. Oppenheim & Schafer - Discrete-Time Signal Processing
-2. Rabiner & Schafer - Digital Processing of Speech Signals
-3. Quatieri - Discrete-Time Speech Signal Processing
-4. Smith - Mathematics of the DFT
