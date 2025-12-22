@@ -89,7 +89,7 @@ With these foundational operations established, we can now build speech processi
 ![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtre.png){: .dark }
 
 ![Filtering Light Mode](../assets/img/graphics/post_12/light/filtre.png){: .light }
-_Figure 1.0: Filter types and their frequency responses_
+_Figure 1.0:Effect of Classical Filters on Signals in Time and Frequency Domains_
 
 ### 1.1 Filter Types by Frequency Response
 
@@ -189,8 +189,6 @@ $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k] - \sum_{k=1}^{N} a_k \cdot y[n-k]$$
 #### Pre-emphasis Filter
 
 
-
-
 $$y[n] = x[n] - \alpha x[n-1], \quad \alpha \approx 0.97$$
 
 **Transfer function:** $H(z) = 1 - \alpha z^{-1}$
@@ -228,15 +226,12 @@ Now that we can filter and shape the spectrum, we need a way to **separate** the
 
 ![Cepstrum Time domain Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_time.png)
 {: .dark }
-
 ![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_time.png){: .light }
-
 _Figure 2.0: Cepstrum separating source and filter in time domain_
 
 
  ![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_frequency.png){: .dark } 
  ![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_frequency.png){: .light } 
-
 _Figure 2.1: Cepstrum separating source and filter in frequency domain_
 
 
@@ -271,7 +266,6 @@ where $l[n]$ is a low-pass lifter.
 
 ![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_quefrency.png){: .light } 
 ![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_quefrency.png){: .dark } 
-
 _Figure 2.1: Cepstrum separating source and filter in quefrency domain_
 
 ### Cepstrum Intuition
@@ -284,188 +278,388 @@ _Figure 2.1: Cepstrum separating source and filter in quefrency domain_
 
 ---
 
-## 3. Mel-Frequency Analysis
+## 3. Discrete Cosine Transform (DCT)
 
-The cepstrum works on linear frequency. But human hearing doesn't perceive frequencies linearly—we're more sensitive to differences at low frequencies than high. The **mel scale** models this perception, leading to **MFCCs (Mel-Frequency Cepstral Coefficients)**—the most widely used features in speech recognition.
+Before introducing mel-frequency processing, we first define the transform that will ultimately produce the cepstral coefficients. MFCCs are _defined_ as the DCT of log-mel energies, so the DCT must be understood first.
 
-<!-- ![Mel Scale Dark Mode](../assets/img/graphics/post_12/dark/img8_mel.png){: .dark } -->
-<!-- ![Mel Scale Light Mode](../assets/img/graphics/post_12/light/img8_mel.png){: .light } -->
-
-_Figure 3.0: Mel filterbank on linear frequency axis_
-
-### Mel Scale
-
-$$m = 2595 \cdot \log_{10}\left(1 + \frac{f}{700}\right)$$
-
-$$f = 700 \cdot \left(10^{m/2595} - 1\right)$$
-
-**Perceptual motivation:** Equal mel intervals = equal perceived pitch intervals.
-
-### Mel Filterbank
-
-Triangular filters uniformly spaced in mel domain:
-
-$$
-H_m[k] = \begin{cases}
-0 & k < f[m-1] \\
-\frac{k - f[m-1]}{f[m] - f[m-1]} & f[m-1] \leq k < f[m] \\
-\frac{f[m+1] - k}{f[m+1] - f[m]} & f[m] \leq k < f[m+1] \\
-0 & k \geq f[m+1]
-\end{cases}
-$$
-
-### Filterbank Energies
-
-$$E_m = \sum_{k=0}^{N/2} \lvert X[k] \rvert^2 \cdot H_m[k]$$
-
-### MFCC Computation
-
-1. Compute power spectrum: $\lvert X[k] \rvert^2$
-2. Apply mel filterbank: $E_m$
-3. Log compress: $\log E_m$
-4. DCT: $c_i = \sum_{m=1}^{M} \log E_m \cdot \cos\left(\frac{\pi i (m-0.5)}{M}\right)$
-
-### Why DCT for MFCCs?
-
-**Decorrelation:** Mel filterbank outputs are correlated (adjacent filters overlap). DCT produces uncorrelated coefficients, beneficial for diagonal-covariance GMMs.
-
-**Energy compaction:** Most speech information concentrates in the first 12-13 coefficients. Higher coefficients represent fine spectral detail (often discarded).
-
-### Dynamic Features: Deltas and Delta-Deltas
-
-Static MFCCs capture spectral shape at a single instant. Speech is inherently dynamic—phoneme transitions carry critical information.
-
-**Delta coefficients** (velocity): First derivative of MFCCs across time
-$$\Delta c_t = \frac{\sum_{n=1}^{N} n(c_{t+n} - c_{t-n})}{2\sum_{n=1}^{N} n^2}$$
-
-**Delta-delta coefficients** (acceleration): Second derivative, computed the same way on deltas.
-
-| Coefficient Type | Captures          | Example                     |
-| ---------------- | ----------------- | --------------------------- |
-| Static MFCC      | Spectral envelope | Vowel identity              |
-| Delta            | Rate of change    | Consonant-vowel transitions |
-| Delta-delta      | Acceleration      | Emphasis, speaking rate     |
-
-**Standard feature vector:** 39 dimensions per frame
-
-- 13 static (12 MFCCs + energy)
-- 13 delta
-- 13 delta-delta
-
-> The 39-dimensional MFCC+delta+delta-delta feature vector has been the de facto standard for speech recognition for decades. Even with modern neural approaches, it remains a strong baseline.
-> {: .prompt-info }
-
-This captures both "what sound" and "how it's changing"—essential for distinguishing coarticulated phonemes.
-
----
-
-## 4. Discrete Cosine Transform (DCT)
-
-The **DCT (Discrete Cosine Transform)** is a transform similar to the DFT but uses only cosine functions, producing real-valued coefficients. It's widely used in compression (JPEG, MP3) because it concentrates signal energy into fewer coefficients than the DFT.
-
-<!-- ![DCT Dark Mode](../assets/img/graphics/post_12/dark/img9_dct.png){: .dark } -->
-<!-- ![DCT Light Mode](../assets/img/graphics/post_12/light/img9_dct.png){: .light } -->
-
-_Figure 4.0: DCT basis functions and energy compaction_
+The **Discrete Cosine Transform (DCT)** is a real-valued orthogonal transform closely related to the Fourier transform, but using only cosine basis functions. Its key role is to decorrelate inputs and compact energy into a small number of coefficients.
 
 ### Definition (DCT-II)
 
-$$C[k] = \sum_{n=0}^{N-1} x[n] \cdot \cos\left(\frac{\pi k (2n+1)}{2N}\right)$$
+$$  
+C[k] = \sum_{n=0}^{N-1} x[n]\cos\left(\frac{\pi k(2n+1)}{2N}\right)  
+$$
 
-### Why DCT?
+### Why the DCT Is Used
 
-1. **Real-valued:** No complex numbers
-2. **Energy compaction:** Most energy in first few coefficients
-3. **Decorrelation:** Approximates the KLT (Karhunen-Loève Transform, the optimal decorrelating transform) for Markov-1 signals
+- **Energy compaction:** Most signal energy concentrates in the first few coefficients
+- **Decorrelation:** Approximates the Karhunen–Loève Transform for short-term speech spectra
+- **Real-valued output:** No complex arithmetic
+    
 
-### DCT vs DFT
+These properties make the DCT ideal for transforming correlated spectral energies into a compact statistical representation.
 
-| Property   | DFT           | DCT                 |
-| ---------- | ------------- | ------------------- |
-| Values     | Complex       | Real                |
-| Assumes    | Periodic      | Symmetric extension |
-| Boundary   | Discontinuity | Smooth              |
-| Compaction | Good          | Better              |
+|Property|DFT|DCT|
+|---|---|---|
+|Output|Complex|Real|
+|Boundary|Periodic|Symmetric extension|
+|Compaction|Good|Better|
+
+---
+
+## 4. Mel-Frequency Analysis
+
+The cepstrum operates on **linear frequency**, but human hearing does not. To align spectral analysis with perception, frequencies are first warped to the **mel scale**, producing **Mel-Frequency Cepstral Coefficients (MFCCs)** after DCT.
+
+### The Origin of "Mel"
+
+The term _mel_ (from _melody_) was introduced by Stevens, Volkmann, and Newman (1937) during early studies of pitch perception.
+
+### Why We Need the Mel Scale
+
+Human auditory resolution is high at low frequencies and coarse at high frequencies:
+
+- **100 Hz → 200 Hz** sounds like a large jump
+- **5000 Hz → 5100 Hz** sounds negligible
+    
+This motivates a nonlinear frequency axis that expands low frequencies and compresses high ones.
+
+### Mel Scale Formulas
+
+Forward mapping (Hz → mel):
+$$  
+m = 2595 \log_{10}\left(1 + \frac{f}{700}\right)  
+$$
+or equivalently,
+$$  
+m = 1127 \ln\left(1 + \frac{f}{700}\right)  
+$$
+Inverse mapping (mel → Hz):
+$$  
+f = 700\left(10^{\frac{m}{2595}} - 1\right)  
+$$
+or
+$$  
+f = 700\left(e^{\frac{m}{1127}} - 1\right)  
+$$
+
+Equal mel intervals correspond to equal perceived pitch intervals.
+
+
+![Mel Scale Dark Mode](assets/img/graphics/post_12/dark/frequency-to-mel.png){: .dark } ![Mel Scale Light Mode](assets/img/graphics/post_12/light/frequency-to-mel.png){: .light } 
+_Figure 3.0: The Mel Scale: Modeling Human Hearing_
+
+---
+
+### Mel Filterbank
+
+Triangular filters are uniformly spaced in the **mel domain**, not in Hz. Each filter (H_m[k]) spans three adjacent mel-spaced frequency points:
+
+$$  
+H_m[k] =  
+\begin{cases}  
+0 & k < f[m-1] \\  
+\frac{k - f[m-1]}{f[m] - f[m-1]} & f[m-1] \le k < f[m] \\  
+\frac{f[m+1] - k}{f[m+1] - f[m]} & f[m] \le k < f[m+1] \\ 
+0 & k \ge f[m+1]  
+\end{cases}  
+$$
+
+---
+
+### Filterbank Energies
+
+Applying the mel filters to the power spectrum produces mel-band energies:
+
+$$  
+E_m = \sum_{k=0}^{N/2} |X[k]|^2 \cdot H_m[k]  
+$$
+
+These energies are perceptually meaningful but highly correlated.
+
+---
+
+### MFCC Computation
+
+Log compression models loudness perception:
+
+$$  
+\tilde{E}_m = \log E_m  
+$$
+
+Finally, MFCCs are obtained by applying the DCT:
+
+$$  
+c_i =  
+\sum_{m=1}^{M}  
+\tilde{E}_m  
+\cos\left(  
+\frac{\pi i(m - 0.5)}{M}  
+\right)  
+$$
+
+Thus, **MFCCs are the DCT of log-mel filterbank energies**.
+
+---
+
+### Dynamic Features
+
+Delta and delta-delta coefficients capture temporal dynamics:
+
+$$  
+\Delta c_t =  
+\frac{  
+\sum_{n=1}^{N} n(c_{t+n} - c_{t-n})  
+}{  
+2\sum_{n=1}^{N} n^2  
+}  
+$$
+
+Standard feature vector: **39 dimensions**
+
+- 13 static MFCCs
+- 13 deltas    
+- 13 delta-deltas
+
+#### MFCC Processing Pipeline
+
+Let (x[n]) be a real-valued, finite-length speech frame of length (N), windowed in time.
+
+---
+
+**Short-Time Fourier Transform (STFT)**  
+The discrete Fourier transform maps the signal from time to linear frequency:
+
+$$  
+X[k] = \sum_{n=0}^{N-1} x[n],e^{-j\frac{2\pi}{N}kn},  
+\qquad k = 0,\dots,N-1  
+$$
+
+**Power Spectrum Operator**  
+Phase information is discarded and spectral energy is retained:
+
+$$  
+P[k] = |X[k]|^2  
+$$
+
+**Mel Filterbank Projection**  
+Let ({H_m[k]}_{m=1}^M) be mel-spaced triangular filters forming a non-uniform spectral partition.  
+Each filter performs a weighted inner product with the power spectrum:
+
+$$  
+E_m = \sum_{k=0}^{N/2} P[k],H_m[k],  
+\qquad m = 1,\dots,M  
+$$
+
+This defines a mapping  
+ -
+$$\mathbb{R}^{N/2+1} \rightarrow \mathbb{R}^M$$
+from linear-frequency energy to perceptual frequency energy.
+
+**Logarithmic Nonlinearity**  
+Dynamic range compression and loudness modeling are applied component-wise:
+
+$$  
+\tilde{E}_m = \log(E_m)  
+$$
+
+This converts multiplicative spectral variations into additive ones.
+
+
+**Discrete Cosine Transform (Cepstral Projection)**  
+The DCT applies an orthogonal change of basis to decorrelate mel-band energies:
+
+$$  
+c_i =  
+\sum_{m=1}^{M}  
+\tilde{E}_m  
+\cos!\left(  
+\frac{\pi i (m - \tfrac12)}{M}  
+\right),  
+\qquad i = 0,\dots,L-1  
+$$
+
+This operation maps the log-mel spectrum into the **cepstral domain**, concentrating information into low-order coefficients.
+
+#### MFCC Mapping (Operator Form)
+
+The complete MFCC extraction process can therefore be written as the composition:
+
+$$  
+\boxed{  
+\mathbf{c}
+=
+\mathcal{D}  
+\circ  
+\log  
+\circ  
+\mathcal{H}  
+\circ  
+|\mathcal{F}|  
+,(x[n])  
+}  
+$$
+
+where:
+
+- $\mathcal{F}$: Fourier transform
+- $|\cdot|$: magnitude-squared (power spectrum)
+- $\mathcal{H}$: mel filterbank projection
+- $\log$: logarithmic compression
+- $\mathcal{D}$: discrete cosine transform
+    
+The operator $\mathcal{H}$ in the MFCC mapping represents a linear projection from the power spectrum to mel-band energies. This operator is defined by a set of overlapping weighting functions constructed via uniform sampling in the mel domain. The figure below visualizes this projection by showing the triangular responses that constitute the mel filterbank.
+
+![Mel Scale Dark Mode](assets/img/graphics/post_12/dark/mfcc.png){: .dark } ![Mel Scale Light Mode](assets/img/graphics/post_12/light/mfcc.png){: .light } 
+_Figure 3.1: The Mel Scale: Modeling Human Hearing_
+
+Each triangle corresponds to one row of the operator $\mathcal{H}$ and defines how spectral energy is aggregated within a frequency band. This projection produces the log-mel energies that are subsequently decorrelated by the discrete cosine transform $\mathcal{D}$ to form MFCCs, linking the Fourier domain to the cepstral representation
+
+
+In voice analysis tasks such as **formant stability assessment** or **vocal tract configuration estimation**, small variations in articulation cause continuous shifts in spectral peaks rather than discrete changes. Hard band assignment would convert these continuous shifts into discontinuous feature variations, degrading measurement reliability. 
+
+Triangular mel filters preserve continuity by linearly sharing energy between neighboring bands, producing stable spectral descriptors under normal intra-speaker variation. This makes them suitable for voice-based analysis where consistency across repeated phonation is required.
+
 
 ---
 
 ## 5. Linear Prediction (LPC)
 
-MFCCs capture spectral shape through filterbanks. **LPC (Linear Predictive Coding)** takes a different approach: it models the vocal tract as an **all-pole filter** and finds coefficients that best predict the signal. This yields another powerful representation—one that's particularly useful for speech coding and formant analysis.
 
-**Formants** are the resonance frequencies of the vocal tract (labeled F1, F2, F3...). They determine vowel identity—for example, the difference between /i/ ("ee") and /a/ ("ah") is primarily in F1 and F2 positions.
+Speech signals, when sampled at typical rates of 8-16 kHz, generate substantial amounts of dataapproximately 480,000 samples per minute at 8 kHz. This presents significant challenges for transmission and storage in telecommunications and audio processing systems. Linear Predictive Coding (LPC) addresses this challenge by exploiting the inherent structure and predictability of speech signals to achieve efficient parametric representations using only 10-20 coefficients per analysis frame.
 
-<!-- ![LPC Dark Mode](../assets/img/graphics/post_12/dark/img10_lpc.png){: .dark } -->
-<!-- ![LPC Light Mode](../assets/img/graphics/post_12/light/img10_lpc.png){: .light } -->
+Unlike MFCCs which capture spectral shape through filterbanks, LPC models the speech production mechanism itself, representing the vocal tract as an all-pole filter. This approach proves particularly effective for speech coding, synthesis, and formant analysis.
+#### The Prediction Framework
 
-_Figure 5.0: Linear prediction as all-pole filter modeling_
+The fundamental observation underlying LPC is that speech exhibits strong short-term correlation—consecutive samples are not independent but related through the physical constraints of vocal tract resonance. This correlation structure can be exploited for compression and analysis.
 
-### The Model
+**The prediction model** expresses the current sample as a linear combination of $p$ previous samples: $$\hat{s}[n] = \sum_{k=1}^{p} \alpha_k \cdot s[n-k]$$
 
-Predict current sample from past samples:
+The **prediction error** quantifies how well this model captures the signal: $$e[n] = s[n] - \hat{s}[n] = s[n] - \sum_{k=1}^{p} \alpha_k \cdot s[n-k]$$
 
-$$\hat{x}[n] = -\sum_{k=1}^{p} a_k \cdot x[n-k]$$
+When prediction is accurate (small error), the signal structure is well-captured by the coefficients $\alpha_k$. These coefficients, rather than the raw samples, can then be transmitted or stored, achieving substantial data reduction.
 
-Prediction error: $e[n] = x[n] - \hat{x}[n]$
+#### The Source-Filter Model
 
-### All-Pole Filter
+To understand what these prediction coefficients represent physically, we consider the source-filter theory of speech production. The vocal tract acts as a resonant cavity, filtering an excitation source (either periodic glottal pulses for voiced sounds or turbulent noise for unvoiced sounds).
 
-$$H(z) = \frac{1}{1 + \sum_{k=1}^{p} a_k z^{-k}} = \frac{1}{A(z)}$$
+LPC models this system through an all-pole transfer function: $$H(z) = \frac{G}{1 + \sum_{k=1}^{p} \alpha_k z^{-k}} = \frac{G}{A(z)}$$
 
-Models vocal tract transfer function (resonances = formants).
+where $G$ represents the gain and $A(z)$ is the inverse filter. The poles of $H(z)$ correspond directly to the **formants**—the resonant frequencies of the vocal tract that determine vowel identity and other phonetic characteristics. This physical correspondence explains why LPC proves so effective for speech: the mathematical model aligns with the underlying acoustic production mechanism.
+#### Coefficient Estimation via Error Minimization
 
-### Solving for Coefficients
+Having established the prediction framework, we must determine the optimal coefficients $\alpha_k$. The standard approach minimizes the total squared prediction error over an analysis window:
 
-Minimize mean squared error:
+$$E = \sum_{n} e^2[n] = \sum_{n} \left(s[n] - \sum_{k=1}^{p} \alpha_k s[n-k]\right)^2$$
 
-$$E = \sum_n e^2[n] = \sum_n \left(x[n] + \sum_{k=1}^{p} a_k x[n-k]\right)^2$$
+Applying calculus optimization (setting partial derivatives to zero) yields the **normal equations**:
 
-Take derivatives, set to zero → **Yule-Walker equations:**
+$$\sum_{k=1}^{p} \alpha_k \phi(i,k) = \phi(i,0), \quad i = 1, \ldots, p$$
 
-$$\sum_{k=1}^{p} a_k R[i-k] = -R[i], \quad i = 1, \ldots, p$$
+where $\phi(i,k) = \sum_n s[n-i]s[n-k]$ represent correlation terms between time-shifted versions of the signal.
 
-where $R[k]$ is autocorrelation.
+These equations, known as the **Yule-Walker equations**, form a system of $p$ linear equations in $p$ unknowns. While standard matrix inversion could solve this system, the computational cost of $O(p^3)$ operations becomes prohibitive for real-time processing, particularly when analyzing speech frame-by-frame.
 
-The **Yule-Walker equations** (named after statisticians George Udny Yule and Gilbert Walker) form a linear system that relates the LPC coefficients to the autocorrelation of the signal. The resulting matrix is **Toeplitz**—a special structure where each descending diagonal contains the same value. This structure enables efficient algorithms.
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=1230arWETzY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+#### Efficient Solution: Levinson-Durbin Algorithm
 
-### Levinson-Durbin Algorithm
+The correlation matrix arising from the autocorrelation method possesses a special Toeplitz structure (constant values along diagonals). The Levinson-Durbin algorithm exploits this structure to reduce computational complexity from $O(p^3)$ to $O(p^2)$, making real-time LPC analysis feasible.
 
-Solving Yule-Walker directly requires $O(p^3)$ operations (matrix inversion). The Levinson-Durbin algorithm exploits the **Toeplitz structure** of the autocorrelation matrix to solve it in $O(p^2)$.
+**The algorithm builds solutions recursively,** computing the optimal $i$-th order predictor from the $(i-1)$-th order solution:
 
-**Key insight:** The solution for order $i$ can be built from order $i-1$. We compute coefficients recursively:
+**Initialize:** $$E^{(0)} = R[0]$$
 
-**Algorithm steps:**
+**For each order $i = 1, 2, \ldots, p$:**
 
-1. **Initialize:** $E_0 = R[0]$ (signal energy)
+1. **Compute reflection coefficient (PARCOR):** $$k_i = \frac{R[i] - \sum_{j=1}^{i-1} \alpha_j^{(i-1)} R[i-j]}{E^{(i-1)}}$$
+    
+2. **Update coefficients:** $$\alpha_i^{(i)} = k_i$$ $$\alpha_j^{(i)} = \alpha_j^{(i-1)} - k_i \cdot \alpha_{i-j}^{(i-1)}, \quad j = 1, \ldots, i-1$$
+    
+3. **Update prediction error:** $$E^{(i)} = (1 - k_i^2) E^{(i-1)}$$
+    
 
-2. **For each order $i = 1, 2, \ldots, p$:**
+**Properties of note:**
 
-   Compute reflection coefficient:
-   $$k_i = \frac{R[i] + \sum_{j=1}^{i-1} a_j^{(i-1)} R[i-j]}{E_{i-1}}$$
+- The reflection coefficients $k_i$ correspond to acoustic reflections in tube models of the vocal tract
+- When $|k_i| < 1$ for all $i$, filter stability is guaranteed (minimum phase property)
+- This condition is automatically satisfied for valid autocorrelation sequences
+- Prediction error decreases monotonically with model order
+#### Implementation Methods
 
-   Update coefficients:
-   $$a_i^{(i)} = k_i$$
-   $$a_j^{(i)} = a_j^{(i-1)} + k_i \cdot a_{i-j}^{(i-1)}, \quad j = 1, \ldots, i-1$$
+Two primary approaches exist for formulating the correlation matrices, each with distinct trade-offs:
 
-   Update prediction error:
-   $$E_i = (1 - k_i^2) E_{i-1}$$
+##### Autocorrelation Method
 
-3. **Output:** Final coefficients $a_1, \ldots, a_p$
+This approach applies a window function (typically Hamming) before computing autocorrelation:
 
-**Reflection coefficients $k_i$:**
+1. Window the signal: $\hat{s}[m] = s[m+n] \cdot w[m]$
+2. Compute autocorrelation: $R[k] = \sum_{m=0}^{L-1} \hat{s}[m]\hat{s}[m+k]$
+3. Solve via Levinson-Durbin
 
-These have a physical interpretation—they represent the reflection at each "stage" of a lattice filter (like acoustic reflections in a tube model of the vocal tract).
+**Advantages:**
 
-**Stability guarantee:** If $|k_i| < 1$ for all $i$, the filter is stable. This is always true when computed from valid autocorrelation (positive definite).
+- Always produces stable filters (minimum phase guaranteed)
+- Efficient $O(p^2)$ solution through Levinson-Durbin
+- Autocorrelation matching property
 
-> Unlike general IIR filter design, Levinson-Durbin always produces stable filters when starting from a valid autocorrelation sequence—no need for manual stability checks.
-> {: .prompt-info }
+**Limitations:**
 
-### Applications
+- Windowing introduces edge effects and discontinuities
+- Prediction at boundaries involves zero-valued samples outside the window
+- Requires careful window selection to minimize artifacts
 
-- Speech coding (LPC-10, CELP)
-- Formant estimation
-- Speaker recognition
+##### Covariance Method
+
+This method avoids windowing by extending the analysis region to include valid samples before the current frame:
+
+1. Analyze fixed interval $[0, L-1]$ without windowing
+2. Use samples from extended region $[-p, L-1]$
+3. Solve via Cholesky decomposition (matrix is symmetric but not Toeplitz)
+
+**Advantages:**
+
+- No windowing artifacts
+- All samples used in prediction are actual speech samples
+- Can provide better spectral matching
+
+**Limitations:**
+
+- May produce unstable filters (no minimum phase guarantee)
+- Requires $O(p^3)$ Cholesky decomposition
+- Requires additional computational resources
+
+#### **Figure 6: "Autocorrelation vs Covariance Method Comparison"**
+
+_Comment: Side-by-side spectral estimates from both methods on the same speech frame. Annotate differences (windowing artifacts vs stability issues). Makes the trade-off tangible._
+
+The choice between methods depends on application requirements—telecommunications systems typically favor autocorrelation for guaranteed stability, while analysis applications may prefer covariance for accuracy.
+
+
+#### Model Gain and Spectral Properties
+
+The gain parameter $G$ is determined by matching signal energy:
+
+$$G^2 = E^{(p)} = R[0] - \sum_{k=1}^{p} \alpha_k R[k]$$
+
+This represents the residual energy after optimal $p$-th order prediction.
+
+**Spectral interpretation** provides insight into what LPC captures. The LPC spectrum is:
+
+$$|H(e^{j\omega})|^2 = \frac{G^2}{|A(e^{j\omega})|^2} = \frac{G^2}{\left|1 + \sum_{k=1}^{p} \alpha_k e^{-j\omega k}\right|^2}$$
+
+In frequency domain terms, minimizing prediction error is equivalent to:
+
+$$E = \frac{1}{2\pi}\int_{-\pi}^{\pi} \frac{|S(e^{j\omega})|^2}{|H(e^{j\omega})|^2} d\omega$$
+
+This formulation reveals a key property: **LPC weights frequencies where signal energy is concentrated more heavily.** Consequently, LPC excels at matching spectral peaks (formants) while smoothing spectral valleys. This behavior aligns naturally with perceptual importance—formants carry most phonetic information, while fine spectral details matter less for intelligibility.
+
+This frequency-weighting characteristic explains why LPC proves particularly effective for speech: it automatically emphasizes the perceptually relevant features while efficiently representing less critical aspects of the spectrum.
+
+#### Applications and Summary
+
+LPC finds widespread application in telecommunications (voice codecs like G.729), speech synthesis systems, voice morphing, and clinical speech analysis. The technique's success stems from its alignment with speech production mechanisms—the all-pole model captures vocal tract resonances that determine phonetic identity, while the efficient parametric representation enables substantial compression with minimal quality loss.
+
+The choice of model order $p$ typically ranges from 8-16 depending on sampling rate and application requirements, balancing spectral resolution against computational cost and parameter overhead.
 
 ---
 
