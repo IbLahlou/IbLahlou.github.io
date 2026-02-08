@@ -22,25 +22,25 @@ image:
 
 # Introduction
 
-**ASR (Automatic Speech Recognition)** systems transform audio waveforms into text. At the heart of this process lies the **acoustic model**—a statistical mapping from audio features to sound units called **phone**.
+**ASR (Automatic Speech Recognition)** systems transform audio waveforms into text. At the heart of this process lies the **acoustic model** a statistical mapping from audio features to sound units called **phone**.
 
 ### What's a Phone
 
 The minimal, perceptually isolable segment of sound the atomic, boundary-defined unit that any hearing system (human or machine) treats as a single entity. From Greek phōnḗ (“sound/voice”), it stays deliberately pre-linguistic, pre-musical, and pre-semantic: the raw quantum from which every audible stream is built, universally accepted in speech tech, music information retrieval, bioacoustics, and forensic audio. Core contemporary representations of the phone (what people actually use in 2025 models)
 
-- Wavelets – localized oscillatory atoms; perfect reconstruction + multi-resolution sparsity (denoising, compression, transient capture)
-- Shapelets – mined discriminative subsequences; shape-focused, highly interpretable for classification
-- MFCCs / Log-Mel frames – 20–40 ms perceptual coefficients; still the workhorse of legacy and lightweight systems
-- CQ-Transform or Gammatone bins – constant-Q or auditory-filterbank responses; preferred for music and environmental sound
-- Self-supervised embeddings (Wav2Vec 2.0, HuBERT, Audio-ALiBi, etc.) – dense vectors learned from raw audio; current state-of-the-art for almost everything
-- Neural codec tokens (EnCodec, SoundStream, DAC) – discrete 50–1500 Hz tokens; the new standard for generative and ultra-low-bitrate pipelines
-- Sinusoidal + residual tracks – high-quality parametric modeling for voice conversion and music
+- **Wavelets** – localized oscillatory atoms; perfect reconstruction + multi-resolution sparsity (denoising, compression, transient capture)
+- **Shapelets** – mined discriminative subsequences; shape-focused, highly interpretable for classification
+- **MFCCs / Log-Mel frames** – 20–40 ms perceptual coefficients; still the workhorse of legacy and lightweight systems
+- **CQ-Transform or Gammatone bins** – constant-Q or auditory-filterbank responses; preferred for music and environmental sound
+-   **(Wav2Vec 2.0, HuBERT, Audio-ALiBi, etc.)** – dense vectors learned from raw audio; current state-of-the-art for almost everything
+- **Neural codec tokens** (EnCodec, SoundStream, DAC) – discrete 50–1500 Hz tokens; the new standard for generative and ultra-low-bitrate pipelines
+- **Sinusoidal + residual tracks** – high-quality parametric modeling for voice conversion and music
 
 From this neutral phone, only three classic domain-specific abstractions emerge:
 
-- Phoneme – bundle of phones that are contrastive in a given language
-- Grapheme – written symbol(s) conventionally linked to a phoneme
-- Note – phone whose dominant attribute is stable perceived pitch (musical domain)
+- **Phoneme** – bundle of phones that are contrastive in a given language
+- **Grapheme** – written symbol(s) conventionally linked to a phoneme
+- **Note** – phone whose dominant attribute is stable perceived pitch (musical domain)
 
 ---
 
@@ -50,19 +50,19 @@ These operations are covered in detail in previous posts. Here's the quick refer
 
 **Convolution** $(x * h)[n]$
 
-— how filters and systems transform signals. Convolution in time = multiplication in frequency (FFT—Fast Fourier Transform—speedup).
+  how filters and systems transform signals. Convolution in time = multiplication in frequency (FFT Fast Fourier Transform speedup).
 
 **Correlation** $R_{xx}[n]$
 
-— measures self-similarity at different lags. Peaks in autocorrelation reveal pitch period.
+  measures self-similarity at different lags. Peaks in autocorrelation reveal pitch period.
 
 **DFT (Discrete Fourier Transform)** $X[k] = \sum_n x[n] e^{-i2\pi kn/N}$
 
-— decomposes signal into frequency components. Magnitude = "how much", phase = "when".
+  decomposes signal into frequency components. Magnitude = "how much", phase = "when".
 
 **Windowing**
 
-— When we extract a finite frame from a continuous signal, the abrupt edges create artificial discontinuities. The DFT assumes periodicity, so these sharp cuts cause **spectral leakage**—energy spreading into adjacent frequency bins where it shouldn't be.
+  When we extract a finite frame from a continuous signal, the abrupt edges create artificial discontinuities. The DFT assumes periodicity, so these sharp cuts cause **spectral leakage** energy spreading into adjacent frequency bins where it shouldn't be.
 
 A window function tapers the frame smoothly to zero at the edges:
 
@@ -73,12 +73,12 @@ A window function tapers the frame smoothly to zero at the edges:
 | Hann        | Medium          | Lower (-31 dB)   | Spectral analysis            |
 | Blackman    | Widest          | Lowest (-58 dB)  | When leakage must be minimal |
 
-**Trade-off:** Narrower main lobe = better frequency resolution. Lower side lobes = less leakage. You can't optimize both—this is the **time-frequency uncertainty principle**.
+**Trade-off:** Narrower main lobe = better frequency resolution. Lower side lobes = less leakage. You can't optimize both this is the **time-frequency uncertainty principle**.
 
 > For speech processing, **Hamming window** is the standard choice: good balance between frequency resolution and leakage suppression.
 {: .prompt-tip }
 
-**STFT (Short-Time Fourier Transform)** $X[m,k]$ — sliding window DFT producing spectrograms. For speech: 20-30ms frames, 10ms hop. Time-frequency uncertainty: $\Delta t \cdot \Delta f \geq 1/4\pi$.
+**STFT (Short-Time Fourier Transform)** $X[m,k]$   sliding window DFT producing spectrograms. For speech: 20-30ms frames, 10ms hop. Time-frequency uncertainty: $\Delta t \cdot \Delta f \geq 1/4\pi$.
 
 ---
 
@@ -152,11 +152,11 @@ Digital filters are fundamentally distinguished by their use of feedback in the 
 
 #### Non-Recursive Filters (FIR)
 
-A **non-recursive filter** computes output using only current and past inputs—no feedback loop.
+A **non-recursive filter** computes output using only current and past inputs no feedback loop.
 
 $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k]$$
 
-**Intuition:** Output is a weighted sum of the current and past $M$ input samples only. If you feed an impulse (single spike), the output dies after $M$ samples—hence "finite impulse response."
+**Intuition:** Output is a weighted sum of the current and past $M$ input samples only. If you feed an impulse (single spike), the output dies after $M$ samples hence "finite impulse response."
 
 | Property            | Explanation                                    |
 | ------------------- | ---------------------------------------------- |
@@ -166,7 +166,7 @@ $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k]$$
 
 #### Recursive Filters (IIR)
 
-A **recursive filter** incorporates feedback—output depends on past outputs as well as inputs.
+A **recursive filter** incorporates feedback output depends on past outputs as well as inputs.
 
 $$y[n] = \sum_{k=0}^{M} b_k \cdot x[n-k] - \sum_{k=1}^{N} a_k \cdot y[n-k]$$
 
@@ -249,7 +249,7 @@ $$c[n] = \mathcal{F}^{-1}\{\log \lvert X[k] \rvert\}$$
 
 ### Quefrency Domain
 
-**Quefrency** is the independent variable in the cepstral domain—it has units of time (samples or milliseconds) but represents "rate of change in the spectrum." The name is an anagram of "frequency," following the cepstrum/spectrum wordplay.
+**Quefrency** is the independent variable in the cepstral domain it has units of time (samples or milliseconds) but represents "rate of change in the spectrum." The name is an anagram of "frequency," following the cepstrum/spectrum wordplay.
 
 - Low quefrency: slow spectral variations (vocal tract = formants)
 - High quefrency: fast spectral variations (pitch harmonics)
@@ -270,9 +270,9 @@ _Figure 2.1: Cepstrum separating source and filter in quefrency domain_
 
 ### Cepstrum Intuition
 
-**Etymology:** "Cepstrum" is an anagram of "spectrum"—we're analyzing the spectrum of a spectrum.
+**Etymology:** "Cepstrum" is an anagram of "spectrum" we're analyzing the spectrum of a spectrum.
 
-**Separation principle:** The vocal tract (slow-varying formants) appears at low quefrencies. The pitch harmonics (fast-varying) appear at high quefrencies. Liftering removes pitch, leaving vocal tract shape—the basis for speaker-independent recognition.
+**Separation principle:** The vocal tract (slow-varying formants) appears at low quefrencies. The pitch harmonics (fast-varying) appear at high quefrencies. Liftering removes pitch, leaving vocal tract shape the basis for speaker-independent recognition.
 
 **Connection to MFCCs:** MFCCs are essentially cepstral coefficients computed on a mel-warped spectrum. The DCT decorrelates the log mel energies, producing a compact representation of the spectral envelope.
 
@@ -295,7 +295,6 @@ $$
 - **Energy compaction:** Most signal energy concentrates in the first few coefficients
 - **Decorrelation:** Approximates the Karhunen–Loève Transform for short-term speech spectra
 - **Real-valued output:** No complex arithmetic
-    
 
 These properties make the DCT ideal for transforming correlated spectral energies into a compact statistical representation.
 
@@ -342,7 +341,6 @@ or
 $$  
 f = 700\left(e^{\frac{m}{1127}} - 1\right)  
 $$
-
 Equal mel intervals correspond to equal perceived pitch intervals.
 
 
@@ -370,14 +368,11 @@ $$
 ### Filterbank Energies
 
 Applying the mel filters to the power spectrum produces mel-band energies:
-
 $$  
 E_m = \sum_{k=0}^{N/2} |X[k]|^2 \cdot H_m[k]  
 $$
-
 These energies are perceptually meaningful but highly correlated.
 
----
 
 ### MFCC Computation
 
@@ -425,11 +420,9 @@ Standard feature vector: **39 dimensions**
 
 Let (x[n]) be a real-valued, finite-length speech frame of length (N), windowed in time.
 
----
 
 **Short-Time Fourier Transform (STFT)**  
 The discrete Fourier transform maps the signal from time to linear frequency:
-
 $$  
 X[k] = \sum_{n=0}^{N-1} x[n],e^{-j\frac{2\pi}{N}kn},  
 \qquad k = 0,\dots,N-1  
@@ -437,7 +430,6 @@ $$
 
 **Power Spectrum Operator**  
 Phase information is discarded and spectral energy is retained:
-
 $$  
 P[k] = |X[k]|^2  
 $$
@@ -458,13 +450,10 @@ from linear-frequency energy to perceptual frequency energy.
 
 **Logarithmic Nonlinearity**  
 Dynamic range compression and loudness modeling are applied component-wise:
-
 $$  
 \tilde{E}_m = \log(E_m)  
 $$
-
 This converts multiplicative spectral variations into additive ones.
-
 
 **Discrete Cosine Transform (Cepstral Projection)**  
 The DCT applies an orthogonal change of basis to decorrelate mel-band energies:
@@ -499,7 +488,6 @@ $$
 ,(x[n])  
 }  
 $$
-
 where:
 
 - $\mathcal{F}$: Fourier transform
@@ -531,31 +519,22 @@ Speech signals, when sampled at typical rates of 8-16 kHz, generate substantial 
 Unlike MFCCs which capture spectral shape through filterbanks, LPC models the speech production mechanism itself, representing the vocal tract as an all-pole filter. This approach proves particularly effective for speech coding, synthesis, and formant analysis.
 #### The Prediction Framework
 
-The fundamental observation underlying LPC is that speech exhibits strong short-term correlation—consecutive samples are not independent but related through the physical constraints of vocal tract resonance. This correlation structure can be exploited for compression and analysis.
+The fundamental observation underlying LPC is that speech exhibits strong short-term correlation consecutive samples are not independent but related through the physical constraints of vocal tract resonance. This correlation structure can be exploited for compression and analysis.
 
-**The prediction model** expresses the current sample as a linear combination of $p$ previous samples: $$\hat{s}[n] = \sum_{k=1}^{p} \alpha_k \cdot s[n-k]$$
-
-The **prediction error** quantifies how well this model captures the signal: $$e[n] = s[n] - \hat{s}[n] = s[n] - \sum_{k=1}^{p} \alpha_k \cdot s[n-k]$$
-
-When prediction is accurate (small error), the signal structure is well-captured by the coefficients $\alpha_k$. These coefficients, rather than the raw samples, can then be transmitted or stored, achieving substantial data reduction.
+**The prediction model** expresses the current sample as a linear combination of $p$ previous samples: $$\hat{s}[n] = \sum_{k=1}^{p} \alpha_k \cdot s[n-k]$$The **prediction error** quantifies how well this model captures the signal: $$e[n] = s[n] - \hat{s}[n] = s[n] - \sum_{k=1}^{p} \alpha_k \cdot s[n-k]$$When prediction is accurate (small error), the signal structure is well-captured by the coefficients $\alpha_k$. These coefficients, rather than the raw samples, can then be transmitted or stored, achieving substantial data reduction.
 
 #### The Source-Filter Model
 
 To understand what these prediction coefficients represent physically, we consider the source-filter theory of speech production. The vocal tract acts as a resonant cavity, filtering an excitation source (either periodic glottal pulses for voiced sounds or turbulent noise for unvoiced sounds).
 
 LPC models this system through an all-pole transfer function: $$H(z) = \frac{G}{1 + \sum_{k=1}^{p} \alpha_k z^{-k}} = \frac{G}{A(z)}$$
-
-where $G$ represents the gain and $A(z)$ is the inverse filter. The poles of $H(z)$ correspond directly to the **formants**—the resonant frequencies of the vocal tract that determine vowel identity and other phonetic characteristics. This physical correspondence explains why LPC proves so effective for speech: the mathematical model aligns with the underlying acoustic production mechanism.
+where $G$ represents the gain and $A(z)$ is the inverse filter. The poles of $H(z)$ correspond directly to the **formants** the resonant frequencies of the vocal tract that determine vowel identity and other phonetic characteristics. This physical correspondence explains why LPC proves so effective for speech: the mathematical model aligns with the underlying acoustic production mechanism.
 #### Coefficient Estimation via Error Minimization
 
 Having established the prediction framework, we must determine the optimal coefficients $\alpha_k$. The standard approach minimizes the total squared prediction error over an analysis window:
-
 $$E = \sum_{n} e^2[n] = \sum_{n} \left(s[n] - \sum_{k=1}^{p} \alpha_k s[n-k]\right)^2$$
-
 Applying calculus optimization (setting partial derivatives to zero) yields the **normal equations**:
-
 $$\sum_{k=1}^{p} \alpha_k \phi(i,k) = \phi(i,0), \quad i = 1, \ldots, p$$
-
 where $\phi(i,k) = \sum_n s[n-i]s[n-k]$ represent correlation terms between time-shifted versions of the signal.
 
 These equations, known as the **Yule-Walker equations**, form a system of $p$ linear equations in $p$ unknowns. While standard matrix inversion could solve this system, the computational cost of $O(p^3)$ operations becomes prohibitive for real-time processing, particularly when analyzing speech frame-by-frame.
@@ -572,11 +551,9 @@ The correlation matrix arising from the autocorrelation method possesses a speci
 **For each order $i = 1, 2, \ldots, p$:**
 
 1. **Compute reflection coefficient (PARCOR):** $$k_i = \frac{R[i] - \sum_{j=1}^{i-1} \alpha_j^{(i-1)} R[i-j]}{E^{(i-1)}}$$
-    
-2. **Update coefficients:** $$\alpha_i^{(i)} = k_i$$ $$\alpha_j^{(i)} = \alpha_j^{(i-1)} - k_i \cdot \alpha_{i-j}^{(i-1)}, \quad j = 1, \ldots, i-1$$
+2. **Update coefficients:** $$\alpha_i^{(i)} = k_i$$$\alpha_j^{(i)} = \alpha_j^{(i-1)} - k_i \cdot \alpha_{i-j}^{(i-1)}, \quad j = 1, \ldots, i-1$$
     
 3. **Update prediction error:** $$E^{(i)} = (1 - k_i^2) E^{(i-1)}$$
-    
 
 **Properties of note:**
 
@@ -596,17 +573,11 @@ This approach applies a window function (typically Hamming) before computing aut
 2. Compute autocorrelation: $R[k] = \sum_{m=0}^{L-1} \hat{s}[m]\hat{s}[m+k]$
 3. Solve via Levinson-Durbin
 
-**Advantages:**
-
-- Always produces stable filters (minimum phase guaranteed)
-- Efficient $O(p^2)$ solution through Levinson-Durbin
-- Autocorrelation matching property
-
-**Limitations:**
-
-- Windowing introduces edge effects and discontinuities
-- Prediction at boundaries involves zero-valued samples outside the window
-- Requires careful window selection to minimize artifacts
+| Advantages                                          | Limitations                                      |
+| --------------------------------------------------- | ------------------------------------------------ |
+| Always produces **stable (minimum-phase) filters**  | **Windowing introduces edge effects**            |
+| Efficient **($O(p^2)$)** solution (Levinson–Durbin) | Boundary prediction uses **zero-padded samples** |
+| Preserves **autocorrelation matching**              | Requires **careful window selection**            |
 
 ##### Covariance Method
 
@@ -616,23 +587,12 @@ This method avoids windowing by extending the analysis region to include valid s
 2. Use samples from extended region $[-p, L-1]$
 3. Solve via Cholesky decomposition (matrix is symmetric but not Toeplitz)
 
-**Advantages:**
+| Advantages                          | Limitations                        |
+| ----------------------------------- | ---------------------------------- |
+| **No windowing artifacts**          | **Stability not guaranteed**       |
+| Uses **only actual speech samples** | Higher complexity **$(O(p^3))$**   |
+| Better **spectral matching**        | More **computationally expensive** |
 
-- No windowing artifacts
-- All samples used in prediction are actual speech samples
-- Can provide better spectral matching
-
-**Limitations:**
-
-- May produce unstable filters (no minimum phase guarantee)
-- Requires $O(p^3)$ Cholesky decomposition
-- Requires additional computational resources
-
-#### **Figure 6: "Autocorrelation vs Covariance Method Comparison"**
-
-_Comment: Side-by-side spectral estimates from both methods on the same speech frame. Annotate differences (windowing artifacts vs stability issues). Makes the trade-off tangible._
-
-The choice between methods depends on application requirements—telecommunications systems typically favor autocorrelation for guaranteed stability, while analysis applications may prefer covariance for accuracy.
 
 
 #### Model Gain and Spectral Properties
@@ -651,13 +611,13 @@ In frequency domain terms, minimizing prediction error is equivalent to:
 
 $$E = \frac{1}{2\pi}\int_{-\pi}^{\pi} \frac{|S(e^{j\omega})|^2}{|H(e^{j\omega})|^2} d\omega$$
 
-This formulation reveals a key property: **LPC weights frequencies where signal energy is concentrated more heavily.** Consequently, LPC excels at matching spectral peaks (formants) while smoothing spectral valleys. This behavior aligns naturally with perceptual importance—formants carry most phonetic information, while fine spectral details matter less for intelligibility.
+This formulation reveals a key property: **LPC weights frequencies where signal energy is concentrated more heavily.** Consequently, LPC excels at matching spectral peaks (formants) while smoothing spectral valleys. This behavior aligns naturally with perceptual importance formants carry most phonetic information, while fine spectral details matter less for intelligibility.
 
 This frequency-weighting characteristic explains why LPC proves particularly effective for speech: it automatically emphasizes the perceptually relevant features while efficiently representing less critical aspects of the spectrum.
 
 #### Applications and Summary
 
-LPC finds widespread application in telecommunications (voice codecs like G.729), speech synthesis systems, voice morphing, and clinical speech analysis. The technique's success stems from its alignment with speech production mechanisms—the all-pole model captures vocal tract resonances that determine phonetic identity, while the efficient parametric representation enables substantial compression with minimal quality loss.
+LPC finds widespread application in telecommunications (voice codecs like G.729), speech synthesis systems, voice morphing, and clinical speech analysis. The technique's success stems from its alignment with speech production mechanisms the all-pole model captures vocal tract resonances that determine phonetic identity, while the efficient parametric representation enables substantial compression with minimal quality loss.
 
 The choice of model order $p$ typically ranges from 8-16 depending on sampling rate and application requirements, balancing spectral resolution against computational cost and parameter overhead.
 
@@ -665,37 +625,135 @@ The choice of model order $p$ typically ranges from 8-16 depending on sampling r
 
 ## 6. Fundamental Frequency (F0) Estimation
 
-So far we've focused on the vocal tract (formants, spectral envelope). But the other critical component is the **excitation source**—specifically, the fundamental frequency or pitch.
+So far we've focused on the vocal tract (formants, spectral envelope). But the other critical component is the **excitation source** specifically, the fundamental frequency or pitch.
 
-**F0 (Fundamental Frequency)** is the rate at which the vocal cords vibrate during voiced speech—it determines the perceived pitch. F0 carries prosodic information: intonation, stress, emotion. Estimating it reliably is essential for many applications.
+**F0 (Fundamental Frequency)** is the rate at which the vocal cords vibrate during voiced speech it determines the perceived pitch. F0 carries prosodic information: intonation, stress, emotion. Estimating it reliably is essential for many applications.
 
 <!-- ![Pitch Detection Dark Mode](../assets/img/graphics/post_12/dark/img11_pitch.png){: .dark } -->
 <!-- ![Pitch Detection Light Mode](../assets/img/graphics/post_12/light/img11_pitch.png){: .light } -->
 
 _Figure 6.0: Pitch detection methods_
 
-### Autocorrelation Method
+#### **Autocorrelation Method**
 
-Find first major peak in autocorrelation:
+**Definition**
 
-$$R[k] = \sum_n x[n] \cdot x[n+k]$$
+The **autocorrelation method** estimates the fundamental frequency (F₀) by measuring the similarity of the signal with delayed versions of itself. Peaks in the autocorrelation indicate repeated patterns, corresponding to the pitch period.
 
-Pitch period $T_0$ = lag of first peak after $R[0]$.
+**Core equation**
 
-F0 = $f_s / T_0$
+$$R[k] = \sum_{n} x[n] \cdot x[n+k]$$
+* (x[n]) is the discrete speech signal.
+* (k) is the lag (delay) in samples.
+* (R[k]) is the autocorrelation at lag (k).
 
-### Cepstral Method
+**Pitch calculation**
 
-Peak in cepstrum at quefrency = pitch period.
+1. Identify the **first major peak** after ($R[0]$) → this gives the **pitch period** ($T_0$).
+2. Convert to F₀:
+$$F_0 = \frac{f_s}{T_0}$$
+where (f_s) is the sampling frequency.
 
-### RAPT / YAAPT / DIO
+**Key points**
 
-<!--
-RESEARCH & EXPLAIN:
-- Robust algorithms for real-world signals
-- Handling unvoiced segments
-- Octave errors
--->
+* Time-domain method    simple and intuitive.
+* Works best for **clean, voiced speech**.
+* Peaks correspond to **repetition rate of vocal fold vibrations**.
+
+**Remark**
+
+* Susceptible to **octave errors** (misidentifying double/half pitch).
+* Noise and aperiodic speech can **blur peaks**, reducing accuracy.
+
+
+### **Cepstral Method**
+
+**Definition**
+
+The **cepstral method** estimates F₀ by transforming the speech signal to a “quefrency” domain (via logarithm of the spectrum and inverse Fourier transform). Peaks in this domain correspond to periodicity in the time signal    effectively the pitch period.
+
+**Core equations**
+
+1. Compute the **spectrum** of the signal: $X(f) = \mathcal{F}{x[n]}$
+2. Take the **log magnitude**: $\log|X(f)|$
+3. Apply **inverse Fourier transform** to get the **cepstrum**: $c[n] = \mathcal{F}^{-1}{\log|X(f)|}$
+4. Find **peak in cepstrum** at quefrency (T_0) → corresponds to the **pitch period**.
+5. Convert to F₀: $F_0 = \frac{f_s}{T_0}$
+
+**Key points**
+
+* Frequency-domain method (indirectly time-domain).
+* Separates **source (F₀)** from **filter (vocal tract)** effects.
+* More robust to **spectral variations and noise** than simple autocorrelation.
+
+**Remark**
+
+* Can handle **mildly noisy or complex speech** better.
+* Requires **FFT and log operation**, slightly more computationally expensive.
+* Less intuitive than autocorrelation but often more reliable in practice.
+
+In real-world speech, periodicity is neither clean nor stationary, creating ambiguity in the fundamental frequency. This has motivated multiple complementary strategies for F₀ estimation  most notably RAPT, YAAPT, and DIO  each exploiting different representations of the speech signal.
+#### **RAPT (Robust Algorithm for Pitch Tracking)**
+
+**Definition**  
+RAPT estimates the fundamental frequency (F_0) by maximizing **normalized autocorrelation** over candidate lags and enforcing **temporal continuity** via dynamic programming.
+
+**Core equation (normalized autocorrelation)**  
+
+$$r(\tau) = \frac{\sum_{n} x(n),x(n+\tau)}  
+{\sqrt{\sum_{n} x^2(n)\sum_{n} x^2(n+\tau)}}$$
+
+**Key points**
+
+- Time-domain method
+- Pitch candidates selected from autocorrelation peaks
+- Dynamic programming minimizes frame-to-frame pitch jumps
+- Explicit voiced/unvoiced decision via correlation threshold
+
+**Remark**
+
+- Stable and well-understood, but **octave errors** may appear when higher harmonics dominate or SNR is low.
+    
+#### **YAAPT (Yet Another Algorithm for Pitch Tracking)**
+
+**Definition**  
+YAAPT estimates (F_0) by **combining time-domain autocorrelation with frequency-domain spectral cues**, improving robustness in noisy and expressive speech.
+
+**Core idea (multi-domain fusion)**  
+
+$$F_0 = \arg\max_f \left( w_t,C_{\text{time}}(f) + w_f,C_{\text{freq}}(f) \right)$$
+
+**Key points**
+
+- Hybrid time–frequency approach
+- Uses spectral peaks and energy-based voicing decisions
+- Strong voiced/unvoiced classification
+- Dynamic programming for pitch continuity
+
+**Remark**
+- More robust than RAPT, with **reduced octave errors**, at the cost of higher computational complexity.
+
+#### **DIO (Distributed Inline-filter Operation – WORLD)**
+
+**Definition**
+
+DIO estimates (F_0) by generating multiple candidates from **spectral envelope and zero-crossing information**, optimized for **high-speed and high-quality vocoding**.
+
+**Core idea (candidate aggregation)**  
+$$
+F_0(t) = \operatorname{median}\left\{ F_0^{(i)}(t) \right\}_{i=1}^{N}
+$$
+
+**Key points**
+
+- Frequency-domain driven
+- Multiple band-wise F0 candidates
+- Accurate voiced/unvoiced boundary detection
+- Often refined using **StoneMask**
+
+**Remark**
+
+- Very low octave error rate and excellent temporal stability; **standard in modern TTS and voice conversion**.
 
 ### Typical Ranges
 
@@ -707,11 +765,15 @@ RESEARCH & EXPLAIN:
 
 ## 7. Modulation and Demodulation
 
-Speech can be viewed as a slowly-varying envelope (amplitude modulation) riding on rapidly-varying carriers (formants). Extracting these modulations provides yet another perspective on the signal—one that connects to neural processing of speech and alternative feature representations.
+Speech can be viewed as a slowly-varying envelope (amplitude modulation) riding on rapidly-varying carriers (formants). Extracting these modulations provides yet another perspective on the signal one that connects to neural processing of speech and alternative feature representations.
 
-<!-- ![Modulation Dark Mode](../assets/img/graphics/post_12/dark/img12_modulation.png){: .dark } -->
-<!-- ![Modulation Light Mode](../assets/img/graphics/post_12/light/img12_modulation.png){: .light } -->
 
+<div style="text-align: center;">
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Amfm3-en-de.gif
+" alt="" width="105%">
+  </figure>
+</div>
 _Figure 7.0: AM, FM, and the analytic signal_
 
 ### Amplitude Modulation
@@ -721,6 +783,10 @@ $$y(t) = x(t) \cdot \cos(2\pi f_c t)$$
 Envelope: $\lvert x(t) \rvert$
 
 ### Hilbert Transform and Analytic Signal
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=_dBNed8D3WY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 $$\hat{x}(t) = \mathcal{H}\{x(t)\} = \frac{1}{\pi} \text{P.V.} \int_{-\infty}^{\infty} \frac{x(\tau)}{t-\tau} d\tau$$
 
@@ -771,7 +837,9 @@ Traditional MFCCs are hand-crafted features. Modern systems learn representation
 
 **Wav2Vec 2.0** (Facebook/Meta, 2020): Learns speech representations by predicting masked portions of the audio. Pre-trained on 60k hours of unlabeled speech, then fine-tuned on small labeled datasets.
 
-> Wav2Vec 2.0 achieves strong ASR results with just 10 minutes of labeled data—a massive reduction from traditional systems requiring thousands of hours.
+https://www.geeksforgeeks.org/nlp/wav2vec2-self-a-supervised-learning-technique-for-speech-representations/
+
+> Wav2Vec 2.0 achieves strong ASR results with just 10 minutes of labeled data a massive reduction from traditional systems requiring thousands of hours.
 > {: .prompt-info }
 
 **HuBERT** (Hidden-Unit BERT): Similar approach but uses offline clustering to create pseudo-labels for masked prediction.
@@ -781,7 +849,7 @@ Traditional MFCCs are hand-crafted features. Modern systems learn representation
 > Whisper is particularly useful for real-world applications due to its robustness to noise and ability to handle multiple languages without explicit language identification.
 > {: .prompt-tip }
 
-These models output **embeddings**—dense vector representations that capture phonetic, speaker, and linguistic information. They can replace or augment traditional MFCC pipelines:
+These models output **embeddings** dense vector representations that capture phonetic, speaker, and linguistic information. They can replace or augment traditional MFCC pipelines:
 
 ```
 Traditional: Audio → MFCCs → Acoustic Model → Text
@@ -819,5 +887,5 @@ model.compile(
 model.summary()
 ```
 
-**Input:** (batch, time_steps, 39) — sequence of MFCC frames
-**Output:** (batch, time_steps, 40) — phoneme probabilities per frame
+**Input:** (batch, time_steps, 39)   sequence of MFCC frames
+**Output:** (batch, time_steps, 40)   phoneme probabilities per frame
