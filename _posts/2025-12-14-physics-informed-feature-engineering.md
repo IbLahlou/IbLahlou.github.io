@@ -108,8 +108,6 @@ Energy carried by electromagnetic waves, traveling through space at the speed of
 - **Conservation and Conversion**: Total energy is conserved (First Law of Thermodynamics, established 1840s–1850s by Mayer, Joule, Helmholtz). Forms interconvert with efficiencies <100%; "losses" often appear as thermal energy or sound. In data science, this principle underpins loss functions in energy balance models.
 - **Storage and Transport**: Examples include batteries (chemical → electrical), pumped hydro (gravitational → kinetic), capacitors/inductors (electrical), and nuclear fuels (nuclear → thermal → mechanical → electrical). Data scientists model these for optimization in supply chain or grid management.
 
-![Energy Conversion Map]({{ '/assets/img/graphics/project/energy/energy_conversion.svg' | relative_url }})
-
 ## The International System of Units (SI)
 
 The **International System of Units (SI)**, from the French *Système international d'unités*, is the modern metric system and the world's most widely used measurement standard. It ensures global consistency in science, engineering, industry, and trade. The Bureau International des Poids et Mesures (BIPM) maintains the SI.
@@ -141,6 +139,7 @@ These constants derive the seven base units.
 {: .prompt-info }
 
 ### Brief History of the SI
+
 The metric system originated during the French Revolution. In 1799, platinum standards for the metre and kilogram were established.
 
 The 1875 Metre Convention created the BIPM. In 1960, the 11th CGPM adopted the **International System of Units (SI)** with six base units (mole added 1971). Units were redefined over time using natural constants, culminating in the 2019 revision based entirely on fundamental constants.
@@ -203,8 +202,6 @@ Advanced: Use physics-informed neural networks (PINNs) to embed constraints duri
 > Avoid mixing units (e.g., J and kWh) in training; normalize consistently and document unit provenance for every feature.
 {: .prompt-warning }
 
-![Feature Engineering Pipeline]({{ '/assets/img/graphics/project/energy/feature_pipeline.svg' | relative_url }})
-
 ---
 
 ## Practical Example: Battery Discharge Modeling
@@ -236,21 +233,18 @@ $$
 $$
 P = V \cdot I \quad [\mathrm{W}] = \mathrm{kg \cdot m^2 \cdot s^{-3}}
 $$
-
 Direct application of Ohm's law. Captures energy flow rate.
 
 #### 2.2 Internal Resistance
 $$
 R = \frac{V}{I} \quad [\Omega] = \mathrm{kg \cdot m^2 \cdot s^{-3} \cdot A^{-2}}
 $$
-
 Key degradation indicator—increases as battery ages.
 
 #### 2.3 Cumulative Energy (Numerical Integration)
 $$
 E(t) = \int_0^t P(\tau) \, d\tau \quad [\mathrm{J}]
 $$
-
 Trapezoid rule for discrete data:
 $$
 E_i = E_{i-1} + \frac{P_i + P_{i-1}}{2} \cdot (t_i - t_{i-1})
@@ -304,14 +298,12 @@ arrhenius = A * np.exp(-E_a / (R * temp_k))
 $$
 z = \frac{x - \mu}{\sigma}
 $$
-
 Apply **after** creating physical features. Use `StandardScaler` for power, resistance, specific power.
 
 #### 3.2 Log Transform
 $$
 \log(1 + E) \quad \text{for skewed energy distributions}
 $$
-
 Stabilizes variance for cumulative quantities.
 
 ---
@@ -319,6 +311,7 @@ Stabilizes variance for cumulative quantities.
 ### Step 4: Exploratory Data Analysis (EDA)
 
 #### 4.1 Dimensional Consistency Check
+
 Verify all features have correct SI dimensions:
 ```python
 # Check units programmatically
@@ -362,7 +355,7 @@ $$
 
 **Power vs. Temperature**:
 Scatter plot with Arrhenius overlay—expect exponential relationship.
-
+0.
 **Correlation Matrix**:
 - High $|r|$ between `power_w` and `specific_power` (expected—linear scaling)
 - Moderate $|r|$ between `resistance_ohm` and target (degradation link)
@@ -443,14 +436,4 @@ Train with any suited regressor model. Physical features improve interpretabilit
 ✅ **Create dimensionless groups** → Scale-invariant, robust predictions  
 ✅ **Transform after creation** → Preserve physical meaning before scaling  
 ✅ **Select with domain knowledge** → Conservation laws guide relevance
-
----
-
-## Common Pitfalls
-
-❌ **Mixing units**: `energy_kwh + energy_j` → Meaningless  
-❌ **Ignoring physics**: Treating $V$ and $I$ independently when $P = VI$  
-❌ **Skipping EDA**: Missing outliers that violate conservation laws  
-❌ **Premature scaling**: Standardizing before creating ratios  
-❌ **Black-box selection**: Dropping `resistance_ohm` despite being known degradation marker
 
