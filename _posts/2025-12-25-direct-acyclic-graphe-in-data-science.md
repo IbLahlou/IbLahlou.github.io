@@ -17,7 +17,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel12@4x.png
+  path: /assets/img/panels/panel14@4x.png
 ---
 ## Introduction
 
