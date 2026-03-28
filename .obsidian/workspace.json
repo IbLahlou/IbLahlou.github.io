@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2025-12-25-direct-acyclic-graphe-in-data-science.md",
+                "file": "_posts/2026-02-26-Encoding-in-Machine-Learning.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025-12-25-direct-acyclic-graphe-in-data-science"
+              "title": "2026-02-26-Encoding-in-Machine-Learning"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 635.5
+    "width": 200
   },
   "right": {
     "id": "56da1e01f01468d1",
@@ -166,6 +166,10 @@
   },
   "active": "845e640948530fc0",
   "lastOpenFiles": [
+    "_posts/2025-12-25-direct-acyclic-graphe-in-data-science.md",
+    "_posts/2026-02-26-Encoding-in-Machine-Learning.md",
+    "_posts/2025-11-18-acoustic-models.md",
+    "_posts/2024-09-10-batch-stream-Inferencing.md",
     "assets/img/graphics/post_14/dark/3-rule-of-dag.png",
     "assets/img/graphics/post_14/light/3-rule-of-dag.png",
     "assets/img/graphics/post_14/light",
@@ -173,8 +177,6 @@
     "assets/img/graphics/post_14",
     "Pasted image 20260208115950.png",
     "Pasted image 20260208114506.png",
-    "_posts/2025-12-25-direct-acyclic-graphe-in-data-science.md",
-    "_posts/2025-11-18-acoustic-models.md",
     "_posts/2025-12-14-physics-informed-feature-engineering.md",
     "Untitled 1.md",
     "Pasted image 20260208114400.png",
@@ -209,7 +211,6 @@
     "_posts/2025-11-17-git-github-actions-devsecops.md",
     "2025-11-18-acoustic-models.md",
     "_posts/2025-11-20-acoustic-models.md",
-    "_posts/2024-09-08-entanglement-and-cace-principle.md",
-    "_posts/2025-08-2025-Real time model inference.md"
+    "_posts/2024-09-08-entanglement-and-cace-principle.md"
   ]
 }

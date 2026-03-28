@@ -99,14 +99,14 @@ Real-world data isn't a straight line; it's messy. A DAG handles this through **
 
 When you move from the rules of a DAG to actually building one in Airflow or dbt, these are the terms that define your pipeline's behavior.
 
-|**Term**|**Engineering Definition**|**Production Context**|
-|---|---|---|
-|**Node**|The atomic unit of work.|A SQL model, a Python script, or a sensor.|
-|**Edge**|The directional dependency.|Defines the execution order; Task B cannot start until the edge from Task A is cleared.|
-|**Source**|An entry point (In-degree = 0).|Where the data enters the system (e.g., S3, Kafka, or a Production DB).|
-|**Sink**|A terminal point (Out-degree = 0).|The final destination, like a BI dashboard or an exported CSV.|
-|**Upstream** (Parent/Ancestor)|The requirements.|If an **Ancestor** fails, the current node is "Upstream Failed" and won't run.|
-|**Downstream** (Child/Descendant)|The impact zone.|If you change a schema in a parent node, these are the tasks you might break.|
+| **Term**                          | **Engineering Definition**         | **Production Context**                                                                  |
+| --------------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------- |
+| **Node**                          | The atomic unit of work.           | A SQL model, a Python script, or a sensor.                                              |
+| **Edge**                          | The directional dependency.        | Defines the execution order; Task B cannot start until the edge from Task A is cleared. |
+| **Source**                        | An entry point (In-degree = 0).    | Where the data enters the system (e.g., S3, Kafka, or a Production DB).                 |
+| **Sink**                          | A terminal point (Out-degree = 0). | The final destination, like a BI dashboard or an exported CSV.                          |
+| **Upstream** (Parent/Ancestor)    | The requirements.                  | If an **Ancestor** fails, the current node is "Upstream Failed" and won't run.          |
+| **Downstream** (Child/Descendant) | The impact zone.                   | If you change a schema in a parent node, these are the tasks you might break.           |
 
 ---
 
