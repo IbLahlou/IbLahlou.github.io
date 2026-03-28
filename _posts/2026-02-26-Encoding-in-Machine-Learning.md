@@ -12,6 +12,7 @@ tags:
   - modeling
   - transformers
   - representation-learning
+pin: true
 math: true
 image:
   path: /assets/img/panels/panel14@4x.png
