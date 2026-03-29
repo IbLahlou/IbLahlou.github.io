@@ -309,12 +309,29 @@ Because the latent space is regularized, points sampled between two known encodi
 
 ### 3.3 A Note on Latent Space Geometry
 
-All encoders above assume $\mathcal{Z} = \mathbb{R}^d$ — a flat Euclidean space. This is appropriate for most data, but it is a structural assumption, not a necessity. When the data has intrinsic hierarchical or graph-structured topology, Euclidean geometry distorts the representation: exponentially growing structures (trees, taxonomies, scale-free networks) cannot be embedded faithfully in polynomial-volume space without dimensional blowup.
+All encoders above assume $\mathcal{Z} = \mathbb{R}^d$ — a flat Euclidean space. This is a structural assumption, not a necessity.
 
-Curved geometries — hyperbolic space in particular — resolve this by matching the geometry of the latent space to the geometry of the data manifold. This connection between representation power and geometric structure is explored in depth through the lens of graph theory in a dedicated post.
+![Euclidean vs Non-Euclidean geometries](/assets/img/graphics/post_15/geometries.png){: width="500" .center}
 
-> For a full treatment of Euclidean vs. non-Euclidean latent spaces, graph-theoretic representations, and how geometry determines what a model can express, see [**The Power of Representation: Graph Theory and Geometric Learning**](/posts/graph-theory-and-geometric-representation-learning/).
-{: .prompt-info }
+In Euclidean space, geodesics are straight lines and distances grow linearly. In spherical space, geodesics curve back on themselves — suitable for data with cyclical structure. In **hyperbolic space**, space expands exponentially away from any center point — exactly matching the growth rate of trees and hierarchies.
+
+This matters for embeddings: a tree with branching factor $b$ has $b^k$ nodes at depth $k$. Euclidean space cannot represent this exponential volume without distortion unless dimension grows proportionally. Hyperbolic space handles it natively in low dimension.
+
+**The Lorentz and Poincaré models** are two equivalent ways to work with hyperbolic space computationally:
+
+![Lorentz model and Poincaré disk](/assets/img/graphics/post_15/lorentz-poincare.jpg){: width="600" .center}
+
+The **Lorentz model** embeds hyperbolic space as a hyperboloid in $\mathbb{R}^{n+1}$:
+
+$$\mathbb{H}^2 = \{ x \in \mathbb{R}^3 \mid -x_0^2 + x_1^2 + x_2^2 = -1,\; x_0 > 0 \}$$
+
+with inner product $\langle x, y \rangle_L = -x_0 y_0 + x_1 y_1 + x_2 y_2$. The **Poincaré disk** $\mathbb{D} = \{(u,v) \in \mathbb{R}^2 : u^2 + v^2 < 1\}$ is obtained by projecting the hyperboloid onto the unit disk. Points near the boundary of the disk are exponentially far from the center in hyperbolic distance — which is why hierarchical trees can be embedded with siblings close together and the root near the center, using very few dimensions.
+
+Distance in the Poincaré ball model between two points $u, v$ is:
+
+$$d_{\mathbb{B}}(u, v) = \text{arcosh}\!\left(1 + \frac{2\|u - v\|^2}{(1 - \|u\|^2)(1 - \|v\|^2)}\right)$$
+
+The denominator shrinks as points approach the boundary ($\|u\| \to 1$), so boundary-adjacent points are very far apart even if their Euclidean coordinates are close — the disk compresses exponential hyperbolic volume into a bounded region.
 
 ---
 
