@@ -65,7 +65,7 @@ Each family operates on a different input type, serves a different modeling obje
 The choice of encoder family is not a preprocessing detail — it defines what the model is allowed to know about the world.
 
 > Encoding determines whether categories become collinear scalars, orthogonal axes, empirical expectations, or learned manifolds.
-> {: .prompt-info }
+{: .prompt-info }
 
 ---
 
@@ -97,7 +97,9 @@ $$
 \{c_1, \dots, c_k\} \mapsto \{0, 1, \dots, k-1\}
 $$
 
-The induced metric is absolute difference $d(c_i, c_j) = |f(c_i) - f(c_j)|$, implying uniform spacing and total order.
+The induced metric is absolute difference , implying uniform spacing and total order.
+
+$$d(c_i, c_j) = |f(c_i) - f(c_j)|$$
 
 Two arbitrary label assignments for the same five regions produce different tree splits at threshold $f(c) \leq 1$:
 
@@ -115,10 +117,10 @@ Two arbitrary label assignments for the same five regions produce different tree
 Same model, same threshold — entirely different groupings, determined solely by encoding order.
 
 > Label encoding introduces artificial ordinal structure unless rank is intrinsic to the domain.
-> {: .prompt-warning }
+{: .prompt-warning }
 
 > **Bias–variance:** Label encoding is a zero-variance transformation — it is deterministic — but it introduces maximal structural bias for nominal data by imposing a total order that does not exist in the domain.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 ### 2.2 One-Hot Encoding
 
@@ -145,10 +147,10 @@ The Euclidean distance between any two categories is constant: $\|e_i - e_j\|_2 
 With $k = 500$ product IDs, each row is 499 zeros and 1 one. Memory scales with $n \times k$. For identifiability with an intercept, one dimension must be dropped to avoid perfect collinearity.
 
 > High-cardinality one-hot encoding inflates parameter dimensionality and increases estimator variance for rare categories.
-> {: .prompt-warning }
+{: .prompt-warning }
 
 > **Bias–variance:** One-hot carries near-zero structural bias — no ordering is imposed, all categories are equidistant. The cost is variance: parameter count scales with $k$, and rare categories with $n_c \ll n$ have their parameters estimated from very few observations.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 ### 2.3 Target Encoding
 
@@ -185,10 +187,10 @@ The critical risk is leakage: if $\hat{\mu}_c$ is computed using full training d
 | 3   | B        | 0.20 | —                          | no                |
 
 > Target encoding must be computed out-of-fold to prevent target leakage.
-> {: .prompt-warning }
+{: .prompt-warning }
 
 > **Bias–variance:** The naive estimator has high variance when $n_c$ is small. Shrinkage reduces variance at the cost of pulling category estimates toward the global mean, introducing bias.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 ### 2.4 Frequency Encoding
 
@@ -201,7 +203,7 @@ $$
 The geometry reflects statistical mass, not semantic similarity. Categories with equal frequency collapse to identical representations. Unlike target encoding, it introduces no leakage — it is independent of $Y$.
 
 > **Bias–variance:** Frequency encoding is a low-variance, high-bias estimator when categorical identity carries signal — it substitutes prevalence for meaning, collapsing distinct categories to identical representations whenever their counts coincide.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 ---
 
@@ -228,7 +230,15 @@ $$
 
 The information bottleneck — $\dim(z) \ll \dim(x)$ — forces the encoder to retain the most informative structure and discard redundancy. Unlike truncated PCA, the encoder is nonlinear and can exploit higher-order structure.
 
-**Simple example — tabular data.** A user profile has 8 features: age, tenure, monthly spend, login frequency, number of products, support tickets, days since last purchase, account tier (numeric). These 8 numbers form $x$. The encoder compresses them: 8 → Dense(4, ReLU) → Dense(2) → $z = [0.7,\; -1.2]$. Two numbers now summarize the entire profile. The decoder reconstructs: 2 → Dense(4, ReLU) → Dense(8) → $\hat{x}$. After training, $z_1$ might separate high-value from low-value users; $z_2$ might separate active from churned ones — but these labels are never given. The geometry is discovered from what the decoder needs to reconstruct.
+**Simple example — tabular data.** A user profile has 8 features: age, tenure, monthly spend, login frequency, number of products, support tickets, days since last purchase, account tier (numeric). These 8 numbers form $x$. 
+The encoder compresses them: 
+8 → Dense(4, ReLU) → Dense(2) → $z = [0.7,\; -1.2]$. 
+Two numbers now summarize the entire profile. 
+
+The decoder reconstructs:
+2 → Dense(4, ReLU) → Dense(8) → $\hat{x}$.
+
+After training, $z_1$ might separate high-value from low-value users; $z_2$ might separate active from churned ones  but these labels are never given. The geometry is discovered from what the decoder needs to reconstruct.
 
 | Layer                 | Dimension | Role                                 |
 | --------------------- | --------- | ------------------------------------ |
@@ -243,10 +253,10 @@ The information bottleneck — $\dim(z) \ll \dim(x)$ — forces the encoder to r
 No prior is placed on $z$. The latent space is organized however minimizes the loss — which makes autoencoders effective for anomaly detection (out-of-distribution inputs reconstruct poorly) but poorly suited for generation (arbitrary samples from $\mathcal{Z}$ decode to noise, since there is no guarantee the space between encoded points is meaningful).
 
 > Autoencoder encodings minimize reconstruction error, not predictive accuracy. A good reconstruction embedding is not necessarily a good predictive embedding.
-> {: .prompt-warning }
+{: .prompt-warning }
 
 > **Bias–variance:** When reconstructive and discriminative dimensions diverge, autoencoders exhibit an inductive bias mismatch — the encoder may retain high-variance but low-signal dimensions (they help reconstruction) while discarding low-variance but high-signal dimensions (they are easily reconstructed from context). The latent space itself has no regularization, so its geometry can be arbitrarily fragmented.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 ### 3.2 Variational Autoencoders
 
@@ -289,10 +299,10 @@ The reconstruction term keeps the encoding informative. The KL term anchors ever
 Because the latent space is regularized, points sampled between two known encodings decode into plausible observations. The geometry is smooth and traversable.
 
 > The VAE encodes not a point but a region of uncertainty. This enables controlled generation and interpolation — plain autoencoders cannot do this reliably.
-> {: .prompt-info }
+{: .prompt-info }
 
 > **Bias–variance:** The KL term introduces bias by pulling the posterior toward the prior $\mathcal{N}(0,I)$, but reduces geometric variance in $\mathcal{Z}$ — the latent space becomes smoother and more predictable across the data manifold. The $\beta$ weight controls this tradeoff directly: higher $\beta$ increases bias and lowers variance; lower $\beta$ approaches the unregularized autoencoder.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 ### 3.3 A Note on Latent Space Geometry
 
@@ -363,7 +373,7 @@ Using both sine and cosine at each frequency is deliberate: any phase shift $PE(
 The inner product $PE(t)^\top PE(t')$ depends only on the offset $t - t'$ — giving the model a built-in bias toward relative position.
 
 > **Bias–variance:** Sinusoidal PE has zero variance by construction — it is a deterministic mapping with no trainable components. Its bias is determined entirely by the design choice: the functional form assumes position structure is well-captured by a fixed multi-frequency basis.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 ### 4.2 Relative and Rotary Variants
 
@@ -376,10 +386,10 @@ Modern large language models move position into attention rather than into token
 Both variants improve length generalization: a model trained on sequences of length 512 can be applied to sequences of length 2048 without degradation.
 
 > **Bias–variance:** Learned absolute PE introduces variance proportional to the number of trainable position vectors and fails to generalize beyond the maximum sequence length seen during training. RoPE and ALiBi encode position as a relative offset, reducing both the bias from absolute position assumptions and the variance from length generalization failures.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 > Positional encodings are not learned from labels — they are geometric injections. The model learns to use them; it does not learn what they are.
-> {: .prompt-info }
+{: .prompt-info }
 
 ---
 
@@ -410,7 +420,7 @@ Because $f_\theta(d)$ can be precomputed for all documents, retrieval scales to 
 The constraint is strong: each representation must be independently sufficient. Cross-document reasoning is impossible — the model cannot attend to tokens in $d$ while encoding $q$.
 
 > **Bias–variance:** The independence constraint is a structural bias — relationships between query and document terms that only emerge in context cannot be modeled at encoding time. In exchange, precomputable document representations eliminate variance from repeated inference.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 ### 5.2 Cross-Encoders
 
@@ -435,10 +445,10 @@ Full attention operates over both inputs simultaneously, allowing every token in
 In production retrieval systems, both are used in sequence: a bi-encoder retrieves a candidate set, a cross-encoder reranks it.
 
 > **Bias–variance:** Cross-encoders remove the independence constraint, eliminating the structural bias of bi-encoders. The cost is mandatory per-pair inference and higher sensitivity to query–document distributional shift.
-> {: .prompt-tip }
+{: .prompt-tip }
 
 > Cross-encoders do not produce embeddings — they produce scores. The encoding is not a point in space; it is a function of a pair.
-> {: .prompt-info }
+{: .prompt-info }
 
 ---
 
