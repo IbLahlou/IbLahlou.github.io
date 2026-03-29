@@ -182,17 +182,17 @@ $$
 
 The information bottleneck — $\dim(z) \ll \dim(x)$ — forces the encoder to retain the most informative structure and discard redundancy. Unlike truncated PCA, the encoder is nonlinear and can exploit higher-order structure.
 
-**Simple example — tabular data.** A user profile has 8 features: age, tenure, monthly spend, login frequency, number of products, support tickets, days since last purchase, account tier. The encoder compresses them: 8 → Dense(4, ReLU) → Dense(2) → $z = [0.7,\; -1.2]$. The decoder reconstructs: 2 → Dense(4, ReLU) → Dense(8) → $\hat{x}$. After training, $z_1$ might separate high-value from low-value users and $z_2$ might separate active from churned — but those labels are never given. The geometry emerges from what the decoder needs to reconstruct.
+**Simple example — tabular data.** A user profile has 8 features: age, tenure, monthly spend, login frequency, number of products, support tickets, days since last purchase, account tier.
 
-| Layer                 | Dimension | Role                                 |
-| --------------------- | --------- | ------------------------------------ |
-| Input $x$             | 8         | Raw user features                    |
-| Encoder hidden layer  | 4         | Intermediate compression             |
-| Bottleneck $z$        | 2         | Compressed representation            |
-| Decoder hidden layer  | 4         | Intermediate expansion               |
-| Output $\hat{x}$      | 8         | Reconstruction                       |
 
-**Visual example — images.** For a 28×28 digit (784 pixels): 784 → Dense(256) → Dense(128) → Dense(32) → $z$, then reversed. The 32-number code captures axes like stroke thickness or slant — whatever the decoder needs. Two separately trained autoencoders on the same data will discover entirely different coordinate systems; no dimension has predetermined meaning.
+![Autoencoder simple example](../assets/img/graphics/post_15/dark/vanilla-ae.png){: .dark }
+
+![Autoencoder simple example](../assets/img/graphics/post_15/light/vanilla-ae.png){: .light }
+_Figure 1.0: illustration of a classic Autoencoder neural network architecture._
+
+
+After training, $z_1$ might separate high-value from low-value users and $z_2$ might separate active from churned — but those labels are never given. The geometry emerges from what the decoder needs to reconstruct.
+
 
 No prior is placed on $z$. The latent space is organized however minimizes the loss — which makes autoencoders effective for anomaly detection (out-of-distribution inputs reconstruct poorly) but unreliable for generation (arbitrary points in $\mathcal{Z}$ decode to noise).
 
@@ -239,7 +239,7 @@ $$
 It is not a true distance — $D_{\text{KL}}(P \| Q) \neq D_{\text{KL}}(Q \| P)$ — but it captures the information cost of using $Q$ to approximate $P$. When $P = Q$, the divergence is zero; the more $P$ departs from $Q$, the larger it grows.
 
 ![KL divergence — forward vs reverse](/assets/img/graphics/post_15/kl-divergence.png){: width="650" .center}
-_Figure 3.2: KL divergence fitting a simple distribution (red) to a complex one (blue). Left: identical distributions, $D_{\text{KL}} = 0$. Centre and right: as the approximation concentrates on different modes, divergence increases._
+_Figure 3.0: KL divergence fitting a simple distribution (red) to a complex one (blue). Left: identical distributions, $D_{\text{KL}} = 0$. Centre and right: as the approximation concentrates on different modes, divergence increases._
 
 In the VAE, $P$ is the encoder's learned posterior $q_\theta(z \mid x)$ and $Q$ is the prior $\mathcal{N}(0, I)$. Minimizing $D_{\text{KL}}(q_\theta(z \mid x) \| \mathcal{N}(0, I))$ forces every encoding cloud toward the origin with bounded spread — filling the gaps and ensuring continuity and completeness.
 
@@ -252,7 +252,7 @@ $$
 The two terms are in tension. Reconstruction alone produces tight, scattered clusters with dead zones (left panel below). KL alone collapses everything into a single Gaussian — no structure survives (centre). The combination preserves class structure while keeping the space smooth and traversable (right).
 
 ![Latent space: reconstruction only vs KL only vs both](/assets/img/graphics/post_15/kl-latent-space.png){: width="700" .center}
-_Figure 3.3: MNIST latent spaces trained with reconstruction loss only, KL divergence only, and both combined (ELBO). Only the combination produces a space that is both structured and complete._
+_Figure 3.1: MNIST latent spaces trained with reconstruction loss only, KL divergence only, and both combined (ELBO). Only the combination produces a space that is both structured and complete._
 
 A scalar $\beta > 1$ on the KL term ($\beta$-VAE) pushes harder toward the prior — trading reconstruction fidelity for a more disentangled, tightly organised space; $\beta < 1$ relaxes toward the unregularised autoencoder.
 
@@ -269,7 +269,7 @@ A scalar $\beta > 1$ on the KL term ($\beta$-VAE) pushes harder toward the prior
 All encoders above assume $\mathcal{Z} = \mathbb{R}^d$ — a flat Euclidean space. This is a structural assumption, not a necessity.
 
 ![Euclidean vs Non-Euclidean geometries](/assets/img/graphics/post_15/geometries.png){: width="500" .center}
-_Figure 3.0: Euclidean, spherical, and hyperbolic geometries — each defines different geodesics and distance growth rates._
+_Figure 3.2: Euclidean, spherical, and hyperbolic geometries — each defines different geodesics and distance growth rates._
 
 In Euclidean space, geodesics are straight lines and distances grow linearly. In spherical space, geodesics curve back on themselves — suitable for data with cyclical structure. In **hyperbolic space**, space expands exponentially away from any center point — exactly matching the growth rate of trees and hierarchies.
 
@@ -278,7 +278,7 @@ This matters for embeddings: a tree with branching factor $b$ has $b^k$ nodes at
 **The Lorentz and Poincaré models** are two equivalent ways to work with hyperbolic space computationally:
 
 ![Lorentz model and Poincaré disk](/assets/img/graphics/post_15/lorentz-poincare.jpg){: width="600" .center}
-_Figure 3.1: The Lorentz hyperboloid (left) projects onto the Poincaré disk (right) — boundary points are exponentially far from the center._
+_Figure 3.3: The Lorentz hyperboloid (left) projects onto the Poincaré disk (right) — boundary points are exponentially far from the center._
 
 The **Lorentz model** embeds hyperbolic space as a hyperboloid in $\mathbb{R}^{n+1}$:
 
