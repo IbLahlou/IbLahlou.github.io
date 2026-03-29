@@ -60,26 +60,13 @@ Encoding is not one technique. It is a family of techniques, each answering a di
 | **Positional**   | sequence order              | frequency-based or learned offsets | Transformers, LLMs |
 | **Semantic**     | meaning of objects or pairs | dense vector or scalar score       | NLP, retrieval     |
 
-Each family operates on a different input type, serves a different modeling objective, and imposes a fundamentally different geometry.
-
 The choice of encoder family is not a preprocessing detail — it defines what the model is allowed to know about the world.
-
-> Encoding determines whether categories become collinear scalars, orthogonal axes, empirical expectations, or learned manifolds.
-{: .prompt-info }
 
 ---
 
 ## 2. Categorical Encoders
 
-Categorical encoders address the most classical problem: a finite set of labels must become numbers.
-
-Formally, they define a mapping from a discrete set $\mathcal{C}$ into some Euclidean space:
-
-$$
-f : \mathcal{C} \rightarrow \mathbb{R}^k
-$$
-
-The choice of $f$ determines adjacency, distance, and orientation. Once applied, the model interacts only with the induced geometry — never again with the original set.
+Categorical encoders address the most classical problem: a finite set of labels — regions, product types, user segments — must become numbers that a model can compute with. The mapping $f : \mathcal{C} \rightarrow \mathbb{R}^k$ looks innocent, but the choice of $f$ determines which categories appear close, which appear far, and which appear identical. Once applied, the model interacts only with the induced geometry — never again with the original labels.
 
 | Encoder   | Geometric form   | Key assumption                    |
 | --------- | ---------------- | --------------------------------- |
@@ -91,17 +78,9 @@ The choice of $f$ determines adjacency, distance, and orientation. Once applied,
 
 ### 2.1 Label Encoding
 
-Label encoding maps each category to an integer:
+The simplest approach: assign each category an integer. North → 0, South → 1, East → 2, and so on. The encoding is a lookup table — deterministic, no parameters.
 
-$$
-\{c_1, \dots, c_k\} \mapsto \{0, 1, \dots, k-1\}
-$$
-
-The induced metric is absolute difference , implying uniform spacing and total order.
-
-$$d(c_i, c_j) = |f(c_i) - f(c_j)|$$
-
-Two arbitrary label assignments for the same five regions produce different tree splits at threshold $f(c) \leq 1$:
+The problem is that integers carry geometry. The model reads the distance between two values as meaningful, so North (0) and South (1) appear closer than North (0) and West (3) — purely because of the arbitrary assignment made before training began. Two different assignments for the same five regions produce different tree splits at the same threshold:
 
 | Region  | Encoding A | Encoding B |
 | ------- | ---------- | ---------- |
@@ -114,21 +93,13 @@ Two arbitrary label assignments for the same five regions produce different tree
 - **Split A** (`f(c) ≤ 1`): {North, South} vs {East, West, Central}
 - **Split B** (`f(c) ≤ 1`): {South, East} vs {North, West, Central}
 
-Same model, same threshold — entirely different groupings, determined solely by encoding order.
-
-> Label encoding introduces artificial ordinal structure unless rank is intrinsic to the domain.
-{: .prompt-warning }
-
-> **Bias–variance:** Label encoding is a zero-variance transformation — it is deterministic — but it introduces maximal structural bias for nominal data by imposing a total order that does not exist in the domain.
-{: .prompt-tip }
+Same model, same threshold — different partitions, determined solely by a choice made before training. Label encoding introduces no estimation variance (it is fully deterministic), but it injects maximal structural bias: the model is forced to treat an invented ordering as real signal.
 
 ### 2.2 One-Hot Encoding
 
-One-hot encoding maps categories to canonical basis vectors $c_i \mapsto e_i \in \mathbb{R}^k$, where $e_i$ has a 1 in position $i$ and 0 elsewhere.
+One-hot encoding assigns each category its own binary column. A category is represented by a 1 in its column and 0 everywhere else — every category gets exactly one "active" dimension.
 
-The Euclidean distance between any two categories is constant: $\|e_i - e_j\|_2 = \sqrt{2}$ for $i \neq j$. No category is closer to another — the embedding assumes complete independence.
-
-**Low cardinality** (3 categories — manageable):
+With 3 countries, the representation is clean and readable:
 
 | Observation | is_France | is_Germany | is_UK |
 | ----------- | --------- | ---------- | ----- |
@@ -136,7 +107,9 @@ The Euclidean distance between any two categories is constant: $\|e_i - e_j\|_2 
 | obs_2       | 0         | 1          | 0     |
 | obs_3       | 0         | 0          | 1     |
 
-**High cardinality** (6 categories — sparse, mostly zeros):
+Each observation is a point on a different axis. No category is numerically closer to another — France and Germany are exactly as far apart as France and UK. This is one-hot's core strength: it imposes no ordering and no artificial proximity.
+
+The geometry breaks down at scale. With 6 countries already every row is mostly zeros:
 
 | Observation | is_FR | is_DE | is_UK | is_ES | is_IT | is_PL |
 | ----------- | ----- | ----- | ----- | ----- | ----- | ----- |
@@ -144,33 +117,34 @@ The Euclidean distance between any two categories is constant: $\|e_i - e_j\|_2 
 | obs_2       | 0     | 0     | 0     | 0     | 1     | 0     |
 | obs_3       | 0     | 0     | 0     | 1     | 0     | 0     |
 
-With $k = 500$ product IDs, each row is 499 zeros and 1 one. Memory scales with $n \times k$. For identifiability with an intercept, one dimension must be dropped to avoid perfect collinearity.
+With 500 product IDs, each row is 499 zeros and 1 one. The model now has one parameter per category — and for a product that appears 3 times in training data, that parameter is estimated from those 3 observations alone. Rare categories carry high estimation variance. Memory scales with $n \times k$, and one column must be dropped when an intercept is present to avoid a perfectly collinear design matrix.
 
-> High-cardinality one-hot encoding inflates parameter dimensionality and increases estimator variance for rare categories.
-{: .prompt-warning }
-
-> **Bias–variance:** One-hot carries near-zero structural bias — no ordering is imposed, all categories are equidistant. The cost is variance: parameter count scales with $k$, and rare categories with $n_c \ll n$ have their parameters estimated from very few observations.
-{: .prompt-tip }
+The structural bias of one-hot is near zero — no ordering is imposed, all categories are equidistant. But that structural neutrality comes at the cost of statistical variance: the sparser the data per category, the noisier the learned coefficients.
 
 ### 2.3 Target Encoding
 
-Target encoding replaces identity with empirical expectation:
+Instead of encoding what a category *is*, target encoding encodes what it *predicts*. Each category is replaced by the average outcome among observations that belong to it:
 
 $$
 c \mapsto \mathbb{E}[Y \mid C = c]
 $$
 
-The category becomes a sufficient statistic for outcome tendency. To control variance under small sample sizes, shrinkage is applied:
+A product category "Electronics" doesn't get an integer or a binary column — it gets a number like 0.73, reflecting the mean conversion rate of that category in the training data. Two categories with similar outcome tendencies land near each other in the encoding, regardless of their names or frequencies.
+
+When a category appears rarely, its sample average is unstable. Shrinkage pulls it toward the global mean to reduce noise:
 
 $$
 \hat{\mu}_c = \frac{n_c \mu_c + \alpha \mu}{n_c + \alpha}
 $$
 
-where $\mu$ is the global mean and $\alpha$ controls regularization. This is equivalent to empirical Bayes shrinkage under a conjugate prior.
+With small $n_c$, the global mean $\mu$ dominates; as $n_c$ grows, the category's own mean takes over. This makes the bias-variance tradeoff explicit: higher $\alpha$ adds bias (estimates are pulled toward the global average) but cuts variance for sparse categories.
 
-The critical risk is leakage: if $\hat{\mu}_c$ is computed using full training data, each observation's $y$ contributes to its own encoding.
+> **Target leakage** — if the average is computed over the full training set, each observation's outcome contributes to its own encoding. The model sees the target baked into the feature before training.
+{: .prompt-warning }
 
-**Naïve (leaky):** each observation's $y$ is in its own $\hat{\mu}_c$.
+The two tables below show how the numbers shift depending on whether the encoding is computed naïvely or out-of-fold:
+
+**Naïve (leaky):** each observation contributes to its own $\hat{\mu}_c$.
 
 | obs | category | y    | $\hat{\mu}_c$ (full data) | self-contribution |
 | --- | -------- | ---- | ------------------------- | ----------------- |
@@ -178,7 +152,7 @@ The critical risk is leakage: if $\hat{\mu}_c$ is computed using full training d
 | 2   | A        | 0.50 | 0.75                      | yes               |
 | 3   | B        | 0.20 | 0.20                      | yes               |
 
-**Out-of-fold (correct):** obs 1's encoding is computed on folds that exclude obs 1.
+**Out-of-fold (correct):** obs 1 is excluded from the fold used to encode it.
 
 | obs | category | y    | $\hat{\mu}_c$ (excl. self) | self-contribution |
 | --- | -------- | ---- | -------------------------- | ----------------- |
@@ -186,43 +160,34 @@ The critical risk is leakage: if $\hat{\mu}_c$ is computed using full training d
 | 2   | A        | 0.50 | 0.583                      | no                |
 | 3   | B        | 0.20 | —                          | no                |
 
-> Target encoding must be computed out-of-fold to prevent target leakage.
-{: .prompt-warning }
-
-> **Bias–variance:** The naive estimator has high variance when $n_c$ is small. Shrinkage reduces variance at the cost of pulling category estimates toward the global mean, introducing bias.
-{: .prompt-tip }
+The encodings differ — and so does the signal the model receives. Naïve target encoding inflates apparent training performance while the out-of-fold version gives the model an honest view of what each category predicts.
 
 ### 2.4 Frequency Encoding
 
-Frequency encoding maps categories to empirical prevalence:
+Frequency encoding replaces each category with how often it appears in the data — its share of the total:
 
 $$
 c \mapsto \frac{n_c}{N}
 $$
 
-The geometry reflects statistical mass, not semantic similarity. Categories with equal frequency collapse to identical representations. Unlike target encoding, it introduces no leakage — it is independent of $Y$.
-
-> **Bias–variance:** Frequency encoding is a low-variance, high-bias estimator when categorical identity carries signal — it substitutes prevalence for meaning, collapsing distinct categories to identical representations whenever their counts coincide.
-{: .prompt-tip }
+A category that appears in 40% of rows gets encoded as 0.40, regardless of what outcome it's associated with. The encoding is fast, leakage-free (it never touches $Y$), and stable — but it substitutes prevalence for meaning. Two categories with the same frequency collapse to the same representation even if they have completely different relationships with the target. When identity carries signal, frequency encoding is a high-bias estimator: it discards the thing that matters in favour of the thing that is easy to measure.
 
 ---
 
 ## 3. Latent Space Encoders
 
-A [**latent space**](https://en.wikipedia.org/wiki/Latent_space), also known as a **latent feature space** or **embedding space**, is an [embedding](https://en.wikipedia.org/wiki/Embedding_\(machine_learning\) "Embedding (machine learning)") of a set of items within a [manifold](https://en.wikipedia.org/wiki/Manifold "Manifold") in which items resembling each other are positioned closer to one another. Position within the latent space can be viewed as being defined by a set of [latent variables](https://en.wikipedia.org/wiki/Latent_variable "Latent variable") that emerge from the resemblances from the objects.
+Categorical encoders map a predefined set to a predefined space. Latent space encoders do something fundamentally different: they learn the encoding itself from data.
 
-Latent space encoders do not map a predefined set to a predefined space. They learn the encoding itself from data, optimizing for a task  reconstruction, generation, or classification.
-
-The common structure is a bottleneck: high-dimensional input is compressed into a lower-dimensional latent representation $z$, which the model must use to accomplish its objective.
+The idea is compression. Take a high-dimensional input — an image, a user session, a molecular graph — and squeeze it through a bottleneck into a low-dimensional code $z$. Whatever survives the bottleneck is, by construction, the information the model found most useful. The resulting [**latent space**](https://en.wikipedia.org/wiki/Latent_space) is a coordinate system the model invented: items that resemble each other land close together, items that differ land far apart, and the axes of variation are discovered rather than prescribed.
 
 All autoencoder variants share the encoder–decoder skeleton but differ in what they regularize, what they corrupt, or what architecture they impose — the objective function is where the design choices live.
 
 ### 3.1 Autoencoders
 
-An autoencoder frames representation learning as a reconstruction problem. It is composed of two parametric functions trained jointly:
+The simplest latent encoder is the autoencoder: force a neural network to reproduce its own input, but make it pass through a narrow bottleneck first. Whatever the network keeps is what matters; whatever it drops is redundant.
 
-- **Encoder** $f_\theta : \mathcal{X} \rightarrow \mathcal{Z}$ — compresses the input to a low-dimensional code $z$.
-- **Decoder** $g_\phi : \mathcal{Z} \rightarrow \mathcal{X}$ — reconstructs the original input from $z$ alone.
+- **Encoder** $f_\theta$ — compresses the input down to a small code $z$.
+- **Decoder** $g_\phi$ — reconstructs the original input from $z$ alone.
 
 $$
 z = f_\theta(x), \qquad \hat{x} = g_\phi(z), \qquad \mathcal{L} = \|x - g_\phi(f_\theta(x))\|^2
@@ -230,15 +195,7 @@ $$
 
 The information bottleneck — $\dim(z) \ll \dim(x)$ — forces the encoder to retain the most informative structure and discard redundancy. Unlike truncated PCA, the encoder is nonlinear and can exploit higher-order structure.
 
-**Simple example — tabular data.** A user profile has 8 features: age, tenure, monthly spend, login frequency, number of products, support tickets, days since last purchase, account tier (numeric). These 8 numbers form $x$. 
-The encoder compresses them: 
-8 → Dense(4, ReLU) → Dense(2) → $z = [0.7,\; -1.2]$. 
-Two numbers now summarize the entire profile. 
-
-The decoder reconstructs:
-2 → Dense(4, ReLU) → Dense(8) → $\hat{x}$.
-
-After training, $z_1$ might separate high-value from low-value users; $z_2$ might separate active from churned ones  but these labels are never given. The geometry is discovered from what the decoder needs to reconstruct.
+**Simple example — tabular data.** A user profile has 8 features: age, tenure, monthly spend, login frequency, number of products, support tickets, days since last purchase, account tier. The encoder compresses them: 8 → Dense(4, ReLU) → Dense(2) → $z = [0.7,\; -1.2]$. The decoder reconstructs: 2 → Dense(4, ReLU) → Dense(8) → $\hat{x}$. After training, $z_1$ might separate high-value from low-value users and $z_2$ might separate active from churned — but those labels are never given. The geometry emerges from what the decoder needs to reconstruct.
 
 | Layer                 | Dimension | Role                                 |
 | --------------------- | --------- | ------------------------------------ |
@@ -250,27 +207,24 @@ After training, $z_1$ might separate high-value from low-value users; $z_2$ migh
 
 **Visual example — images.** For a 28×28 digit (784 pixels): 784 → Dense(256) → Dense(128) → Dense(32) → $z$, then reversed. The 32-number code captures axes like stroke thickness or slant — whatever the decoder needs. Two separately trained autoencoders on the same data will discover entirely different coordinate systems; no dimension has predetermined meaning.
 
-No prior is placed on $z$. The latent space is organized however minimizes the loss — which makes autoencoders effective for anomaly detection (out-of-distribution inputs reconstruct poorly) but poorly suited for generation (arbitrary samples from $\mathcal{Z}$ decode to noise, since there is no guarantee the space between encoded points is meaningful).
+No prior is placed on $z$. The latent space is organized however minimizes the loss — which makes autoencoders effective for anomaly detection (out-of-distribution inputs reconstruct poorly) but unreliable for generation (arbitrary points in $\mathcal{Z}$ decode to noise).
 
-> Autoencoder encodings minimize reconstruction error, not predictive accuracy. A good reconstruction embedding is not necessarily a good predictive embedding.
-{: .prompt-warning }
-
-> **Bias–variance:** When reconstructive and discriminative dimensions diverge, autoencoders exhibit an inductive bias mismatch — the encoder may retain high-variance but low-signal dimensions (they help reconstruction) while discarding low-variance but high-signal dimensions (they are easily reconstructed from context). The latent space itself has no regularization, so its geometry can be arbitrarily fragmented.
+> **Reconstruction ≠ prediction** — the encoder may retain high-variance but low-signal dimensions because they help reconstruction, while discarding low-variance but high-signal dimensions. A good reconstruction embedding is not necessarily a good predictive one.
 {: .prompt-tip }
 
 ### 3.2 Variational Autoencoders
 
-A plain autoencoder places no prior on $\mathcal{Z}$: similar inputs may land in distant regions, and sampling an arbitrary point decodes to noise since the decoder has only seen encoder outputs.
+An autoencoder finds a good compression, but nothing guarantees the latent space is *organised*. Two similar inputs may land in distant regions; a randomly sampled point decodes to noise because the decoder has never seen it.
 
-A **Variational Autoencoder** (VAE) addresses this by reformulating the problem as variational inference. Rather than learning a deterministic encoding, the encoder learns a posterior distribution over latent codes. The architecture remains encoder–decoder, but the encoder now outputs the parameters of a Gaussian:
+A **Variational Autoencoder** (VAE) fixes this by encoding each input not as a single point but as a small cloud — a Gaussian distribution with learned mean and spread. The architecture remains encoder–decoder, but the encoder now outputs two vectors instead of one:
 
-- **Encoder** $f_\theta : \mathcal{X} \rightarrow (\mu, \sigma)$ — two parallel output heads instead of one. For the user profile above: $\mu = [0.70,\; -1.20]$ (the most likely location in $\mathcal{Z}$ for this user) and $\sigma = [0.15,\; 0.30]$ (how uncertain the encoder is along each latent dimension).
-- **Sampling** — $z$ is drawn from $q_\theta(z \mid x) = \mathcal{N}(\mu_\theta(x),\, \sigma_\theta^2(x))$, a different point each forward pass.
-- **Decoder** $g_\phi : \mathcal{Z} \rightarrow \mathcal{X}$ — same role as in a plain autoencoder; reconstructs the input from the sampled $z$.
+- **Encoder** outputs $\mu$ and $\sigma$ — for the user profile above: $\mu = [0.70,\; -1.20]$ (where this user most likely lives in $\mathcal{Z}$) and $\sigma = [0.15,\; 0.30]$ (how spread out the cloud is along each axis).
+- **Sampling** — $z$ is drawn from $\mathcal{N}(\mu, \sigma^2)$, a different point each forward pass.
+- **Decoder** — same role as before; reconstructs the input from the sampled $z$.
 
-Encoding to a distribution rather than a point means every input occupies a region in $\mathcal{Z}$. When the regularization term enforces overlap between those regions, the complement of the training encodings is no longer out-of-distribution — the latent space becomes dense enough that arbitrary samples decode coherently.
+**Intuition:** because every input now occupies a *region* rather than a point, the clouds overlap. The gaps between training inputs are filled in. Random samples from $\mathcal{Z}$ decode to coherent outputs — generation becomes possible.
 
-**The reparameterization trick** makes this trainable. Sampling $z \sim \mathcal{N}(\mu, \sigma^2)$ is not differentiable — gradients cannot flow back through a stochastic node to reach $\mu$ and $\sigma$. The trick externalizes the randomness: sample auxiliary noise $\varepsilon \sim \mathcal{N}(0, I)$ independently of the parameters, then construct $z$ deterministically:
+**The reparameterization trick** makes this trainable. Sampling from a distribution is not differentiable, so instead: draw noise $\varepsilon \sim \mathcal{N}(0, I)$ and construct $z$ deterministically:
 
 $$
 z = \mu_\theta(x) + \sigma_\theta(x) \cdot \varepsilon
@@ -296,19 +250,14 @@ The reconstruction term keeps the encoding informative. The KL term anchors ever
 | Sampling new points  | not meaningful      | meaningful interpolation              |
 | Objective            | reconstruction only | reconstruction + KL divergence        |
 
-Because the latent space is regularized, points sampled between two known encodings decode into plausible observations. The geometry is smooth and traversable.
-
-> The VAE encodes not a point but a region of uncertainty. This enables controlled generation and interpolation — plain autoencoders cannot do this reliably.
-{: .prompt-info }
-
-> **Bias–variance:** The KL term introduces bias by pulling the posterior toward the prior $\mathcal{N}(0,I)$, but reduces geometric variance in $\mathcal{Z}$ — the latent space becomes smoother and more predictable across the data manifold. The $\beta$ weight controls this tradeoff directly: higher $\beta$ increases bias and lowers variance; lower $\beta$ approaches the unregularized autoencoder.
-{: .prompt-tip }
+Because the latent space is regularized, points sampled between two known encodings decode into plausible observations — the VAE encodes not a point but a region of uncertainty. The KL term introduces bias by pulling every posterior toward the prior $\mathcal{N}(0,I)$, but it buys geometric regularity: the latent space becomes smooth and traversable rather than fragmented. Higher $\beta$ on the KL term trades reconstruction fidelity for a more tightly organised space; lower $\beta$ relaxes toward the unregularised autoencoder.
 
 ### 3.3 A Note on Latent Space Geometry
 
 All encoders above assume $\mathcal{Z} = \mathbb{R}^d$ — a flat Euclidean space. This is a structural assumption, not a necessity.
 
 ![Euclidean vs Non-Euclidean geometries](/assets/img/graphics/post_15/geometries.png){: width="500" .center}
+_Figure 3.0: Euclidean, spherical, and hyperbolic geometries — each defines different geodesics and distance growth rates._
 
 In Euclidean space, geodesics are straight lines and distances grow linearly. In spherical space, geodesics curve back on themselves — suitable for data with cyclical structure. In **hyperbolic space**, space expands exponentially away from any center point — exactly matching the growth rate of trees and hierarchies.
 
@@ -317,6 +266,7 @@ This matters for embeddings: a tree with branching factor $b$ has $b^k$ nodes at
 **The Lorentz and Poincaré models** are two equivalent ways to work with hyperbolic space computationally:
 
 ![Lorentz model and Poincaré disk](/assets/img/graphics/post_15/lorentz-poincare.jpg){: width="600" .center}
+_Figure 3.1: The Lorentz hyperboloid (left) projects onto the Poincaré disk (right) — boundary points are exponentially far from the center._
 
 The **Lorentz model** embeds hyperbolic space as a hyperboloid in $\mathbb{R}^{n+1}$:
 
@@ -334,9 +284,9 @@ The denominator shrinks as points approach the boundary ($\|u\| \to 1$), so boun
 
 ## 4. Positional Encoders
 
-Attention mechanisms are permutation-invariant. A Transformer has no built-in notion of sequence order — it treats a sentence and a shuffled version of that sentence identically.
+A Transformer has no built-in notion of order. Feed it "the cat sat on the mat" or "mat the on sat cat the" — it sees the same bag of tokens. Without help, every permutation is identical.
 
-Positional encoders solve this by injecting a position-dependent signal into each token representation:
+Positional encoders fix this by adding a position-dependent signal to each token before attention sees it. The token embedding carries *what* the word is; the positional encoding carries *where* it sits:
 
 $$
 x'_t = x_t + PE(t)
@@ -351,16 +301,16 @@ $$
 
 ### 4.1 Sinusoidal Positional Encoding
 
-Each position $t$ is mapped to a $d$-dimensional vector by applying sine and cosine at geometrically decreasing frequencies across dimension pairs:
+The original Transformer uses a clever trick: encode each position $t$ as a $d$-dimensional vector built from sine and cosine waves at different frequencies — fast-changing waves for fine position, slow-changing waves for coarse position:
 
 $$
 PE_{(t,\, 2i)} = \sin\!\left(\frac{t}{10000^{2i/d}}\right), \qquad
 PE_{(t,\, 2i+1)} = \cos\!\left(\frac{t}{10000^{2i/d}}\right)
 $$
 
-The design is a multi-scale decomposition of position. Low-index dimensions ($i$ small) have high frequency — they oscillate rapidly and resolve fine-grained positional differences between adjacent tokens. High-index dimensions ($i$ large) have low frequency — they change slowly and encode coarse positional structure across long spans. Together the $d$ dimensions uniquely identify any position up to the sequence length the frequencies can represent.
+The table below makes this concrete. Dimensions 0–1 (high frequency) change dramatically between adjacent positions — they tell the model whether two tokens are one step apart. Dimensions 2–3 (low frequency) barely move at short range and only differentiate tokens across long spans.
 
-Using both sine and cosine at each frequency is deliberate: any phase shift $PE(t + \Delta)$ can be expressed as a linear transformation of $PE(t)$, making relative position a linear operation in the encoding space.
+Using both sine and cosine at each frequency is deliberate: it means any shift $PE(t + \Delta)$ can be written as a linear transformation of $PE(t)$, so the model can learn to compute "how far apart?" as a simple operation.
 
 | Position | dim 0 ($\sin$, high freq) | dim 1 ($\cos$, high freq) | dim 2 ($\sin$, low freq) | dim 3 ($\cos$, low freq) |
 | :------: | :-----------------------: | :-----------------------: | :----------------------: | :----------------------: |
@@ -370,10 +320,7 @@ Using both sine and cosine at each frequency is deliberate: any phase shift $PE(
 |    3     |           0.141           |          −0.990           |          0.030           |          1.000           |
 |    4     |          −0.757           |          −0.654           |          0.040           |          0.999           |
 
-The inner product $PE(t)^\top PE(t')$ depends only on the offset $t - t'$ — giving the model a built-in bias toward relative position.
-
-> **Bias–variance:** Sinusoidal PE has zero variance by construction — it is a deterministic mapping with no trainable components. Its bias is determined entirely by the design choice: the functional form assumes position structure is well-captured by a fixed multi-frequency basis.
-{: .prompt-tip }
+The inner product $PE(t)^\top PE(t')$ depends only on the offset $t - t'$, giving the model a built-in bias toward relative position. Since sinusoidal PE has no trainable components, it introduces zero estimation variance — its only bias comes from the design choice itself: the assumption that a fixed multi-frequency basis captures all the positional structure the model needs.
 
 ### 4.2 Relative and Rotary Variants
 
@@ -383,21 +330,17 @@ Modern large language models move position into attention rather than into token
 
 **ALiBi** (Attention with Linear Biases) adds a fixed negative slope to attention scores as a function of key-query distance — no vector modification required.
 
-Both variants improve length generalization: a model trained on sequences of length 512 can be applied to sequences of length 2048 without degradation.
+Both variants improve length generalization: a model trained on sequences of length 512 can be applied to sequences of length 2048 without degradation. This is where learned absolute PE fails — it introduces a trainable vector per position, so it has no representation for positions it never saw during training. RoPE and ALiBi sidestep this by encoding position as a relative offset rather than an absolute lookup, removing both the assumption bias of fixed sinusoids and the length generalisation variance of learned tables.
 
-> **Bias–variance:** Learned absolute PE introduces variance proportional to the number of trainable position vectors and fails to generalize beyond the maximum sequence length seen during training. RoPE and ALiBi encode position as a relative offset, reducing both the bias from absolute position assumptions and the variance from length generalization failures.
-{: .prompt-tip }
-
-> Positional encodings are not learned from labels — they are geometric injections. The model learns to use them; it does not learn what they are.
-{: .prompt-info }
+Positional encodings are not learned from labels — they are geometric injections. The model learns to use them; it does not learn what they are.
 
 ---
 
 ## 5. Semantic Encoders
 
-Semantic encoders map natural language — or structured objects — into representations that reflect meaning, not just identity.
+Everything above encodes structure — categories, compressed data, position. Semantic encoders tackle a harder target: **meaning**. Given a sentence, a paragraph, or a document, they produce a representation that captures what the text is *about*, not just what symbols it contains.
 
-The central question they answer: how similar is A to B?
+The central question: how similar is A to B?
 
 | Encoder type  | Input                       | Output       | Similarity computation         |
 | ------------- | --------------------------- | ------------ | ------------------------------ |
@@ -407,7 +350,7 @@ The central question they answer: how similar is A to B?
 
 ### 5.1 Bi-Encoders
 
-A bi-encoder encodes query and document independently:
+The simplest approach: encode the query and the document separately, then compare their vectors.
 
 $$
 s(q, d) = f_\theta(q)^\top f_\theta(d)
@@ -417,22 +360,17 @@ Because $f_\theta(d)$ can be precomputed for all documents, retrieval scales to 
 
 **Example**: query _"early symptoms of diabetes"_ → 768-dim vector $q$. Document _"Fatigue and frequent urination are early signs of high blood sugar"_ → 768-dim vector $d$, computed once and stored. Similarity = $q^\top d = 0.87$. Nothing in this score knows that "early" in the query aligns with "early signs" in the document — the match is purely geometric, between two independently computed vectors.
 
-The constraint is strong: each representation must be independently sufficient. Cross-document reasoning is impossible — the model cannot attend to tokens in $d$ while encoding $q$.
-
-> **Bias–variance:** The independence constraint is a structural bias — relationships between query and document terms that only emerge in context cannot be modeled at encoding time. In exchange, precomputable document representations eliminate variance from repeated inference.
-{: .prompt-tip }
+The constraint is strong: each representation must be independently sufficient. The model cannot attend to tokens in $d$ while encoding $q$, so relationships that only emerge when query and document are read together are invisible to it — a structural bias built into the architecture. In exchange, document representations are computed once and reused for every query, eliminating the inference variance that comes from per-pair computation.
 
 ### 5.2 Cross-Encoders
 
-A cross-encoder concatenates query and document and processes the pair jointly:
+What if the model could read both texts at once? A cross-encoder does exactly that — it concatenates query and document into a single input and processes them jointly:
 
 $$
 s = f_\theta\bigl([q \,;\, \text{[SEP]} \,;\, d]\bigr)
 $$
 
-Full attention operates over both inputs simultaneously, allowing every token in $q$ to interact with every token in $d$. The output is a scalar relevance score.
-
-**Example**: the concatenated input is _"early symptoms of diabetes [SEP] Fatigue and frequent urination are early signs of high blood sugar"_. The token "symptoms" in the query can now directly attend to "signs" in the document; "diabetes" can attend to "blood sugar". The model integrates these alignments and outputs a single score like 0.94 — much more precise than the dot product of two independent vectors, but only computable at query time.
+Every token in the query can now attend to every token in the document. "Symptoms" directly aligns with "signs"; "diabetes" with "blood sugar". The model integrates these cross-attention alignments and outputs a single relevance score — much more precise than the dot product of two independent vectors, but only computable at query time.
 
 | Property              | Bi-Encoder                    | Cross-Encoder                     |
 | --------------------- | ----------------------------- | --------------------------------- |
@@ -442,13 +380,12 @@ Full attention operates over both inputs simultaneously, allowing every token in
 | Expressivity          | limited                       | high                              |
 | Typical role          | first-stage retrieval         | second-stage reranking            |
 
-In production retrieval systems, both are used in sequence: a bi-encoder retrieves a candidate set, a cross-encoder reranks it.
+Cross-encoders remove the independence constraint, eliminating the structural bias that limits bi-encoders. The cost is that every query-document pair requires its own forward pass — no precomputation is possible, and the model is more sensitive to distributional shift between query and document populations.
 
-> **Bias–variance:** Cross-encoders remove the independence constraint, eliminating the structural bias of bi-encoders. The cost is mandatory per-pair inference and higher sensitivity to query–document distributional shift.
+> In production retrieval systems, both are used in sequence: a **bi-encoder** retrieves a candidate set at scale, then a **cross-encoder** reranks the top candidates where precision matters.
 {: .prompt-tip }
 
-> Cross-encoders do not produce embeddings — they produce scores. The encoding is not a point in space; it is a function of a pair.
-{: .prompt-info }
+Note that cross-encoders do not produce embeddings — they produce scores. The encoding is not a point in space; it is a function of a pair.
 
 ---
 
