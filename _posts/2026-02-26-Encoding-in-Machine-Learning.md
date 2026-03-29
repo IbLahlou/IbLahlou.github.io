@@ -219,16 +219,14 @@ All autoencoder variants share the encoder–decoder skeleton but differ in what
 
 An autoencoder frames representation learning as a reconstruction problem. It is composed of two parametric functions trained jointly:
 
-- **Encoder** $f_\theta : \mathcal{X} \rightarrow \mathcal{Z}$ — compresses the input down to a low-dimensional code $z$.
+- **Encoder** $f_\theta : \mathcal{X} \rightarrow \mathcal{Z}$ — compresses the input to a low-dimensional code $z$.
 - **Decoder** $g_\phi : \mathcal{Z} \rightarrow \mathcal{X}$ — reconstructs the original input from $z$ alone.
-
-The encoder maps $x$ to a latent code $z$, the decoder reconstructs $\hat{x}$ from $z$, and the whole system is trained end-to-end to minimize reconstruction error:
 
 $$
 z = f_\theta(x), \qquad \hat{x} = g_\phi(z), \qquad \mathcal{L} = \|x - g_\phi(f_\theta(x))\|^2
 $$
 
-The information bottleneck — $\dim(z) \ll \dim(x)$ — is the key constraint. Since the decoder must recover $x$ from $z$ alone, the encoder must retain the most statistically informative structure and discard redundancy. This is conceptually related to truncated PCA, but the encoder is nonlinear, so the compression can exploit higher-order structure that linear projections miss.
+The information bottleneck — $\dim(z) \ll \dim(x)$ — forces the encoder to retain the most informative structure and discard redundancy. Unlike truncated PCA, the encoder is nonlinear and can exploit higher-order structure.
 
 **Simple example — tabular data.** A user profile has 8 features: age, tenure, monthly spend, login frequency, number of products, support tickets, days since last purchase, account tier (numeric). These 8 numbers form $x$. The encoder compresses them: 8 → Dense(4, ReLU) → Dense(2) → $z = [0.7,\; -1.2]$. Two numbers now summarize the entire profile. The decoder reconstructs: 2 → Dense(4, ReLU) → Dense(8) → $\hat{x}$. After training, $z_1$ might separate high-value from low-value users; $z_2$ might separate active from churned ones — but these labels are never given. The geometry is discovered from what the decoder needs to reconstruct.
 
@@ -240,9 +238,7 @@ The information bottleneck — $\dim(z) \ll \dim(x)$ — is the key constraint. 
 | Decoder hidden layer  | 4         | Intermediate expansion               |
 | Output $\hat{x}$      | 8         | Reconstruction                       |
 
-**Visual example — images.** For a 28×28 grayscale digit image (784 pixels), the same skeleton scales up: 784 → Dense(256, ReLU) → Dense(128, ReLU) → Dense(32) → $z$, then reversed. The 32-number code might capture stroke thickness, digit slant, or loop closure — whatever axes of variation best explain the training set. The decoder reconstructs 784 pixel values from those 32 numbers. The further the architecture from convolutional structure, the more the encoder wastes capacity modeling spatial correlations that convolutions handle for free.
-
-What the encoder **does not** do in either case: assign predetermined meaning to dimensions, or guarantee nearby points in $\mathcal{Z}$ decode to similar inputs. Two separately trained autoencoders on the same data will discover entirely different coordinate systems.
+**Visual example — images.** For a 28×28 digit (784 pixels): 784 → Dense(256) → Dense(128) → Dense(32) → $z$, then reversed. The 32-number code captures axes like stroke thickness or slant — whatever the decoder needs. Two separately trained autoencoders on the same data will discover entirely different coordinate systems; no dimension has predetermined meaning.
 
 No prior is placed on $z$. The latent space is organized however minimizes the loss — which makes autoencoders effective for anomaly detection (out-of-distribution inputs reconstruct poorly) but poorly suited for generation (arbitrary samples from $\mathcal{Z}$ decode to noise, since there is no guarantee the space between encoded points is meaningful).
 
@@ -254,7 +250,7 @@ No prior is placed on $z$. The latent space is organized however minimizes the l
 
 ### 3.2 Variational Autoencoders
 
-A plain autoencoder has no prior over $\mathcal{Z}$. Two observations that are semantically similar may land in distant, unrelated regions of latent space, because nothing in the objective penalizes that. Sampling an arbitrary point from $\mathcal{Z}$ and decoding it produces incoherent outputs, because the decoder has only been trained on points that are direct outputs of the encoder — the complement of that set is effectively out-of-distribution.
+A plain autoencoder places no prior on $\mathcal{Z}$: similar inputs may land in distant regions, and sampling an arbitrary point decodes to noise since the decoder has only seen encoder outputs.
 
 A **Variational Autoencoder** (VAE) addresses this by reformulating the problem as variational inference. Rather than learning a deterministic encoding, the encoder learns a posterior distribution over latent codes. The architecture remains encoder–decoder, but the encoder now outputs the parameters of a Gaussian:
 
@@ -270,16 +266,9 @@ $$
 z = \mu_\theta(x) + \sigma_\theta(x) \cdot \varepsilon
 $$
 
-**Concretely**
+**Concretely** (tabular): $\mu = [0.70,\; -1.20]$, $\sigma = [0.15,\; 0.30]$, draw $\varepsilon = [0.50,\; -0.80]$, giving $z = [0.775,\; -1.44]$. On the next pass a different $\varepsilon$ is drawn. From the optimizer's perspective $\varepsilon$ is a constant, so gradients flow normally through $\mu$ and $\sigma$.
 
-(tabular): $\mu = [0.70,\; -1.20]$, $\sigma = [0.15,\; 0.30]$, draw $\varepsilon = [0.50,\; -0.80]$,
-so $z = [0.70 + 0.15 \times 0.50,\; -1.20 + 0.30 \times (-0.80)] = [0.775,\; -1.44]$. 
-
-This $z$ is passed to the decoder. On the next pass, a new $\varepsilon$ is drawn, producing a slightly different $z$  the encoder learns to keep $\sigma$ small for dimensions that matter for reconstruction, and the KL term prevents $\sigma$ from collapsing to zero entirely.
-
-**Visual example**: on MNIST, each digit class occupies a fuzzy region in $\mathcal{Z}$ rather than a single point. Sampling a $z$ between the "3" region and the "8" region and decoding it produces a smoothly morphed intermediate — closed loops gradually opening. A plain autoencoder cannot do this because the space between the two encoded points has never been seen during training and decodes to noise.
-
-From the optimizer's perspective, $\varepsilon$ is a fixed constant. $\mu$ and $\sigma$ are differentiable functions of the input, so gradients propagate through the entire encoder normally.
+**Visual example**: on MNIST, each digit class occupies a fuzzy region rather than a point. Sampling between the "3" and "8" regions produces a smoothly morphed intermediate — a plain autoencoder cannot do this, as the interpolated region was never seen during training.
 
 **The training objective** is the Evidence Lower BOund (ELBO), written as two terms:
 
@@ -287,9 +276,7 @@ $$
 \mathcal{L} = \underbrace{\|x - \hat{x}\|^2}_{\text{reconstruction}} \;+\; \underbrace{D_{\text{KL}}\!\left(q_\theta(z \mid x) \;\|\; \mathcal{N}(0,I)\right)}_{\text{latent regularization}}
 $$
 
-The reconstruction term keeps the encoding informative — same pressure as a plain autoencoder. The KL term penalizes how much the encoder's posterior $q_\theta(z \mid x)$ deviates from the prior $\mathcal{N}(0, I)$. It is zero when the posterior matches the prior exactly, and grows as they diverge. Its effect is to anchor every encoding region near the origin with bounded spread, so the latent space cannot collapse into isolated islands or grow unbounded.
-
-The two terms are in fundamental tension: reconstruction pushes the encoder toward sharp, concentrated posteriors (more information preserved); the KL term pushes toward diffuse posteriors that all resemble the prior (more regularity). The model settles at a balance determined by the relative weighting — in practice, a scalar $\beta > 1$ on the KL term ($\beta$-VAE) can increase disentanglement at the cost of reconstruction fidelity.
+The reconstruction term keeps the encoding informative. The KL term anchors every encoding region near the origin with bounded spread — it is zero when the posterior matches the prior exactly, and grows as they diverge. The two terms are in tension: reconstruction favors sharp posteriors; KL favors diffuse ones. A scalar $\beta > 1$ on the KL term ($\beta$-VAE) trades reconstruction fidelity for disentanglement.
 
 | Property             | Autoencoder         | VAE                                   |
 | -------------------- | ------------------- | ------------------------------------- |
@@ -373,7 +360,7 @@ Using both sine and cosine at each frequency is deliberate: any phase shift $PE(
 |    3     |           0.141           |          −0.990           |          0.030           |          1.000           |
 |    4     |          −0.757           |          −0.654           |          0.040           |          0.999           |
 
-The inner product $PE(t)^\top PE(t')$ depends only on the offset $t - t'$, not on absolute position. This gives the model a structural inductive bias toward relative position: the similarity between two positional encodings is a function of their distance, not their location in the sequence.
+The inner product $PE(t)^\top PE(t')$ depends only on the offset $t - t'$ — giving the model a built-in bias toward relative position.
 
 > **Bias–variance:** Sinusoidal PE has zero variance by construction — it is a deterministic mapping with no trainable components. Its bias is determined entirely by the design choice: the functional form assumes position structure is well-captured by a fixed multi-frequency basis.
 > {: .prompt-tip }
