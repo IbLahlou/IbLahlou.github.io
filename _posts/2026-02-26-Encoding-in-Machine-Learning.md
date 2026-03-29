@@ -26,26 +26,13 @@ How do we represent the world?
 
 A categorical variable looks innocent. A column of regions. Product IDs. User segments. Device types. We call them "features" as if they were naturally numeric, as if the model were merely waiting for them to be formatted correctly.
 
-But a category is not a number.
-It is a partition.
-It is a declaration that some observations are equivalent under a certain abstraction.
+But a category is not a number — it is a partition, a declaration that some observations are equivalent under a certain abstraction.
 
-The moment we transform it, we decide something far more consequential than data formatting. We decide whether two categories are neighbors or strangers. Whether they lie on a line or float in orthogonal isolation. Whether identity matters more than frequency. Whether behavior matters more than structure. Whether similarity is imposed or allowed to emerge.
+The moment we transform it, we decide something far more consequential than formatting. We decide whether two categories are neighbors or strangers, whether they lie on a line or float in orthogonal isolation, whether similarity is imposed or allowed to emerge. And once we decide, the model never questions that choice.
 
-And once we decide, the model never questions that choice.
+What is distance between "France" and "Germany"? Should "Premium" be twice "Standard"? When we collapse identity into expectation, are we modeling behavior — or leaking it?
 
-What is distance between "France" and "Germany"?
-Should "Premium" be twice "Standard"?
-Is rarity itself meaningful, or only correlation with outcome?
-When we collapse identity into expectation, are we modeling behavior — or leaking it?
-When we embed categories in dense vectors, are we discovering structure — or inventing it?
-
-Only at the end do we name the act: to **encode** — from Latin _in-_ ("into") and _codex_ ("a book of rules") — is to inscribe something into a system. In machine learning, it is the transformation of information into numerical form so a model can process it.
-
-Encoding is the first act of modeling.
-It is where epistemology becomes geometry.
-
-Everything that follows — bias, variance, generalization, fairness, stability — is downstream of that act.
+To **encode** — from Latin _in-_ ("into") and _codex_ ("a book of rules") — is to inscribe something into a system. In machine learning, it is the transformation of information into numerical form so a model can process it. Encoding is the first act of modeling — where epistemology becomes geometry.
 
 ---
 
@@ -234,13 +221,40 @@ $$
 
 **Visual example**: on MNIST, each digit class occupies a fuzzy region rather than a point. Sampling between the "3" and "8" regions produces a smoothly morphed intermediate — a plain autoencoder cannot do this, as the interpolated region was never seen during training.
 
-**The training objective** is the Evidence Lower BOund (ELBO), written as two terms:
+**Why reconstruction loss alone is not enough.** Minimizing $\|x - \hat{x}\|^2$ gives the encoder no reason to organise the space *between* training points. The result is a latent space that memorises positions but violates two properties needed for generation:
+
+- **Continuity** — nearby points in $\mathcal{Z}$ should decode to similar outputs.
+- **Completeness** — *any* point sampled from $\mathcal{Z}$ should decode to something meaningful.
+
+Without a regularizer, the encoder is free to scatter clusters arbitrarily and leave dead zones between them. This is where the **Kullback–Leibler divergence** comes in.
+
+#### KL Divergence as a Regularizer
+
+KL divergence measures how one probability distribution $P$ diverges from a reference distribution $Q$:
+
+$$
+D_{\text{KL}}(P \| Q) = \sum_i P(i) \log \frac{P(i)}{Q(i)}
+$$
+
+It is not a true distance — $D_{\text{KL}}(P \| Q) \neq D_{\text{KL}}(Q \| P)$ — but it captures the information cost of using $Q$ to approximate $P$. When $P = Q$, the divergence is zero; the more $P$ departs from $Q$, the larger it grows.
+
+![KL divergence — forward vs reverse](/assets/img/graphics/post_15/kl-divergence.png){: width="650" .center}
+_Figure 3.2: KL divergence fitting a simple distribution (red) to a complex one (blue). Left: identical distributions, $D_{\text{KL}} = 0$. Centre and right: as the approximation concentrates on different modes, divergence increases._
+
+In the VAE, $P$ is the encoder's learned posterior $q_\theta(z \mid x)$ and $Q$ is the prior $\mathcal{N}(0, I)$. Minimizing $D_{\text{KL}}(q_\theta(z \mid x) \| \mathcal{N}(0, I))$ forces every encoding cloud toward the origin with bounded spread — filling the gaps and ensuring continuity and completeness.
+
+**The training objective** combines both terms as the Evidence Lower Bound (ELBO):
 
 $$
 \mathcal{L} = \underbrace{\|x - \hat{x}\|^2}_{\text{reconstruction}} \;+\; \underbrace{D_{\text{KL}}\!\left(q_\theta(z \mid x) \;\|\; \mathcal{N}(0,I)\right)}_{\text{latent regularization}}
 $$
 
-The reconstruction term keeps the encoding informative. The KL term anchors every encoding region near the origin with bounded spread — it is zero when the posterior matches the prior exactly, and grows as they diverge. The two terms are in tension: reconstruction favors sharp posteriors; KL favors diffuse ones. A scalar $\beta > 1$ on the KL term ($\beta$-VAE) trades reconstruction fidelity for disentanglement.
+The two terms are in tension. Reconstruction alone produces tight, scattered clusters with dead zones (left panel below). KL alone collapses everything into a single Gaussian — no structure survives (centre). The combination preserves class structure while keeping the space smooth and traversable (right).
+
+![Latent space: reconstruction only vs KL only vs both](/assets/img/graphics/post_15/kl-latent-space.png){: width="700" .center}
+_Figure 3.3: MNIST latent spaces trained with reconstruction loss only, KL divergence only, and both combined (ELBO). Only the combination produces a space that is both structured and complete._
+
+A scalar $\beta > 1$ on the KL term ($\beta$-VAE) pushes harder toward the prior — trading reconstruction fidelity for a more disentangled, tightly organised space; $\beta < 1$ relaxes toward the unregularised autoencoder.
 
 | Property             | Autoencoder         | VAE                                   |
 | -------------------- | ------------------- | ------------------------------------- |
@@ -249,8 +263,6 @@ The reconstruction term keeps the encoding informative. The KL term anchors ever
 | Gradient through $z$ | direct              | via reparameterization                |
 | Sampling new points  | not meaningful      | meaningful interpolation              |
 | Objective            | reconstruction only | reconstruction + KL divergence        |
-
-Because the latent space is regularized, points sampled between two known encodings decode into plausible observations — the VAE encodes not a point but a region of uncertainty. The KL term introduces bias by pulling every posterior toward the prior $\mathcal{N}(0,I)$, but it buys geometric regularity: the latent space becomes smooth and traversable rather than fragmented. Higher $\beta$ on the KL term trades reconstruction fidelity for a more tightly organised space; lower $\beta$ relaxes toward the unregularised autoencoder.
 
 ### 3.3 A Note on Latent Space Geometry
 
@@ -391,27 +403,10 @@ Note that cross-encoders do not produce embeddings — they produce scores. The 
 
 ## Conclusion
 
-Most engineers think the model is where intelligence lives.
+Most engineers think the model is where intelligence lives. It isn't — it lives in the representation.
 
-It isn't.
+Once a categorical variable has been embedded into $\mathbb{R}^k$, the model can only reason within that geometry. It cannot undo an imposed order, rediscover collapsed identity, or remove leakage baked into expectation. The hypothesis space is shaped long before training begins.
 
-It lives in the representation.
+If you cannot articulate the geometry your encoding imposes — the metric it defines, the assumptions it encodes — then you are not controlling your model. You are guessing at its world.
 
-Once a categorical variable has been embedded into $\mathbb{R}^k$, the model can only reason within that geometry. It cannot undo an imposed order. It cannot rediscover identity that was collapsed. It cannot separate categories that were merged by frequency. It cannot remove leakage that was baked into expectation.
-
-The hypothesis space is shaped long before training begins.
-
-And here is the uncomfortable part:
-
-If you cannot precisely articulate the geometry your encoding imposes — the metric it defines, the assumptions it encodes, the bias it injects, the variance it amplifies — then you are not controlling your model.
-
-You are guessing at its world.
-
-Encoding is where domain semantics become statistical structure.
-If you do not understand that structure deeply, you are building systems whose reasoning you cannot fully explain — systems that make decisions about credit, hiring, medical triage, fraud detection, recommendation — based on geometries you never examined.
-
-And if that does not make you uneasy, it should.
-
-Because the model is not misunderstanding the data.
-
-It is faithfully executing the geometry you gave it.
+The model is not misunderstanding the data. It is faithfully executing the geometry you gave it.
