@@ -72,6 +72,7 @@ A window function tapers the frame smoothly to zero at the edges:
 | Hamming     | Medium          | Low (-43 dB)     | General speech analysis      |
 | Hann        | Medium          | Lower (-31 dB)   | Spectral analysis            |
 | Blackman    | Widest          | Lowest (-58 dB)  | When leakage must be minimal |
+|             |                 |                  |                              |
 
 **Trade-off:** Narrower main lobe = better frequency resolution. Lower side lobes = less leakage. You can't optimize both this is the **time-frequency uncertainty principle**.
 
