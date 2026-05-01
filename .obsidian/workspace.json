@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2026-02-26-Encoding-in-Machine-Learning.md",
+                "file": "_posts/2024-09-10-batch-stream-Inferencing.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-02-26-Encoding-in-Machine-Learning"
+              "title": "2024-09-10-batch-stream-Inferencing"
             }
           }
         ]
@@ -166,8 +166,13 @@
   },
   "active": "0aca2dea4e16be71",
   "lastOpenFiles": [
-    "_posts/2025-11-18-acoustic-models.md",
+    "_posts/2024-09-09-data-drift-overview.md",
+    "_posts/2024-09-10-batch-stream-Inferencing.md",
+    "_posts/2024-09-08-entanglement-and-cace-principle.md",
+    "_posts/2024-09-11-data-scraping.md",
+    "_posts/2024-09-11-Convolutional-neural-networks.md",
     "_posts/2026-02-26-Encoding-in-Machine-Learning.md",
+    "_posts/2025-11-18-acoustic-models.md",
     "assets/img/graphics/project/energy/energy_conversion.svg",
     "assets/img/graphics/project/energy/feature_pipeline.svg",
     "assets/img/graphics/project/allam/allam_architecture.svg",
@@ -187,7 +192,6 @@
     "posts/encoding-in-machine-learning.md",
     "posts",
     "_posts/2025-12-25-direct-acyclic-graphe-in-data-science.md",
-    "_posts/2024-09-10-batch-stream-Inferencing.md",
     "assets/img/graphics/post_14/light",
     "assets/img/graphics/post_14/dark",
     "assets/img/graphics/post_14",
@@ -195,7 +199,6 @@
     "Untitled 1.md",
     "assets/img/graphics/post_11/light/Untitled-2026-01-27-1505.excalidraw.crswap",
     "{{.md",
-    "_posts/2024-09-11-Convolutional-neural-networks.md",
     "Untitled.md",
     "Activity Generator API - Data Contract.md",
     "Phonetic Pronunciation API Data contract –  Endpoints.md",
@@ -208,8 +211,6 @@
     "_tabs/archives.md",
     "_posts/2025-03-20-Planning in ML System.md",
     "_posts/2025-11-20-git-best-practice-devsecops.md",
-    "_posts/2025-03-19-ML System Overview.md",
-    "_posts/2024-09-09-data-drift-overview.md",
-    "_posts/2025-11-17-git-github-actions-devsecops.md"
+    "_posts/2025-03-19-ML System Overview.md"
   ]
 }

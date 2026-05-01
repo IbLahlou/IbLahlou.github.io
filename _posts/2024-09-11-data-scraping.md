@@ -184,6 +184,116 @@ It involves saving the parsed data in a structured manner for future use or refe
 For example once data is fetched and parsed, it might need to be stored for various purposes. In web development, this could involve saving user preferences, caching data for faster retrieval, or persisting data in databases for long-term storage. Storage mechanisms can include local storage, session storage, databases (SQL or NoSQL), or file systems.
 
 
+### Advanced Web Scraping Constraints :  
+  
+When working with web scraping in real scenarios, things are not always as simple as sending a request and parsing the response. Modern websites are not static systems anymore, they are dynamic, protected, and continuously evolving.  
+  
+In many cases, the scraper works at the beginning, then suddenly stops working without any change in the code. This behavior is not random, it is the result of multiple detection layers that evaluate how requests are made.  
+  
+---  
+  
+#### Network Identity (IP, ISP, DHCP, Proxies)  
+  
+When a request is sent to a server, it is always associated with an identity, mainly represented by the IP address. However, this identity is not fixed.  
+  
+In real networks:  
+- Internet Service Providers (ISP) assign IP addresses dynamically  
+- this is done using protocols such as DHCP  
+- meaning that a user does not always keep the same IP  
+  
+This creates a natural distribution of requests across different identities.  
+  
+In scraping, the situation is different:  
+- many requests come from the same machine  
+- same IP, same pattern  
+  
+This creates concentration, which is one of the first signals used for blocking.  
+  
+To reduce this, techniques like proxy usage or IP rotation are introduced. A residential proxy, for example, uses IP addresses assigned by ISPs, making the request appear closer to a real user. ****
+  
+But even with IP rotation, if everything else remains identical, the system can still detect abnormal behavior.  
+  
+---  
+  
+#### Rendering Problem (CSR vs SSR)  
+  
+Another issue appears when extracting data from modern web applications.  
+  
+Not all web pages contain their data directly in the HTML.  
+  
+- In **Server-Side Rendering (SSR)**, the server returns a complete page  
+- In **Client-Side Rendering (CSR)**, the page is built after loading using JavaScript  
+  
+In CSR:  
+- the initial HTML may look empty  
+- the real data is loaded later (API calls, AJAX)  
+  
+This means that scraping too early or at the wrong level leads to incomplete or missing data.  
+  
+So the problem is not always access, but timing and execution.  
+  
+---  
+  
+#### Browser Execution and Environment  
+  
+A simple HTTP request does not behave like a browser.  
+  
+A browser:  
+- executes JavaScript  
+- loads additional resources  
+- updates the page dynamically  
+  
+If a scraper does not reproduce this environment, it may miss data or be detected.  
+  
+This is why some scraping scenarios require a full execution environment instead of simple requests.  
+  
+---  
+  
+#### Request Identity and Fingerprinting  
+  
+Changing the IP is not always enough.  
+  
+Modern systems analyze multiple attributes together:  
+- headers (User-Agent, Accept, etc.)  
+- browser characteristics  
+- rendering behavior  
+  
+This is called fingerprinting.  
+  
+Even if the IP changes, if the rest of the request remains identical, it can still be linked to the same source. 
+  
+This shifts the concept of identity from a single value (IP) to a combination of signals.  
+  
+---  
+  
+#### Behavioral Detection  
+  
+Beyond identity, websites analyze how requests are made.  
+  
+A script usually behaves in a predictable way:  
+- same delay between requests  
+- same navigation pattern  
+- same sequence of actions  
+  
+Humans do not behave like this.  
+  
+Modern systems use behavioral analysis to detect these patterns, tracking interaction timing, navigation flow, and consistency. 
+  
+This makes detection based not only on what is sent, but on how it is done.  
+  
+---  
+  
+#### CAPTCHA as a Consequence  
+  
+CAPTCHA is often seen as the main obstacle, but it is usually a result of previous signals.  
+  
+It is triggered when:  
+- identity looks suspicious  
+- behavior is inconsistent  
+- request patterns deviate from normal usage  
+  
+It acts as a final verification layer rather than the first line of defense.
+
 ### Watch out web scraping is not always legal ?
 
 Web scraping is a complex issue when it comes to legality , While the aim can be just to programmatically collect data for analysis or research. , **_Ethical and legal concerns arise when scraping is done without proper consent_** or violates a site’s terms of service.
