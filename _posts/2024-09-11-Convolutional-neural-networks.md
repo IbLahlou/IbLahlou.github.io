@@ -24,6 +24,33 @@ image:
 
 Convolutional Neural Networks (ConvNets or CNNs) are a type of neural network where the primary operation is the convolution of data matrices. Technically, they use cross-correlation instead of convolution. Cross-correlation is similar to convolution, but without flipping the kernel. The kernel, a smaller matrix that moves over the input, performs the convolution operation to extract features.
 
+## Filter (Kernel)  
+  
+A **filter** is a small matrix used to detect patterns in an image.  
+  
+Example:  
+  
+$$  
+\begin{pmatrix}  
+1 & 0 & -1 \\  
+1 & 0 & -1 \\  
+1 & 0 & -1 \\  
+\end{pmatrix}  
+$$  
+  
+At each position:  
+- Multiply input values with the filter  
+- Sum the result  
+  
+Sliding the filter across the image produces a **feature map**.  
+  
+Different filters detect:  
+- edges  
+- lines  
+- textures
+
+
+
 ### How Convolution Works in CNNs:
 
 The kernel overlaps with sections of the input matrix, and the dot product of each overlap is computed and summed. This process generates a feature map (such as a sharpened image). Convolution extracts significant features from the input, such as edges.
@@ -55,6 +82,7 @@ Before proceeding to implement ConvNets in PyTorch, there’s one more essential
 ##### Origin
 
 In [mathematics](https://en.wikipedia.org/wiki/Mathematics "Mathematics") (in particular, [functional analysis](https://en.wikipedia.org/wiki/Functional_analysis "Functional analysis")), **convolution** is a [mathematical operation](https://en.wikipedia.org/wiki/Operation_(mathematics) "Operation (mathematics)") on two [functions](https://en.wikipedia.org/wiki/Function_(mathematics) "Function (mathematics)") (f![{\displaystyle f}](https://wikimedia.org/api/rest_v1/media/math/render/svg/132e57acb643253e7810ee9702d9581f159a1c61) and g![{\displaystyle g}](https://wikimedia.org/api/rest_v1/media/math/render/svg/d3556280e66fe2c0d0140df20935a6f057381d77)) that produces a third function (f∗g). The term _convolution_ refers to both the result function and to the process of computing it.
+
 
 The convolution of two functions $$ f $$ and $$ g $$, written as $$ f * g $$, is defined as the integral of the product of $$ f $$ and a time-shifted, reflected version of $$ g $$:
 
@@ -161,6 +189,8 @@ $$
   </figure>
 </div>
 
+>Convolution is applying the same filter across the input to detect patterns, independent of position.
+>{: .prompt-info }
 
 #### Example with Matrix Convolution (including padding and stride):
 

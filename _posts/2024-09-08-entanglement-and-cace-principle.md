@@ -10,36 +10,62 @@ tags:
   - hidden-technical-debt
 ---
 
+
+
+## Introduction 
+
+There’s a problematic approach to improvement where people seeking result-oriented solutions, like using LLMs, wish to have their code ready in a single prompt. However, they face changes frequently, and when they do, they may let their model overfit to a result due to memorization. The problem isn’t just with the code or what they consistently want — did they use a better approach to update their code? For this, there are solutions like modular design or abstraction that can express strong invariance and allow prompts to span multiple sessions.
+
+When we move to machine learning, we can effectively use ensemble boosting or multitask learning to help with modular design. However, with abstraction, we encounter problems, particularly with highly imbalanced datasets or when data is very detailed. We typically use ML when the task is too complex or dynamic to be handled by traditional if-then rules, and when we have data that can teach the system the right behavior.
+
+This is because software logic depends on external data — that’s the exhaustive set of rules where we have everything in its designated spot. However, in reality, items often belong in multiple categories, serve multiple purposes, or don’t fit neatly anywhere.
+
+We can say that the best model isn’t one that simply achieves the highest easy-to-calculate metric, but rather one that allows us to improve gradually through explanation. This enables data scientists to understand its behavior and decisions, leading to better explanations regardless of the problem. Mathematics and mathematical modeling are the best solutions, not just an arbitrary set of neural networks that can’t be understood or consciously improved.
+
+## Entanglement in Literature
+<div style="text-align: center;">
+  <figure>
+    <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*pHW_GpMHJrDKY4Bl50VxwQ.png" alt="" width="105%">
+  </figure>
+</div>
+<img href="https://miro.medium.com/v2/resize:fit:720/format:webp/1*pHW_GpMHJrDKY4Bl50VxwQ.png
+">
+_Figure 1: Visual distinction between Entanglement, Correlation, and Causality using colored ball , Same state (Entanglement), Change together (Correlation), One causes other (Causality)”_
+
+
+Entanglement often describes complex, intertwined relationships or situations characters can’t easily escape from  like a romantic entanglement between lovers who keep getting drawn back to each other despite trying to separate, or families entangled in generations-old feuds. 
+
+Correlation typically appears in describing subtle patterns or echoes in narrative, like how weather might mirror a character’s mood. 
+
+Causation is the most straightforward, used to trace how one event leads to another in plot development, like how a character’s childhood trauma causes their adult behavior or how a small decision snowballs into major consequences.
+## Entanglement in Machine Learning Models 
+
+
+In machine learning, **entanglement** refers to the complex inter dependencies between features, where modifying one feature can affect the behavior of others. This phenomenon is captured by the **"CACE Principle"** (Changing Anything Changes Everything) also called "cake" principle 🎂, which highlights how altering any feature can influence the model’s overall predictions.
+
+Machine learning models use a set of features $$x_1, x_2, \dots, x_n$$, and the relationships between them are often non-linear. Any change, such as shifts in input distribution, adding new features, or removing existing ones, can disrupt the model’s learned dynamics.
+
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
 
 ![Model Entanglement](/assets/img/graphics/post_8/gray/dBrQcyN.png){: .dark }
 ![Model Entanglement](/assets/img/graphics/post_8/gray/dBrQcyN.png){: .light }
-_Figure 0.1: Model entanglement and CACE principle illustration_
+_Figure 2: Model entanglement and CACE principle illustration_
 
 
-
-
-## Entanglement in Machine Learning Models and the "CACE Principle"
-
-In machine learning, **entanglement** refers to the complex interdependencies between features, where modifying one feature can affect the behavior of others. This phenomenon is captured by the **"CACE Principle"** (Changing Anything Changes Everything) also called "cake" principle 🎂, which highlights how altering any feature can influence the model’s overall predictions.
-
-Machine learning models use a set of features $$x_1, x_2, \dots, x_n$$, and the relationships between them are often non-linear. Any change, such as shifts in input distribution, adding new features, or removing existing ones, can disrupt the model’s learned dynamics.
 
 ### Types of Feature Changes:
 
 
 1. **Input Distribution Change**: A shift in how feature values are distributed can alter the model's weighting of other features.
 
-
-
 2. **Adding a New Feature** $$x_{n+1}$$: Introducing new data alters the balance of the model, potentially impacting existing features.
-
 
 
 3. **Removing a Feature** $$x_j$$: Excluding a feature forces the model to redistribute its reliance on remaining features, often unpredictably.
 
 
 ### Mitigation Strategies:
+
 - **Feature Interaction Monitoring**: Track how features affect one another to detect potential issues early.
 - **Regularization**: Use techniques like L1/L2 regularization to control feature influence.
 - **Retraining**: Regularly retrain the model after any changes to ensure stability.
@@ -102,6 +128,7 @@ where:
 
 
 ##### 2. Model Evaluation
+
 IN[2] :
 ```python
 y_pred = model.predict(X_test)
@@ -159,6 +186,7 @@ Accuracy after shifting x1: 0.7833
 ```
 
 ##### 4.  Change 2: Add a new feature (x4)
+
 IN[4] :
 ```python
 X_train['x4'] = np.random.normal(loc=0, scale=1, size=len(X_train))  # New feature x4
