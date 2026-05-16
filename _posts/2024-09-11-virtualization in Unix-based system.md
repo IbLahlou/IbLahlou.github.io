@@ -14,7 +14,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel5@4x.png
+  path: /assets/img/panels/panel5@4x.webp
 ---
 
 ### Virtualization in Unix-based system

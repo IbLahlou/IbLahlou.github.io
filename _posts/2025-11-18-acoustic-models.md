@@ -17,7 +17,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel12@4x.png
+  path: /assets/img/panels/panel12@4x.webp
 ---
 
 # Introduction
@@ -87,9 +87,9 @@ A window function tapers the frame smoothly to zero at the edges:
 
 With these foundational operations established, we can now build speech processing systems. The first step is often **filtering**: selectively passing or blocking certain frequencies to prepare the signal for analysis. Frequency notation can be $\omega$ or $f$ or $\nu$.
 
-![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtre.png){: .dark }
+![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtre.webp){: .dark }
 
-![Filtering Light Mode](../assets/img/graphics/post_12/light/filtre.png){: .light }
+![Filtering Light Mode](../assets/img/graphics/post_12/light/filtre.webp){: .light }
 _Figure 1.0:Effect of Classical Filters on Signals in Time and Frequency Domains_
 
 ### 1.1 Filter Types by Frequency Response
@@ -105,9 +105,9 @@ Filters are categorized by which frequencies they allow through:
 
 ### 1.2 Filter Design: Magnitude Response Characteristics
 
-![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtredesign.png){: .light}
+![Filtering Dark Mode](../assets/img/graphics/post_12/dark/filtredesign.webp){: .light}
 
-![Filtering Light Mode](../assets/img/graphics/post_12/light/filtredesign.png){: .dark }
+![Filtering Light Mode](../assets/img/graphics/post_12/light/filtredesign.webp){: .dark }
 _Figure 1.1: Filter Design types_
 
 While the filter type determines **which frequencies** to pass or block, the **filter design** determines **how** this transition occurs. Different filter approximations offer trade-offs between passband flatness, stopband attenuation, transition sharpness, and phase response.
@@ -198,10 +198,10 @@ $$y[n] = x[n] - \alpha x[n-1], \quad \alpha \approx 0.97$$
 
 Boosts high frequencies ~6 dB/octave.
 
-![Pre-emphasis Filtering Light Mode](../assets/img/graphics/post_12/light/pre-emphasis-filter.png)
+![Pre-emphasis Filtering Light Mode](../assets/img/graphics/post_12/light/pre-emphasis-filter.webp)
 {: .light}
 
-![Pre-emphasis Filtering Dark Mode](../assets/img/graphics/post_12/dark/pre-emphasis-filter.png){: .dark }
+![Pre-emphasis Filtering Dark Mode](../assets/img/graphics/post_12/dark/pre-emphasis-filter.webp){: .dark }
 _Figure 1.2:  Pre-Emphasis Filter Design types_
 
 #### Why Pre-emphasis?
@@ -225,14 +225,14 @@ The glottal source (vocal cord vibration) has a natural spectral tilt: energy de
 
 Now that we can filter and shape the spectrum, we need a way to **separate** the two main components of speech: the excitation source (vocal cords) and the vocal tract filter. The cepstrum provides exactly this capability.
 
-![Cepstrum Time domain Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_time.png)
+![Cepstrum Time domain Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_time.webp)
 {: .dark }
-![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_time.png){: .light }
+![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_time.webp){: .light }
 _Figure 2.0: Cepstrum separating source and filter in time domain_
 
 
- ![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_frequency.png){: .dark } 
- ![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_frequency.png){: .light } 
+ ![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_frequency.webp){: .dark } 
+ ![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_frequency.webp){: .light } 
 _Figure 2.1: Cepstrum separating source and filter in frequency domain_
 
 
@@ -265,8 +265,8 @@ where $l[n]$ is a low-pass lifter.
 
 
 
-![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_quefrency.png){: .light } 
-![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_quefrency.png){: .dark } 
+![Cepstrum Dark Mode](../assets/img/graphics/post_12/dark/cepstrum_quefrency.webp){: .light } 
+![Cepstrum Light Mode](../assets/img/graphics/post_12/light/cepstrum_quefrency.webp){: .dark } 
 _Figure 2.1: Cepstrum separating source and filter in quefrency domain_
 
 ### Cepstrum Intuition
@@ -345,7 +345,7 @@ $$
 Equal mel intervals correspond to equal perceived pitch intervals.
 
 
-![Mel Scale Dark Mode](assets/img/graphics/post_12/dark/frequency-to-mel.png){: .dark } ![Mel Scale Light Mode](assets/img/graphics/post_12/light/frequency-to-mel.png){: .light } 
+![Mel Scale Dark Mode](assets/img/graphics/post_12/dark/frequency-to-mel.webp){: .dark } ![Mel Scale Light Mode](assets/img/graphics/post_12/light/frequency-to-mel.webp){: .light } 
 _Figure 3.0: The Mel Scale: Modeling Human Hearing_
 
 ---
@@ -499,7 +499,7 @@ where:
     
 The operator $\mathcal{H}$ in the MFCC mapping represents a linear projection from the power spectrum to mel-band energies. This operator is defined by a set of overlapping weighting functions constructed via uniform sampling in the mel domain. The figure below visualizes this projection by showing the triangular responses that constitute the mel filterbank.
 
-![Mel Scale Dark Mode](assets/img/graphics/post_12/dark/mfcc.png){: .dark } ![Mel Scale Light Mode](assets/img/graphics/post_12/light/mfcc.png){: .light } 
+![Mel Scale Dark Mode](assets/img/graphics/post_12/dark/mfcc.webp){: .dark } ![Mel Scale Light Mode](assets/img/graphics/post_12/light/mfcc.webp){: .light } 
 _Figure 3.1: The Mel Scale: Modeling Human Hearing_
 
 Each triangle corresponds to one row of the operator $\mathcal{H}$ and defines how spectral energy is aggregated within a frequency band. This projection produces the log-mel energies that are subsequently decorrelated by the discrete cosine transform $\mathcal{D}$ to form MFCCs, linking the Fourier domain to the cepstral representation
@@ -630,8 +630,8 @@ So far we've focused on the vocal tract (formants, spectral envelope). But the o
 
 **F0 (Fundamental Frequency)** is the rate at which the vocal cords vibrate during voiced speech it determines the perceived pitch. F0 carries prosodic information: intonation, stress, emotion. Estimating it reliably is essential for many applications.
 
-<!-- ![Pitch Detection Dark Mode](../assets/img/graphics/post_12/dark/img11_pitch.png){: .dark } -->
-<!-- ![Pitch Detection Light Mode](../assets/img/graphics/post_12/light/img11_pitch.png){: .light } -->
+<!-- ![Pitch Detection Dark Mode](../assets/img/graphics/post_12/dark/img11_pitch.webp){: .dark } -->
+<!-- ![Pitch Detection Light Mode](../assets/img/graphics/post_12/light/img11_pitch.webp){: .light } -->
 
 _Figure 6.0: Pitch detection methods_
 

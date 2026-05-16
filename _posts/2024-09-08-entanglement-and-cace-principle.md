@@ -47,8 +47,8 @@ Machine learning models use a set of features $$x_1, x_2, \dots, x_n$$, and the 
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
 
-![Model Entanglement](/assets/img/graphics/post_8/gray/dBrQcyN.png){: .dark }
-![Model Entanglement](/assets/img/graphics/post_8/gray/dBrQcyN.png){: .light }
+![Model Entanglement](/assets/img/graphics/post_8/gray/dBrQcyN.webp){: .dark }
+![Model Entanglement](/assets/img/graphics/post_8/gray/dBrQcyN.webp){: .light }
 _Figure 2: Model entanglement and CACE principle illustration_
 
 
@@ -110,8 +110,8 @@ model.fit(X_train, y_train)
 ```
 OUT[1] :
 
-![Decision Tree Model](/assets/img/graphics/post_8/gray/rI4OI6j.png){: .dark }
-![Decision Tree Model](/assets/img/graphics/post_8/gray/rI4OI6j.png){: .light }
+![Decision Tree Model](/assets/img/graphics/post_8/gray/rI4OI6j.webp){: .dark }
+![Decision Tree Model](/assets/img/graphics/post_8/gray/rI4OI6j.webp){: .light }
 _Figure 1.0: Decision tree classifier visualization_
 
 #### Initial Loss Function (Cross-Entropy Loss)

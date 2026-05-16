@@ -17,7 +17,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel8@4x.png
+  path: /assets/img/panels/panel8@4x.webp
 ---
 ## The Evolving Ecosystem
 
@@ -28,8 +28,8 @@ Think about it like a physical system that continuously evolves. Similar to how 
 
 A physical system might include a mass on a 30° inclined plane with gravity and friction, a spring creating natural oscillation with specific characteristics, and an electromagnetic actuator maintaining oscillation when it diminishes. A system like that can be interpretative at first, but it can lead to chaos just by some hidden details that can emerge over time.
 
-![Physical System Analogy](/assets/img/graphics/post_9/gray/m0KtwR1.png){: .dark }
-![Physical System Analogy](/assets/img/graphics/post_9/gray/m0KtwR1.png){: .light }
+![Physical System Analogy](/assets/img/graphics/post_9/gray/m0KtwR1.webp){: .dark }
+![Physical System Analogy](/assets/img/graphics/post_9/gray/m0KtwR1.webp){: .light }
 _Figure 1.0: Physical system analogy for ML systems_
 
 
@@ -39,8 +39,8 @@ Time is also a very important component in computer science in general. It lets 
 
 What can a wise data scientist do to an ML system, for example in time series?
 
-![Time Series System](/assets/img/graphics/post_9/gray/GTyun46.png){: .dark }
-![Time Series System](/assets/img/graphics/post_9/gray/GTyun46.png){: .light }
+![Time Series System](/assets/img/graphics/post_9/gray/GTyun46.webp){: .dark }
+![Time Series System](/assets/img/graphics/post_9/gray/GTyun46.webp){: .light }
 _Figure 2.0: Time series system with intervention mechanisms_
 
 

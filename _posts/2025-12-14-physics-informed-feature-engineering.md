@@ -19,7 +19,7 @@ math: true
 mermaid: true
 reading_time: 18 min
 image:
-  path: /assets/img/panels/panel13@4x.png
+  path: /assets/img/panels/panel13@4x.webp
 ---
 
 # Physics-Informed Feature Engineering

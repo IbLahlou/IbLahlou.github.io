@@ -12,7 +12,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel2@4x.png
+  path: /assets/img/panels/panel2@4x.webp
 ---
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
@@ -38,8 +38,8 @@ There are various data processing techniques, such as batch, stream processing, 
 
 The diminishing value of data refers how much value is being created based on your processing approach.. It is a very beneficial strategy to analyze the most recent facts and make a decision based on the results. Time-sensitive judgments must be made in a matter of minutes. Assume for the moment that you are searching for running shoes to replace your current pair. You can view the running shoe advertisement you're looking for by jumping to any website that has an advertisement window.
 
-![Diminishing Value of Data](/assets/img/graphics/post_2/gray/Y0VZHFx.png){: .dark }
-![Diminishing Value of Data](/assets/img/graphics/post_2/gray/Y0VZHFx.png){: .light }
+![Diminishing Value of Data](/assets/img/graphics/post_2/gray/Y0VZHFx.webp){: .dark }
+![Diminishing Value of Data](/assets/img/graphics/post_2/gray/Y0VZHFx.webp){: .light }
 _Figure 1.0: Diminishing value of data over time_
 
 ##### Batch Processing
@@ -69,8 +69,8 @@ Microbatch processing combines batch and stream approaches by processing small c
 Tasks are grouped into batches, and all batches are processed at the same time. Each batch can have a maximum size, and if there are fewer tasks than the limit, the batch will contain fewer items.
 
 
-![Simultaneous Batching](/assets/img/graphics/post_2/gray/ZksUvbo.png){: .dark }
-![Simultaneous Batching](/assets/img/graphics/post_2/gray/ZksUvbo.png){: .light }
+![Simultaneous Batching](/assets/img/graphics/post_2/gray/ZksUvbo.webp){: .dark }
+![Simultaneous Batching](/assets/img/graphics/post_2/gray/ZksUvbo.webp){: .light }
 _Figure 2.0: Simultaneous batching strategy_
 
 
@@ -82,8 +82,8 @@ In a food delivery service, four orders are grouped into a batch, and all four a
 Tasks are organized into groups that are processed one after the other. One group must finish before the next group starts, maintaining a strict sequence in execution.
 
 
-![Sequential Batching](/assets/img/graphics/post_2/gray/u7jxWBT.png){: .dark }
-![Sequential Batching](/assets/img/graphics/post_2/gray/u7jxWBT.png){: .light }
+![Sequential Batching](/assets/img/graphics/post_2/gray/u7jxWBT.webp){: .dark }
+![Sequential Batching](/assets/img/graphics/post_2/gray/u7jxWBT.webp){: .light }
 _Figure 3.0: Sequential batching strategy_
 
 
@@ -95,8 +95,8 @@ In a manufacturing line, a machine produces 10 units of product A before switchi
 Tasks from different batches are passed to a final processing stage. After forming initial batches, tasks are transferred for further execution, combining elements while maintaining the batch size limit.
 
 
-![Transfer Batching](/assets/img/graphics/post_2/gray/G3TbvW6.png){: .dark }
-![Transfer Batching](/assets/img/graphics/post_2/gray/G3TbvW6.png){: .light }
+![Transfer Batching](/assets/img/graphics/post_2/gray/G3TbvW6.webp){: .dark }
+![Transfer Batching](/assets/img/graphics/post_2/gray/G3TbvW6.webp){: .light }
 _Figure 4.0: Transfer batching strategy_
 
 

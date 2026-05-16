@@ -15,7 +15,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel3@4x.png
+  path: /assets/img/panels/panel3@4x.webp
 ---
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">
@@ -154,8 +154,8 @@ This describes how convolution can be extended to finitely supported sequences a
 
 ### Convolution Layer
 
-![Convolution Layer](/assets/img/graphics/post_3/gray/convolution.png){: .dark }
-![Convolution Layer](/assets/img/graphics/post_3/gray/convolution.png){: .light }
+![Convolution Layer](/assets/img/graphics/post_3/gray/convolution.webp){: .dark }
+![Convolution Layer](/assets/img/graphics/post_3/gray/convolution.webp){: .light }
 _Figure 1.0: Convolution layer operation_
 
 1. **Output dimensions for convolution:**
@@ -346,8 +346,8 @@ output = F.conv2d(input_matrix, kernel, stride=2, padding=1)
 ****
 ### Pooling layer
 
-![Pooling Layer](/assets/img/graphics/post_3/gray/pooling.png){: .dark }
-![Pooling Layer](/assets/img/graphics/post_3/gray/pooling.png){: .light }
+![Pooling Layer](/assets/img/graphics/post_3/gray/pooling.webp){: .dark }
+![Pooling Layer](/assets/img/graphics/post_3/gray/pooling.webp){: .light }
 _Figure 2.0: Pooling layer operation_
 
 **Definition**:
@@ -420,8 +420,8 @@ This code demonstrates the pooling operations described earlier using PyTorch. Y
 ****
 ### Flattening layer
 
-![Flattening Layer](/assets/img/graphics/post_3/gray/flattening.png){: .dark }
-![Flattening Layer](/assets/img/graphics/post_3/gray/flattening.png){: .light }
+![Flattening Layer](/assets/img/graphics/post_3/gray/flattening.webp){: .dark }
+![Flattening Layer](/assets/img/graphics/post_3/gray/flattening.webp){: .light }
 _Figure 3.0: Flattening layer operation_
 
 ### Flattening in Convolutional Neural Networks (CNNs)

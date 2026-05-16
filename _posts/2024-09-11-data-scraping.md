@@ -15,7 +15,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel4@4x.png
+  path: /assets/img/panels/panel4@4x.webp
 ---
 
 <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicons/ild01@4x.ico' | relative_url }}">

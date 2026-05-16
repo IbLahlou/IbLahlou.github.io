@@ -15,7 +15,7 @@ tags:
 pin: true
 math: true
 image:
-  path: /assets/img/panels/panel15@4x.png
+  path: /assets/img/panels/panel15@4x.webp
 ---
 
 ## Introduction
@@ -185,9 +185,9 @@ The information bottleneck — $\dim(z) \ll \dim(x)$ — forces the encoder to r
 **Simple example — tabular data.** A user profile has 8 features: age, tenure, monthly spend, login frequency, number of products, support tickets, days since last purchase, account tier.
 
 
-![Autoencoder simple example](../assets/img/graphics/post_15/dark/vanilla-ae.png){: .dark }
+![Autoencoder simple example](../assets/img/graphics/post_15/dark/vanilla-ae.webp){: .dark }
 
-![Autoencoder simple example](../assets/img/graphics/post_15/light/vanilla-ae.png){: .light }
+![Autoencoder simple example](../assets/img/graphics/post_15/light/vanilla-ae.webp){: .light }
 _Figure 1.0: illustration of a classic Autoencoder neural network architecture._
 
 
@@ -238,7 +238,7 @@ $$
 
 It is not a true distance — $D_{\text{KL}}(P \| Q) \neq D_{\text{KL}}(Q \| P)$ — but it captures the information cost of using $Q$ to approximate $P$. When $P = Q$, the divergence is zero; the more $P$ departs from $Q$, the larger it grows.
 
-![KL divergence — forward vs reverse](/assets/img/graphics/post_15/kl-divergence.png){: width="650" .center}
+![KL divergence — forward vs reverse](/assets/img/graphics/post_15/kl-divergence.webp){: width="650" .center}
 _Figure 3.0: KL divergence fitting a simple distribution (red) to a complex one (blue). Left: identical distributions, $D_{\text{KL}} = 0$. Centre and right: as the approximation concentrates on different modes, divergence increases. [source](https://www.amazon.com/Pattern-Recognition-Learning-Information-Statistics/dp/0387310738)_
 
 In the VAE, $P$ is the encoder's learned posterior $q_\theta(z \mid x)$ and $Q$ is the prior $\mathcal{N}(0, I)$. Minimizing $D_{\text{KL}}(q_\theta(z \mid x) \| \mathcal{N}(0, I))$ forces every encoding cloud toward the origin with bounded spread — filling the gaps and ensuring continuity and completeness.
@@ -251,7 +251,7 @@ $$
 
 The two terms are in tension. Reconstruction alone produces tight, scattered clusters with dead zones (left panel below). KL alone collapses everything into a single Gaussian — no structure survives (centre). The combination preserves class structure while keeping the space smooth and traversable (right).
 
-![Latent space: reconstruction only vs KL only vs both](/assets/img/graphics/post_15/kl-latent-space.png){: width="700" .center}
+![Latent space: reconstruction only vs KL only vs both](/assets/img/graphics/post_15/kl-latent-space.webp){: width="700" .center}
 _Figure 3.1: MNIST latent spaces trained with reconstruction loss only, KL divergence only, and both combined (ELBO). Only the combination produces a space that is both structured and complete. [source](https://www.ibm.com/think/topics/latent-space)_
 
 A scalar $\beta > 1$ on the KL term ($\beta$-VAE) pushes harder toward the prior — trading reconstruction fidelity for a more disentangled, tightly organised space; $\beta < 1$ relaxes toward the unregularised autoencoder.
@@ -268,7 +268,7 @@ A scalar $\beta > 1$ on the KL term ($\beta$-VAE) pushes harder toward the prior
 
 All encoders above assume $\mathcal{Z} = \mathbb{R}^d$ — a flat Euclidean space. This is a structural assumption, not a necessity.
 
-![Euclidean vs Non-Euclidean geometries](/assets/img/graphics/post_15/geometries.png){: width="500" .center}
+![Euclidean vs Non-Euclidean geometries](/assets/img/graphics/post_15/geometries.webp){: width="500" .center}
 _Figure 3.2: Euclidean, spherical, and hyperbolic geometries — each defines different geodesics and distance growth rates . [source](https://manifoldsunfolded.com/2025/06/13/spherical-geometry-another-kind-of-non-euclidean-geometry/)_
 
 In Euclidean space, geodesics are straight lines and distances grow linearly. In spherical space, geodesics curve back on themselves — suitable for data with cyclical structure. In **hyperbolic space**, space expands exponentially away from any center point — exactly matching the growth rate of trees and hierarchies.

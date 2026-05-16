@@ -13,7 +13,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel6@4x.png
+  path: /assets/img/panels/panel6@4x.webp
 ---
 # The Evolution and Dynamics of Language
 

@@ -17,7 +17,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel14@4x.png
+  path: /assets/img/panels/panel14@4x.webp
 ---
 ## Introduction
 
@@ -90,9 +90,9 @@ Real-world data isn't a straight line; it's messy. A DAG handles this through **
 - **The Result:** This structure allows for **Concurrency**. Tasks that don't depend on each other run at the same time, maximizing your cluster's resources and cutting down execution time.
     
 
-![3 Basic rule of Dag](../assets/img/graphics/post_14/dark/3-rule-of-dag.png){: .dark }
+![3 Basic rule of Dag](../assets/img/graphics/post_14/dark/3-rule-of-dag.webp){: .dark }
 
-![3 Basic rule of Dag](../assets/img/graphics/post_14/light/3-rule-of-dag.png){: .light }
+![3 Basic rule of Dag](../assets/img/graphics/post_14/light/3-rule-of-dag.webp){: .light }
 
 
 ### Key DAG Vocabulary

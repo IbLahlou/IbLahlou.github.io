@@ -15,7 +15,7 @@ pin: true
 math: true
 mermaid: true
 image:
-  path: /assets/img/panels/panel7@4x.png
+  path: /assets/img/panels/panel7@4x.webp
 ---
 
 ## Overview
@@ -99,8 +99,8 @@ Split text into fragments between words and characters. Vocabulary is learned fr
 - **Language bias**: Languages with simpler morphology (like English) tokenize efficiently. Agglutinative languages (Finnish, Turkish) fragment badly, requiring more tokens per concept
 - **Inference instability**: The same word might tokenize differently depending on context or capitalization
 
-![Tokenization Methods](/assets/img/graphics/post_4/gray/ChSqlAz.png){: .dark }
-![Tokenization Methods](/assets/img/graphics/post_4/gray/ChSqlAz.png){: .light }
+![Tokenization Methods](/assets/img/graphics/post_4/gray/ChSqlAz.webp){: .dark }
+![Tokenization Methods](/assets/img/graphics/post_4/gray/ChSqlAz.webp){: .light }
 _Figure 1.0: Different tokenization strategies_
 
 #### The Tokenization Decision Matrix
@@ -613,8 +613,8 @@ Let me explain each of these text processing concepts in simple terms:
 **2. Normalization:**
 - **Lemmatization**: Converting words to their dictionary base form
 
-![Lemmatization](/assets/img/graphics/post_4/gray/w5FFhSi.png){: .dark }
-![Lemmatization](/assets/img/graphics/post_4/gray/w5FFhSi.png){: .light }
+![Lemmatization](/assets/img/graphics/post_4/gray/w5FFhSi.webp){: .dark }
+![Lemmatization](/assets/img/graphics/post_4/gray/w5FFhSi.webp){: .light }
 _Figure 2.0: Lemmatization process_
 
 
@@ -627,8 +627,8 @@ _Figure 2.0: Lemmatization process_
 
 - **Stemming**: Cutting off word endings to get a common base (faster but rougher than lemmatization)
 
-![Stemming](/assets/img/graphics/post_4/gray/b8hvqj1.png){: .dark }
-![Stemming](/assets/img/graphics/post_4/gray/b8hvqj1.png){: .light }
+![Stemming](/assets/img/graphics/post_4/gray/b8hvqj1.webp){: .dark }
+![Stemming](/assets/img/graphics/post_4/gray/b8hvqj1.webp){: .light }
 _Figure 3.0: Stemming process_
 
 
