@@ -1,7 +1,7 @@
 ---
 title: Computer Vision Essentials
 description: Primitive operations used across computer vision pipelines, and where they come from
-date: 2025-05-15
+date: 2026-05-15
 categories:
   - Machine Learning
   - Computer Vision
